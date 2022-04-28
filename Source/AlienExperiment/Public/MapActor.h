@@ -29,5 +29,7 @@ protected:
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
 	TSoftClassPtr<ACellActor> CellClass;
+	UPROPERTY(EditAnywhere, Category = "Cell Size")
+		float SectorSize = 100.f;
 
 };

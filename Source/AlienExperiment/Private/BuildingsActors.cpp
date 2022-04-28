@@ -35,3 +35,7 @@ void ABuildingsActors::BeginPlay()
 	
 }
 
+void ABuildingsActors::ResetRotation()
+{
+	SetActorRotation(FRotator::ZeroRotator);
+}

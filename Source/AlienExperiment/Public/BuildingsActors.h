@@ -23,6 +23,9 @@ public:
 protected:
 	virtual void BeginPlay() override;
 
+	UFUNCTION(BlueprintCallable, Category = "BuildTransform")
+		void ResetRotation();
+
 	UPROPERTY(VisibleAnywhere , BlueprintReadOnly, Category = "Components")
 	class UStaticMeshComponent* StaticMeshComponent;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Config")

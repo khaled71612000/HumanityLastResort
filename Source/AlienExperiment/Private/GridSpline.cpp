@@ -7,7 +7,7 @@
 
 AGridSpline::AGridSpline()
 {
-	PrimaryActorTick.bCanEverTick = true;
+	PrimaryActorTick.bCanEverTick = false;
 	SplineComponent = CreateDefaultSubobject<USplineComponent>("Spline");
 
 }
@@ -21,7 +21,7 @@ void AGridSpline::AddMeshToSplinePoint(int const& SplinePoint)
 		NewMeshComponent->SetStaticMesh(StaticMeshREF);
 		NewMeshComponent->SetMaterial(0, MaterialREF);
 		NewMeshComponent->SetRelativeScale3D(FVector(0.5f, 0.5f, 0.5f));
-		NewMeshComponent->SetWorldLocation(SplineComponent->GetLocationAtSplinePoint(0, ESplineCoordinateSpace::World));
+		NewMeshComponent->SetWorldLocation(SplineComponent->GetLocationAtSplinePoint(SplinePoint, ESplineCoordinateSpace::World));
 	}
 }
 

@@ -2,9 +2,8 @@
 
 
 #include "CameraPawn.h"
-#include "GameFramework/PawnMovementComponent.h"
 #include <BuildingsActors.h>
-#include "GameFramework/PlayerController.h"
+#include "GameFramework/PawnMovementComponent.h"
 #include "GameFramework/FloatingPawnMovement.h"
 
 // Sets default values
@@ -41,7 +40,7 @@ void ACameraPawn::BeginPlay()
 	FInputModeGameAndUI inputMode;
 	inputMode.SetHideCursorDuringCapture(false);
 	Player->SetInputMode(inputMode);
-	
+
 }
 
 FVector ACameraPawn::GetCameraPanDirecton() {
@@ -71,6 +70,7 @@ FVector ACameraPawn::GetCameraPanDirecton() {
 	}
 
 	return FVector(CamDirectonX, CamDirectonY, 0);
+
 }
 
 void ACameraPawn::MoveForward(float Value)

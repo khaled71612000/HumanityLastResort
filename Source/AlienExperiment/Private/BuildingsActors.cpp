@@ -39,3 +39,8 @@ void ABuildingsActors::ResetRotation()
 {
 	SetActorRotation(FRotator::ZeroRotator);
 }
+
+void ABuildingsActors::DestroyBuildingActor()
+{
+	Destroy();
+}

@@ -8,6 +8,12 @@ ABuildingsActors::ABuildingsActors()
 	PrimaryActorTick.bCanEverTick = false;
 	StaticMeshComponent = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Static Mesh"));
 	RootComponent = StaticMeshComponent;
+	StaticMeshComponent->bIgnoreRadialForce = true;
+	StaticMeshComponent->bIgnoreRadialImpulse = true;
+	StaticMeshComponent->SetLinearDamping(2.f);
+	StaticMeshComponent->SetAngularDamping(2.f);
+
+
 	//StaticMeshComponent->SetRelativeScale3D(FVector(0.75f, 0.75f, 1.5f));
 }
 

@@ -36,7 +36,6 @@ protected:
 
 	UPROPERTY(VisibleAnywhere,BlueprintReadOnly, Category = "Componenets")
 	class	USplineComponent* SplineComponent;
-
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Config")
 	class UStaticMesh* StaticMeshREF;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Config")

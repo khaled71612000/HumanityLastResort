@@ -2,7 +2,6 @@
 
 
 #include "CameraPawn.h"
-#include <BuildingsActors.h>
 #include "GameFramework/PawnMovementComponent.h"
 #include "GameFramework/FloatingPawnMovement.h"
 
@@ -40,7 +39,7 @@ void ACameraPawn::BeginPlay()
 	FInputModeGameAndUI inputMode;
 	inputMode.SetHideCursorDuringCapture(false);
 	Player->SetInputMode(inputMode);
-
+	
 }
 
 FVector ACameraPawn::GetCameraPanDirecton() {
@@ -70,7 +69,6 @@ FVector ACameraPawn::GetCameraPanDirecton() {
 	}
 
 	return FVector(CamDirectonX, CamDirectonY, 0);
-
 }
 
 void ACameraPawn::MoveForward(float Value)
@@ -81,48 +79,6 @@ void ACameraPawn::MoveForward(float Value)
 void ACameraPawn::MoveRight(float Value)
 {
 	AddMovementInput(GetActorRightVector(), Value);
-}
-void ACameraPawn::RotateToken(float value) {
-	if (SelectedToken) {
-		auto const OriginalRotation = SelectedToken->GetActorRotation().GetDenormalized();
-		float const Remainder = FMath::Fmod(OriginalRotation.Yaw, 45.f);
-
-		/** If we have a Yaw that is greater than or equal to 360 degrees, use 0 instead */
-		int Quotient = (OriginalRotation.Yaw > 337.5f ? 0 : OriginalRotation.Yaw) / 45;
-
-		// UE_LOG(LogTemp, Warning, TEXT("Incoming Yaw: %f"), OriginalRotation.Yaw)
-		// UE_LOG(LogTemp, Warning, TEXT("Remainder: %f"), Remainder)
-		// UE_LOG(LogTemp, Warning, TEXT("Quotient: %d"), Quotient)
-
-		/**
-		 * if our Yaw is close to 360 then don't upgrade the Quotient
-		 * (lest we shoot past 45 and go to 90)
-		 */
-		if (Remainder >= 22.5f && OriginalRotation.Yaw < 337.5f)
-		{
-			++Quotient;
-		}
-
-		Quotient *= 45;
-
-		if (value > 0)
-		{
-			Quotient += 45;
-		}
-		else if (value < 0)
-		{
-			Quotient -= 45;
-			Quotient < 0 ? Quotient += 360 : Quotient;
-		}
-
-		// UE_LOG(LogTemp, Warning, TEXT("New Angle: %d"), Quotient)
-
-		auto NewRotation = FRotator(0.f, Quotient, 0.f);
-		NewRotation.Normalize();
-
-			SelectedToken->SetActorRotation(NewRotation);
-		
-	}
 }
 
 
@@ -140,7 +96,6 @@ void ACameraPawn::SetupPlayerInputComponent(UInputComponent* PlayerInputComponen
 
 	InputComponent->BindAxis("MoveForward", this, &ACameraPawn::MoveForward);
 	InputComponent->BindAxis("MoveRight", this, &ACameraPawn::MoveRight);
-	InputComponent->BindAxis("Rotate", this, &ACameraPawn::RotateToken);
 
 }
 

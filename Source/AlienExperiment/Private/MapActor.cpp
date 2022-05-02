@@ -18,10 +18,12 @@ void AMapActor::BuildMap(const FVector CenterLocation, const int X, const int Y)
 		MapSize.X = 0;
 		MapSize.Y = 0;
 	
+
 		for (int32 OuterIndex = 0; OuterIndex <= Y - 1; ++OuterIndex)
 		{
 			for (int32 InnerIndex = 0; InnerIndex <= X - 1; ++InnerIndex)
 			{
+				float SectorSize = 400.f;
 
 				//Prepare Spawn Transform
 				FVector SpawnLocation =

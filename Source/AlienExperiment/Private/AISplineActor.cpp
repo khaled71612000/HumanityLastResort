@@ -17,6 +17,8 @@ AAISplineActor::AAISplineActor()
 	Spline->Duration = TotalPathTimeController;
 	Spline->bDrawDebug = true;
 
+
+
 	TotalPathTimeController = 10.0f;
 	bCanMoveActor = false;
 	PrimaryActorTick.bCanEverTick = true;

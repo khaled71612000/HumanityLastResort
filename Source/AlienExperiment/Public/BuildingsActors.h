@@ -18,14 +18,10 @@ public:
 	ABuildingsActors();
 	UFUNCTION(BlueprintCallable, Category = "Functions")
 		void LockPosition(bool block);
-	UFUNCTION(BlueprintCallable, Category = "Functions")
-		void DestroyBuildingActor();
+
 
 protected:
 	virtual void BeginPlay() override;
-
-	UFUNCTION(BlueprintCallable, Category = "BuildTransform")
-		void ResetRotation();
 
 	UPROPERTY(VisibleAnywhere , BlueprintReadOnly, Category = "Components")
 	class UStaticMeshComponent* StaticMeshComponent;

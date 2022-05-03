@@ -1,13 +1,17 @@
 {
 	"FileVersion": 3,
-	"EngineAssociation": "4.27",
+	"EngineAssociation": "4.26",
 	"Category": "",
 	"Description": "",
 	"Modules": [
 		{
 			"Name": "AlienExperiment",
 			"Type": "Runtime",
-			"LoadingPhase": "Default"
+			"LoadingPhase": "Default",
+			"AdditionalDependencies": [
+				"Engine",
+				"AIModule"
+			]
 		}
 	]
 }

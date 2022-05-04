@@ -10,7 +10,15 @@
 // Sets default values
 AAICharacterBase::AAICharacterBase()
 {
-	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
+	ConstructorHelpers::FObjectFinder<USkeletalMesh> SSMeshRef(TEXT("SkeletalMesh'/Engine/Tutorial/SubEditors/TutorialAssets/Character/TutorialTPP.TutorialTPP'"));
+	if (SSMeshRef.Succeeded()) 
+	{
+		GetMesh()->SetSkeletalMesh(SSMeshRef.Object);
+		GetMesh()->SetRelativeLocation(FVector(0.f, 0.f, -88.f));
+		GetMesh()->SetRelativeRotation(FRotator(0.f, -90.f, 0.f));
+	}
+
+	AutoPossessAI = EAutoPossessAI::PlacedInWorldOrSpawned;
 	PrimaryActorTick.bCanEverTick = true;
 	NotHungry = 100;
 	NotSleepy = 100;
@@ -85,8 +93,7 @@ void AAICharacterBase::MoveToResturant()
 {
 	UGameplayStatics::GetAllActorsOfClass(GetWorld(), AResturant::StaticClass(), Resturants);
 
-	AAIControllerBase* AI = Cast<AAIControllerBase>(GetController());
-
+	AAIController* AI = Cast<AAIController>(GetController());
 	if (!AI)
 		return;
 
@@ -107,10 +114,12 @@ void AAICharacterBase::MoveToHotel()
 	UGameplayStatics::GetAllActorsOfClass(GetWorld(), AHotel::StaticClass(), Hotels);
 	UE_LOG(LogTemp, Warning, TEXT("Hotels: %d"), Hotels.Num());
 
-	AAIControllerBase* AI = Cast<AAIControllerBase>(GetController());
+	AAIController* AI = Cast<AAIController>(GetController());
 
 	if (!AI)
 		return;
+
+	//GEngine->AddOnScreenDebugMessage(-1, 10.f, FColor::Red, TEXT("Move?"));
 
 	for (AActor* Hotel : Hotels)
 	{
@@ -119,6 +128,7 @@ void AAICharacterBase::MoveToHotel()
 		if (Hot)
 		{
 			AI->MoveTo(Hot->GetActorLocation());
+			//GEngine->AddOnScreenDebugMessage(-1, 10.f, FColor::Red, TEXT("Moving"));
 		}
 	}
 }

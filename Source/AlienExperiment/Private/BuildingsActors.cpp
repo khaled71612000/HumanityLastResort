@@ -3,6 +3,7 @@
 
 #include "BuildingsActors.h"
 #include "CameraPawn.h"
+#include "DrawDebugHelpers.h"
 #include "RunTime\Engine\Classes\Kismet\GameplayStatics.h"
 
 ABuildingsActors::ABuildingsActors()
@@ -25,12 +26,11 @@ void ABuildingsActors::BeginPlay()
 	Super::BeginPlay();
 	
 	StaticMeshComponent->OnClicked.AddDynamic(this, &ABuildingsActors::OnClicked);
-
 }
 
 void ABuildingsActors::OnClicked(UPrimitiveComponent* ClickedComp, FKey ButtonClicked)
 {
-	UE_LOG(LogTemp, Warning, TEXT("HERE Clicked %d"));
+	//UE_LOG(LogTemp, Warning, TEXT("HERE Clicked %d"));
 	isDragging = true;
 }
 
@@ -66,19 +66,35 @@ void ABuildingsActors::MouseMove(FVector position)
 	if (isDragging)
 	{
 		//UE_LOG(LogTemp, Warning, TEXT("Moving"));
-		
 		this->SetActorLocation(position);
-		ACameraPawn* MyPawn = UGameplayStatics::GetPlayerController(this, 0)->GetPawn<ACameraPawn>();
+	    MyPawn = UGameplayStatics::GetPlayerController(this, 0)->GetPawn<ACameraPawn>();
 		if(MyPawn)
 		MyPawn->SelectedToken = this;
+
+		FVector Start = GetActorLocation();
+		FVector End = ((GetActorUpVector() * -1 * 10000.f) + Start);
+		FHitResult Hit;
+		FCollisionQueryParams TraceParams;
+		TraceParams.AddIgnoredActor(this);
+		bool bHit = GetWorld()->LineTraceSingleByChannel(Hit, Start, End, ECC_Visibility, TraceParams);
+		if (bHit) {
+			ABuildingsActors* UnderHit = Cast<ABuildingsActors>(Hit.GetActor());
+			DrawDebugLine(GetWorld(), Start, End, FColor::Orange, false, 0.1f);
+			if (UnderHit) {
+				GEngine->AddOnScreenDebugMessage(-1, 1 ,FColor::Yellow, FString::Printf(TEXT("HERE %s"), *Hit.GetActor()->GetName()));
+				this->SetActorLocation(FVector::ZeroVector);
+			}
+		}
+		
 	}
 }
 
 void ABuildingsActors::MouseRelease()
 {
-	UE_LOG(LogTemp, Warning, TEXT("HERE release %d"));
+	//UE_LOG(LogTemp, Warning, TEXT("HERE release %d"));
 	isDragging = false;
-
+	if (MyPawn)
+		MyPawn->SelectedToken = nullptr;
 }
 
 void ABuildingsActors::DestroyBuildingActor()

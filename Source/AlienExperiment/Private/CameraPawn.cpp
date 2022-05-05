@@ -84,7 +84,7 @@ void ACameraPawn::MoveRight(float Value)
 }
 void ACameraPawn::RotateToken(float value) {
 	if (SelectedToken) {
-		UE_LOG(LogTemp, Warning, TEXT("TUUUTs"));
+		//UE_LOG(LogTemp, Warning, TEXT("TUUUTs"));
 
 		auto const OriginalRotation = SelectedToken->GetActorRotation().GetDenormalized();
 		float const Remainder = FMath::Fmod(OriginalRotation.Yaw, 45.f);

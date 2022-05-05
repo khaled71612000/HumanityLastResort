@@ -37,5 +37,5 @@ protected:
 	UFUNCTION()
 	void OnClicked(UPrimitiveComponent* ClickedComp, FKey ButtonClicked);
 	bool isDragging = false;
-	
+	class ACameraPawn* MyPawn;
 };

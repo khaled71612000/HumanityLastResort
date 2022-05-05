@@ -21,6 +21,11 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
+	UFUNCTION(BlueprintCallable, Category = "BuildTransform")
+		void RotateToken(float value);
+
+	
+
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
@@ -56,5 +61,6 @@ public:
 		class UPawnMovementComponent* PawnMovementComponent;
 	UPROPERTY(VisibleAnywhere, Category = "Movement")
 		class UFloatingPawnMovement* FloatingPawnMovement;
-
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "BuildTransform")
+		class ABuildingsActors* SelectedToken;
 };

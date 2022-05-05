@@ -2,13 +2,36 @@
 
 
 #include "BuildingsActors.h"
+#include "CameraPawn.h"
+#include "RunTime\Engine\Classes\Kismet\GameplayStatics.h"
 
 ABuildingsActors::ABuildingsActors()
 {
 	PrimaryActorTick.bCanEverTick = false;
 	StaticMeshComponent = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Static Mesh"));
 	RootComponent = StaticMeshComponent;
+	StaticMeshComponent->bIgnoreRadialForce = true;
+	StaticMeshComponent->bIgnoreRadialImpulse = true;
+	StaticMeshComponent->SetLinearDamping(2.f);
+	StaticMeshComponent->SetAngularDamping(2.f);
+
 	//StaticMeshComponent->SetRelativeScale3D(FVector(0.75f, 0.75f, 1.5f));
+
+
+}
+
+void ABuildingsActors::BeginPlay()
+{
+	Super::BeginPlay();
+	
+	StaticMeshComponent->OnClicked.AddDynamic(this, &ABuildingsActors::OnClicked);
+
+}
+
+void ABuildingsActors::OnClicked(UPrimitiveComponent* ClickedComp, FKey ButtonClicked)
+{
+	UE_LOG(LogTemp, Warning, TEXT("HERE Clicked %d"));
+	isDragging = true;
 }
 
 void ABuildingsActors::LockPosition(bool block)
@@ -29,9 +52,36 @@ void ABuildingsActors::LockPosition(bool block)
 	}
 }
 
-void ABuildingsActors::BeginPlay()
+
+void ABuildingsActors::ResetRotation()
 {
-	Super::BeginPlay();
-	
+	SetActorRotation(FRotator::ZeroRotator);
 }
 
+
+
+void ABuildingsActors::MouseMove(FVector position)
+{
+
+	if (isDragging)
+	{
+		//UE_LOG(LogTemp, Warning, TEXT("Moving"));
+		
+		this->SetActorLocation(position);
+		ACameraPawn* MyPawn = UGameplayStatics::GetPlayerController(this, 0)->GetPawn<ACameraPawn>();
+		if(MyPawn)
+		MyPawn->SelectedToken = this;
+	}
+}
+
+void ABuildingsActors::MouseRelease()
+{
+	UE_LOG(LogTemp, Warning, TEXT("HERE release %d"));
+	isDragging = false;
+
+}
+
+void ABuildingsActors::DestroyBuildingActor()
+{
+	Destroy();
+}

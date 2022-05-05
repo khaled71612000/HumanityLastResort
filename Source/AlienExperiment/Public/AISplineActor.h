@@ -7,7 +7,7 @@
 #include "AISplineActor.generated.h"
 
 UCLASS()
-class ALIENEXPERIMENT_API AAISplineActor : public AActor
+class HUMANITYLASTRESORT_API AAISplineActor : public AActor
 {
 	GENERATED_BODY()
 protected:

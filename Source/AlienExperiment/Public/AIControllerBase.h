@@ -10,7 +10,7 @@
  * 
  */
 UCLASS()
-class ALIENEXPERIMENT_API AAIControllerBase : public AAIController
+class HUMANITYLASTRESORT_API AAIControllerBase : public AAIController
 {
 	GENERATED_BODY()
 

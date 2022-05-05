@@ -1,0 +1,18 @@
+{
+  "Category": "",
+  "Description": "",
+  "EngineAssociation": "4.27",
+  "FileVersion": 3,
+  "Modules": [
+    {
+      "AdditionalDependencies": [
+        "Engine",
+        "AIModule",
+        "UMG"
+      ],
+      "LoadingPhase": "Default",
+      "Name": "HumanityLastResort",
+      "Type": "Runtime"
+    }
+  ]
+}

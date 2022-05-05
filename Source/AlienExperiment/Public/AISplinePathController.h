@@ -16,7 +16,7 @@
  * 
  */
 UCLASS()
-class ALIENEXPERIMENT_API AAISplinePathController : public AAIController
+class HUMANITYLASTRESORT_API AAISplinePathController : public AAIController
 {
 	GENERATED_BODY()
 

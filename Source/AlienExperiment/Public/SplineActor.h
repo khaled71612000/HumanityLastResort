@@ -52,7 +52,7 @@ struct FBGBuildBank : public FTableRowBase
 };
 
 UCLASS()
-class ALIENEXPERIMENT_API ASplineActor : public AActor
+class HUMANITYLASTRESORT_API ASplineActor : public AActor
 {
 	GENERATED_BODY()
 	

@@ -10,7 +10,7 @@
  * 
  */
 UCLASS()
-class ALIENEXPERIMENT_API ASpawnAI : public AVolume
+class HUMANITYLASTRESORT_API ASpawnAI : public AVolume
 {
 	GENERATED_BODY()
 

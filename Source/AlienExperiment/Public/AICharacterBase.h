@@ -8,7 +8,7 @@
 #include "AICharacterBase.generated.h"
 
 UCLASS()
-class ALIENEXPERIMENT_API AAICharacterBase : public ACharacter
+class HUMANITYLASTRESORT_API AAICharacterBase : public ACharacter
 {
 	GENERATED_BODY()
 

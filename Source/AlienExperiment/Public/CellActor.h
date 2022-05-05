@@ -36,7 +36,7 @@ enum class EBGActorType : uint8
 
 
 UCLASS()
-class ALIENEXPERIMENT_API ACellActor : public AActor
+class HUMANITYLASTRESORT_API ACellActor : public AActor
 {
 	GENERATED_BODY()
 	

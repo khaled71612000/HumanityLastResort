@@ -7,7 +7,7 @@
 #include "BuildingBase.generated.h"
 
 UCLASS()
-class ALIENEXPERIMENT_API ABuildingBase : public AActor
+class HUMANITYLASTRESORT_API ABuildingBase : public AActor
 {
 	GENERATED_BODY()
 	

@@ -10,7 +10,7 @@
  * 
  */
 UCLASS()
-class ALIENEXPERIMENT_API AGameController : public APlayerController
+class HUMANITYLASTRESORT_API AGameController : public APlayerController
 {
 	GENERATED_BODY()
 

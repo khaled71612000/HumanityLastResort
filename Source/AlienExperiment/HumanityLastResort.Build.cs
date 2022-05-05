@@ -2,9 +2,9 @@
 
 using UnrealBuildTool;
 
-public class AlienExperiment : ModuleRules
+public class HumanityLastResort : ModuleRules
 {
-	public AlienExperiment(ReadOnlyTargetRules Target) : base(Target)
+	public HumanityLastResort(ReadOnlyTargetRules Target) : base(Target)
 	{
 		PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
 	

@@ -8,7 +8,7 @@
 #include "RoadSpawnSystem.generated.h"
 
 UCLASS()
-class ALIENEXPERIMENT_API ARoadSpawnSystem : public AActor
+class HUMANITYLASTRESORT_API ARoadSpawnSystem : public AActor
 {
 	GENERATED_BODY()
 	

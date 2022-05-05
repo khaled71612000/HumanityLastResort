@@ -21,7 +21,7 @@ struct FGridSplineBank: public FTableRowBase
 
 
 UCLASS()
-class ALIENEXPERIMENT_API AGridSpline : public AActor
+class HUMANITYLASTRESORT_API AGridSpline : public AActor
 {
 	GENERATED_BODY()
 	

@@ -9,7 +9,7 @@
 #include "CameraPawn.generated.h"
 
 UCLASS()
-class ALIENEXPERIMENT_API ACameraPawn : public APawn
+class HUMANITYLASTRESORT_API ACameraPawn : public APawn
 {
 	GENERATED_BODY()
 

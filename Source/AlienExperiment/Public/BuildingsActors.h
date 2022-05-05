@@ -10,7 +10,7 @@
 
 
 UCLASS()
-class ALIENEXPERIMENT_API ABuildingsActors : public AActor
+class HUMANITYLASTRESORT_API ABuildingsActors : public AActor
 {
 	GENERATED_BODY()
 	

@@ -10,7 +10,7 @@
  * 
  */
 UCLASS()
-class ALIENEXPERIMENT_API AHotel : public ABuildingBase
+class HUMANITYLASTRESORT_API AHotel : public ABuildingBase
 {
 	GENERATED_BODY()
 

@@ -10,7 +10,7 @@
  * 
  */
 UCLASS()
-class ALIENEXPERIMENT_API UStructureDragDrop : public UDragDropOperation
+class HUMANITYLASTRESORT_API UStructureDragDrop : public UDragDropOperation
 {
 	GENERATED_BODY()
 	

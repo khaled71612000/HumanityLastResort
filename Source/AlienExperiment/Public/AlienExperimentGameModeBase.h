@@ -10,7 +10,7 @@
  * 
  */
 UCLASS()
-class ALIENEXPERIMENT_API AAlienExperimentGameModeBase : public AGameModeBase
+class HUMANITYLASTRESORT_API AAlienExperimentGameModeBase : public AGameModeBase
 {
 	GENERATED_BODY()
 	

@@ -8,7 +8,7 @@
 #include "MapActor.generated.h"
 
 UCLASS()
-class ALIENEXPERIMENT_API AMapActor : public AActor
+class HUMANITYLASTRESORT_API AMapActor : public AActor
 {
 	GENERATED_BODY()
 	

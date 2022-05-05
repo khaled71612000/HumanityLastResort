@@ -3,12 +3,12 @@
 using UnrealBuildTool;
 using System.Collections.Generic;
 
-public class AlienExperimentTarget : TargetRules
+public class HumanityLastResortTarget : TargetRules
 {
-	public AlienExperimentTarget( TargetInfo Target) : base(Target)
+	public HumanityLastResortTarget( TargetInfo Target) : base(Target)
 	{
 		Type = TargetType.Game;
 		DefaultBuildSettings = BuildSettingsVersion.V2;
-		ExtraModuleNames.AddRange( new string[] { "AlienExperiment" } );
+		ExtraModuleNames.AddRange( new string[] { "HumanityLastResort" } );
 	}
 }

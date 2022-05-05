@@ -26,6 +26,7 @@ void ABuildingsActors::BeginPlay()
 	Super::BeginPlay();
 	
 	StaticMeshComponent->OnClicked.AddDynamic(this, &ABuildingsActors::OnClicked);
+	oldPos = GetActorLocation();
 }
 
 void ABuildingsActors::OnClicked(UPrimitiveComponent* ClickedComp, FKey ButtonClicked)
@@ -79,10 +80,10 @@ void ABuildingsActors::MouseMove(FVector position)
 		bool bHit = GetWorld()->LineTraceSingleByChannel(Hit, Start, End, ECC_Visibility, TraceParams);
 		if (bHit) {
 			ABuildingsActors* UnderHit = Cast<ABuildingsActors>(Hit.GetActor());
-			DrawDebugLine(GetWorld(), Start, End, FColor::Orange, false, 0.1f);
+			//DrawDebugLine(GetWorld(), Start, End, FColor::Orange, false, 0.1f);
 			if (UnderHit) {
-				GEngine->AddOnScreenDebugMessage(-1, 1 ,FColor::Yellow, FString::Printf(TEXT("HERE %s"), *Hit.GetActor()->GetName()));
-				this->SetActorLocation(FVector::ZeroVector);
+				//GEngine->AddOnScreenDebugMessage(-1, 1 ,FColor::Yellow, FString::Printf(TEXT("HERE %s"), *Hit.GetActor()->GetName()));
+				this->SetActorLocation(oldPos);
 			}
 		}
 		

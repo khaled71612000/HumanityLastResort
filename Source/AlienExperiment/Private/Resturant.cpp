@@ -9,10 +9,11 @@ AResturant::AResturant(const FObjectInitializer& objectInitializer)
 {
 	RestCollision = CreateDefaultSubobject<USphereComponent>(TEXT("RootCollision"));
 
+	RestCollision->SetupAttachment(RootComponent);
+
 	RestCollision->SetSphereRadius(200.f);
 	RestCollision->SetHiddenInGame(false);
 
-	RootComponent = RestCollision;
 
 	RestCollision->OnComponentBeginOverlap.AddDynamic(this, &AResturant::OnOverlap);
 	RestCollision->OnComponentEndOverlap.AddDynamic(this, &AResturant::OnOverlapEnd);
@@ -29,7 +30,7 @@ void AResturant::OnOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherAct
 		if (Chr)
 		{
 			Chr->NotHungry = 100;
-			GEngine->AddOnScreenDebugMessage(-1, 10.f, FColor::Red, TEXT("Begin Overlap"));
+			//GEngine->AddOnScreenDebugMessage(-1, 10.f, FColor::Red, TEXT("Begin Overlap"));
 		}
 	}
 
@@ -45,7 +46,7 @@ void AResturant::OnOverlapEnd(UPrimitiveComponent* OverlappedComp, AActor* Other
 		if (Chr)
 		{
 			Chr->NotHungry = 100;
-			GEngine->AddOnScreenDebugMessage(-1, 10.f, FColor::Red, TEXT("Begin Overlap"));
+			//GEngine->AddOnScreenDebugMessage(-1, 10.f, FColor::Red, TEXT("Begin Overlap"));
 		}
 	}
 }

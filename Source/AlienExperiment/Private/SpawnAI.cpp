@@ -18,7 +18,7 @@ void ASpawnAI::BeginPlay()
 
 void ASpawnAI::SpawnAnAlien()
 {
-	GetWorld()->SpawnActor<AAICharacterBase>(SpawnLocation, SpawnRotation, SpawnParams);
+	GetWorld()->SpawnActor<AAICharacterBase>(ActorToSpawn,SpawnLocation, SpawnRotation, SpawnParams);
 
 	GEngine->AddOnScreenDebugMessage(-1, 10.f, FColor::Red, TEXT("Spawn"));
 }

@@ -33,14 +33,16 @@ ACameraPawn::ACameraPawn()
 void ACameraPawn::BeginPlay()
 {
 	Super::BeginPlay();
+
 	Player = Cast<APlayerController>(GetController());
 	Player->GetViewportSize(ScreenSizeX, ScreenSizeY);
+
 	Player->bShowMouseCursor = true;
 	//Player->DefaultMouseCursor = EMouseCursor::Crosshairs;
 	FInputModeGameAndUI inputMode;
 	inputMode.SetHideCursorDuringCapture(false);
+	inputMode.SetLockMouseToViewportBehavior(EMouseLockMode::LockAlways);
 	Player->SetInputMode(inputMode);
-
 }
 
 FVector ACameraPawn::GetCameraPanDirecton() {

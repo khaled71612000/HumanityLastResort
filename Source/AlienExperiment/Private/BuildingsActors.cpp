@@ -9,8 +9,13 @@
 ABuildingsActors::ABuildingsActors()
 {
 	PrimaryActorTick.bCanEverTick = false;
+
 	StaticMeshComponent = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Static Mesh"));
 	RootComponent = StaticMeshComponent;
+
+	SceneComponent = CreateDefaultSubobject<USceneComponent>(TEXT("SceneComponent"));
+	SceneComponent->SetupAttachment(StaticMeshComponent);
+
 	StaticMeshComponent->bIgnoreRadialForce = true;
 	StaticMeshComponent->bIgnoreRadialImpulse = true;
 	StaticMeshComponent->SetLinearDamping(2.f);
@@ -92,7 +97,7 @@ void ABuildingsActors::MouseMove(FVector position)
 
 void ABuildingsActors::MouseRelease()
 {
-	//UE_LOG(LogTemp, Warning, TEXT("HERE release %d"));
+	UE_LOG(LogTemp, Warning, TEXT("HERE release %d"));
 	isDragging = false;
 	if (MyPawn)
 		MyPawn->SelectedToken = nullptr;

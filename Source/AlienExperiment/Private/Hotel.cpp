@@ -9,10 +9,10 @@ AHotel::AHotel(const FObjectInitializer& objectInitializer)
 {
 	HotelCollision = CreateDefaultSubobject<USphereComponent>(TEXT("RootCollision"));
 
-	HotelCollision->SetSphereRadius(600.f);
-	HotelCollision->SetHiddenInGame(false);
+	HotelCollision->SetupAttachment(RootComponent);
 
-	RootComponent = HotelCollision;
+	HotelCollision->SetSphereRadius(200.f);
+	HotelCollision->SetHiddenInGame(false);
 
 	HotelCollision->OnComponentBeginOverlap.AddDynamic(this, &AHotel::OnOverlap);
 	HotelCollision->OnComponentEndOverlap.AddDynamic(this, &AHotel::OnOverlapEnd);
@@ -27,11 +27,22 @@ void AHotel::OnOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, 
 		if (Chr)
 		{
 			Chr->NotSleepy = 100;
-			GEngine->AddOnScreenDebugMessage(-1, 10.f, FColor::Red, TEXT("Begin Overlap"));
+			//GEngine->AddOnScreenDebugMessage(-1, 10.f, FColor::Red, TEXT("Begin Overlap"));
 		}
 	}
 }
 
 void AHotel::OnOverlapEnd(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
 {
+	GEngine->AddOnScreenDebugMessage(-1, 10.f, FColor::Red, TEXT("End Overlap"));
+	if (OtherActor && OtherActor != this)
+	{
+		AAICharacterBase* Chr = Cast<AAICharacterBase>(OtherActor);
+
+		if (Chr)
+		{
+			Chr->NotSleepy = 100;
+			//GEngine->AddOnScreenDebugMessage(-1, 10.f, FColor::Red, TEXT("Begin Overlap"));
+		}
+	}
 }

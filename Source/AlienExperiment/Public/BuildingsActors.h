@@ -31,6 +31,10 @@ protected:
 
 	UPROPERTY(VisibleAnywhere , BlueprintReadOnly, Category = "Components")
 	class UStaticMeshComponent* StaticMeshComponent;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
+		class USceneComponent* SceneComponent;
+
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Config")
 	FText TokenName;
 

@@ -3,21 +3,18 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "BuildingBase.h"
+#include "BuildingsActors.h"
 #include "Hotel.generated.h"
 
-/**
- * 
- */
 UCLASS()
-class HUMANITYLASTRESORT_API AHotel : public ABuildingBase
+class HUMANITYLASTRESORT_API AHotel : public ABuildingsActors
 {
 	GENERATED_BODY()
 
 public:
 	AHotel(const FObjectInitializer& objectInitializer);
 
-	UPROPERTY(VisibleAnyWhere, Category = "Trigger Capsule")
+	UPROPERTY(VisibleAnywhere, Category = "Trigger Capsule")
 	class USphereComponent* HotelCollision;
 
 	UFUNCTION()

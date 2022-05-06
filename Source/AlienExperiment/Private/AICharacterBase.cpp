@@ -2,21 +2,21 @@
 
 
 #include "AICharacterBase.h"
-#include "Kismet/GameplayStatics.h"
 #include "Resturant.h"
-#include "AIControllerBase.h"
 #include "Hotel.h"
+#include "Kismet/GameplayStatics.h"
+#include "AIControllerBase.h"
 
 // Sets default values
 AAICharacterBase::AAICharacterBase()
 {
-	ConstructorHelpers::FObjectFinder<USkeletalMesh> SSMeshRef(TEXT("SkeletalMesh'/Engine/Tutorial/SubEditors/TutorialAssets/Character/TutorialTPP.TutorialTPP'"));
-	if (SSMeshRef.Succeeded()) 
+	/*ConstructorHelpers::FObjectFinder<USkeletalMesh> SSMeshRef(TEXT("SkeletalMesh'/Engine/Tutorial/SubEditors/TutorialAssets/Character/TutorialTPP.TutorialTPP'"));
+	if (SSMeshRef.Succeeded())
 	{
 		GetMesh()->SetSkeletalMesh(SSMeshRef.Object);
 		GetMesh()->SetRelativeLocation(FVector(0.f, 0.f, -88.f));
 		GetMesh()->SetRelativeRotation(FRotator(0.f, -90.f, 0.f));
-	}
+	}*/
 
 	AutoPossessAI = EAutoPossessAI::PlacedInWorldOrSpawned;
 	PrimaryActorTick.bCanEverTick = true;
@@ -61,7 +61,7 @@ void AAICharacterBase::ChangeNotHungryAttr()
 		GoingToResturant = false;
 	}
 
-	UE_LOG(LogTemp, Warning, TEXT("Not Hungry: %d"), NotHungry);
+	//UE_LOG(LogTemp, Warning, TEXT("Not Hungry: %d"), NotHungry);
 }
 
 void AAICharacterBase::ChangeNotSleepyAttr()
@@ -78,7 +78,7 @@ void AAICharacterBase::ChangeNotSleepyAttr()
 	if (NotSleepy > 95)
 		GoingToHotel = false;
 
-	UE_LOG(LogTemp, Warning, TEXT("Not Sleepy: %d"), NotSleepy);
+	//UE_LOG(LogTemp, Warning, TEXT("Not Sleepy: %d"), NotSleepy);
 }
 
 
@@ -127,8 +127,8 @@ void AAICharacterBase::MoveToHotel()
 
 		if (Hot)
 		{
+		//GEngine->AddOnScreenDebugMessage(-1, 10.f, FColor::Red, TEXT("Moving"));
 			AI->MoveTo(Hot->GetActorLocation());
-			//GEngine->AddOnScreenDebugMessage(-1, 10.f, FColor::Red, TEXT("Moving"));
 		}
 	}
 }

@@ -22,4 +22,7 @@ private:
 	virtual void BeginPlay() override;
 
 	void SpawnAnAlien();
+
+	UPROPERTY(EditAnywhere, meta = (AllowPrivateAccess = "true"))
+		TSubclassOf<class AAICharacterBase> ActorToSpawn;
 };

@@ -37,21 +37,20 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		USpringArmComponent* SpringArm;
 		UCameraComponent* CameraComp;
-	UPROPERTY()
-		APlayerController* Player;
-	UFUNCTION()
-		FVector GetCameraPanDirecton();
-	UPROPERTY()
-		float Margin = 15;
 
-	UPROPERTY()
+	UPROPERTY(EditAnywhere, Category = "Panning")
+	float CamSpeed = 8;
+
+	APlayerController* Player;
+	FVector GetCameraPanDirecton();
+
+	UPROPERTY(EditAnywhere, Category = "Panning")
+	float Margin = 20;
 	int32 ScreenSizeX;
-
-	UPROPERTY()
 	int32 ScreenSizeY;
 
-	UPROPERTY(EditAnywhere)
-		float CamSpeed = 4;
+	
+
 
 	UFUNCTION(BlueprintCallable, Category = "Movement")
 		void MoveForward(float Value);

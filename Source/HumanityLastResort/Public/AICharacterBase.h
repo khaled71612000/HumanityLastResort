@@ -13,8 +13,11 @@ class HUMANITYLASTRESORT_API AAICharacterBase : public ACharacter
 	GENERATED_BODY()
 
 public:
+
+	UPROPERTY(VisibleAnywhere)
 	int32 NotHungry;
 	int32 NotSleepy;
+
 	TArray<AActor*> Resturants;
 	TArray<AActor*> Hotels;
 

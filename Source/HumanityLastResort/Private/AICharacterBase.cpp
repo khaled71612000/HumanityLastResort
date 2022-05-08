@@ -22,7 +22,6 @@ AAICharacterBase::AAICharacterBase()
 	PrimaryActorTick.bCanEverTick = true;
 	NotHungry = 100;
 	NotSleepy = 100;
-
 }
 
 // Called when the game starts or when spawned
@@ -31,7 +30,6 @@ void AAICharacterBase::BeginPlay()
 	Super::BeginPlay();
 	GettingHungry();
 	GettingSleepy();
-	//MoveToResturant();
 }
 
 void AAICharacterBase::GettingHungry()
@@ -61,7 +59,7 @@ void AAICharacterBase::ChangeNotHungryAttr()
 		GoingToResturant = false;
 	}
 
-	//UE_LOG(LogTemp, Warning, TEXT("Not Hungry: %d"), NotHungry);
+	UE_LOG(LogTemp, Warning, TEXT("Not Hungry: %d"), NotHungry);
 }
 
 void AAICharacterBase::ChangeNotSleepyAttr()
@@ -103,7 +101,7 @@ void AAICharacterBase::MoveToResturant()
 
 		if (Rest)
 		{
-			AI->MoveTo(Rest->GetActorLocation());
+			AI->MoveToLocation(Rest->GetActorLocation() , 250.f);
 			//GEngine->AddOnScreenDebugMessage(-1, 10.f, FColor::Red, TEXT("Moving"));
 		}
 	}
@@ -112,7 +110,7 @@ void AAICharacterBase::MoveToResturant()
 void AAICharacterBase::MoveToHotel()
 {
 	UGameplayStatics::GetAllActorsOfClass(GetWorld(), AHotel::StaticClass(), Hotels);
-	UE_LOG(LogTemp, Warning, TEXT("Hotels: %d"), Hotels.Num());
+	//UE_LOG(LogTemp, Warning, TEXT("Hotels: %d"), Hotels.Num());
 
 	AAIController* AI = Cast<AAIController>(GetController());
 
@@ -128,7 +126,7 @@ void AAICharacterBase::MoveToHotel()
 		if (Hot)
 		{
 		//GEngine->AddOnScreenDebugMessage(-1, 10.f, FColor::Red, TEXT("Moving"));
-			AI->MoveTo(Hot->GetActorLocation());
+			AI->MoveToLocation(Hot->GetActorLocation() , 250.f);
 		}
 	}
 }

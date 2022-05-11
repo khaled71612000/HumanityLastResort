@@ -22,6 +22,7 @@ AAICharacterBase::AAICharacterBase()
 	PrimaryActorTick.bCanEverTick = true;
 	NotHungry = 100;
 	NotSleepy = 100;
+
 }
 
 // Called when the game starts or when spawned
@@ -30,6 +31,7 @@ void AAICharacterBase::BeginPlay()
 	Super::BeginPlay();
 	GettingHungry();
 	GettingSleepy();
+
 }
 
 void AAICharacterBase::GettingHungry()

@@ -46,5 +46,5 @@ public:
 
 	void MoveToResturant();
 	void MoveToHotel();
-
+	
 };

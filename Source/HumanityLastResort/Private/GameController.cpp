@@ -12,6 +12,7 @@ AGameController::AGameController() {
 	bShowMouseCursor = true;
 	bEnableClickEvents = true;
 	DefaultMouseCursor = EMouseCursor::Hand;
+	
 }
 
 void AGameController::Tick(float dt) {
@@ -33,6 +34,7 @@ void AGameController::Tick(float dt) {
 	FCollisionQueryParams TraceParams;
 
 	bool bHit = GetWorld()->LineTraceSingleByChannel(Hit, start, end, ECC_Visibility, TraceParams);
+	
 	FVector origin;
 	FVector boundsExtent;
 	ACellActor* Tile;

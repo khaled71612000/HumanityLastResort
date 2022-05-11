@@ -27,6 +27,8 @@ ACameraPawn::ACameraPawn()
 	AutoPossessPlayer = EAutoReceiveInput::Player0;
 	PawnMovementComponent = CreateDefaultSubobject<UPawnMovementComponent>(TEXT("Pawn Movement"));
 	FloatingPawnMovement = CreateDefaultSubobject<UFloatingPawnMovement>(TEXT("Pawn Float Movement"));
+
+
 }
 
 // Called when the game starts or when spawned
@@ -43,6 +45,7 @@ void ACameraPawn::BeginPlay()
 	inputMode.SetHideCursorDuringCapture(false);
 	inputMode.SetLockMouseToViewportBehavior(EMouseLockMode::LockAlways);
 	Player->SetInputMode(inputMode);
+
 }
 
 FVector ACameraPawn::GetCameraPanDirecton() {

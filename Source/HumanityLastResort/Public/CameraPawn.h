@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Pawn.h"
+
 #include "GameFramework/SpringArmComponent.h"
 #include "Camera/CameraComponent.h"
 #include "CameraPawn.generated.h"
@@ -62,4 +63,6 @@ public:
 		class UFloatingPawnMovement* FloatingPawnMovement;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "BuildTransform")
 		class ABuildingsActors* SelectedToken;
+
+
 };

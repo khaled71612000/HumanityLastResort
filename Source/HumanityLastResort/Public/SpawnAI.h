@@ -9,6 +9,8 @@
 /**
  * 
  */
+
+
 UCLASS()
 class HUMANITYLASTRESORT_API ASpawnAI : public AVolume
 {
@@ -28,5 +30,4 @@ private:
 public:
 	UPROPERTY(EditAnywhere, Category = "Spawn")
 		float SpawnRate = 8.f;
-	
 };

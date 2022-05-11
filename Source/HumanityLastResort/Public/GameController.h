@@ -6,9 +6,6 @@
 #include "GameFramework/PlayerController.h"
 #include "GameController.generated.h"
 
-/**
- * 
- */
 UCLASS()
 class HUMANITYLASTRESORT_API AGameController : public APlayerController
 {

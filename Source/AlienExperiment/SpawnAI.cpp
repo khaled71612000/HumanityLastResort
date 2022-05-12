@@ -12,13 +12,11 @@ void ASpawnAI::BeginPlay()
 	SpawnRotation = this->GetActorRotation();
 
 	FTimerHandle SpawningManager;
-	GetWorld()->GetTimerManager().SetTimer(SpawningManager, this, &ASpawnAI::SpawnAnAlien, 5.0f, true);
+	GetWorld()->GetTimerManager().SetTimer(SpawningManager, this, &ASpawnAI::SpawnAnAlien, SpawnRate, true);
 
 }
 
 void ASpawnAI::SpawnAnAlien()
 {
-	GetWorld()->SpawnActor<AAICharacterBase>(SpawnLocation, SpawnRotation, SpawnParams);
-
-	GEngine->AddOnScreenDebugMessage(-1, 10.f, FColor::Red, TEXT("Spawn"));
+	GetWorld()->SpawnActor<AAICharacterBase>(ActorToSpawn, SpawnLocation, SpawnRotation, SpawnParams);
 }

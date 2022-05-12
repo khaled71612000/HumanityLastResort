@@ -11,6 +11,10 @@ class ALIENEXPERIMENT_API ABuildingBase : public AActor
 {
 	GENERATED_BODY()
 	
+public:
+	int32 Capacity;
+	int32 Residents;
+
 public:	
 	// Sets default values for this actor's properties
 	ABuildingBase();
@@ -22,5 +26,7 @@ protected:
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
+
+
 
 };

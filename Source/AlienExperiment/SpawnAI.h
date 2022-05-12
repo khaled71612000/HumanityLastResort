@@ -18,8 +18,15 @@ private:
 	FActorSpawnParameters SpawnParams;
 	FVector SpawnLocation;
 	FRotator SpawnRotation;
+
 private:
 	virtual void BeginPlay() override;
-
 	void SpawnAnAlien();
+
+
+public:
+	UPROPERTY(EditAnywhere, Category = "Spawn Actor", meta = (AllowPrivateAccess = "true"))
+		TSubclassOf<class AAICharacterBase> ActorToSpawn;
+	UPROPERTY(EditAnywhere, Category = "Spawn Actor", meta = (AllowPrivateAccess = "true"))
+		float SpawnRate = 2.f;
 };

@@ -7,6 +7,9 @@
 
 AHotel::AHotel(const FObjectInitializer& objectInitializer)
 {
+	Capacity = 2;
+	Residents = 0;
+
 	HotelCollision = CreateDefaultSubobject<USphereComponent>(TEXT("RootCollision"));
 
 	HotelCollision->SetSphereRadius(600.f);
@@ -23,15 +26,30 @@ void AHotel::OnOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, 
 	if (OtherActor && OtherActor != this)
 	{
 		AAICharacterBase* Chr = Cast<AAICharacterBase>(OtherActor);
-
 		if (Chr)
 		{
+			if (Chr->SleepyManager.IsValid())
+			{
+				GetWorld()->GetTimerManager().PauseTimer(Chr->SleepyManager);
+			}
+
 			Chr->NotSleepy = 100;
+			Chr->isSleepy = false;
+			Chr->TaskState = Idle;
 			GEngine->AddOnScreenDebugMessage(-1, 10.f, FColor::Red, TEXT("Begin Overlap"));
+			
 		}
 	}
+
 }
 
 void AHotel::OnOverlapEnd(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
 {
+	Residents -= 1;
+	AAICharacterBase* Chr = Cast<AAICharacterBase>(OtherActor);
+
+	if (Chr && Chr->SleepyManager.IsValid())
+	{
+		GetWorld()->GetTimerManager().UnPauseTimer(Chr->SleepyManager);
+	}
 }

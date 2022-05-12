@@ -61,7 +61,7 @@ void AAICharacterBase::ChangeNotHungryAttr()
 		GoingToResturant = false;
 	}
 
-	UE_LOG(LogTemp, Warning, TEXT("Not Hungry: %d"), NotHungry);
+	//UE_LOG(LogTemp, Warning, TEXT("Not Hungry: %d"), NotHungry);
 }
 
 void AAICharacterBase::ChangeNotSleepyAttr()

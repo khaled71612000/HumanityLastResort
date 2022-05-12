@@ -3,6 +3,7 @@
 
 #include "BuildingsActors.h"
 #include "CameraPawn.h"
+#include "Kismet\KismetSystemLibrary.h"
 #include "DrawDebugHelpers.h"
 #include "RunTime\Engine\Classes\Kismet\GameplayStatics.h"
 
@@ -83,8 +84,24 @@ void ABuildingsActors::MouseMove(FVector position)
 		FCollisionQueryParams TraceParams;
 		TraceParams.AddIgnoredActor(this);
 		bool bHit = GetWorld()->LineTraceSingleByChannel(Hit, Start, End, ECC_Visibility, TraceParams);
-		if (bHit) {
-			ABuildingsActors* UnderHit = Cast<ABuildingsActors>(Hit.GetActor());
+
+		FVector origin, boxExtent;
+		GetActorBounds(false , origin , boxExtent);
+		boxExtent.Z = 1.f;
+
+		TArray<AActor*> ActorsToIgnore;
+		ActorsToIgnore.Add(this);
+		FHitResult HitArray;
+
+		bool BoxHit = UKismetSystemLibrary::BoxTraceSingle(GetWorld(), Start, End, boxExtent,
+			FRotator(0, 0, 0), UEngineTypes::ConvertToTraceType(ECC_Visibility),
+			false, ActorsToIgnore, EDrawDebugTrace::ForDuration, HitArray,
+			true, FLinearColor::Red, FLinearColor::Green, 0.1f
+		);
+
+		if (BoxHit) {
+			UE_LOG(LogTemp, Error, TEXT("Colliding"))
+			ABuildingsActors* UnderHit = Cast<ABuildingsActors>(HitArray.GetActor());
 			//DrawDebugLine(GetWorld(), Start, End, FColor::Orange, false, 0.1f);
 			if (UnderHit) {
 				//GEngine->AddOnScreenDebugMessage(-1, 1 ,FColor::Yellow, FString::Printf(TEXT("HERE %s"), *Hit.GetActor()->GetName()));

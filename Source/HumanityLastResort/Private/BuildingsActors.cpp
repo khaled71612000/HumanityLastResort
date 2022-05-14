@@ -5,6 +5,8 @@
 #include "CameraPawn.h"
 #include "Kismet\KismetSystemLibrary.h"
 #include "DrawDebugHelpers.h"
+#include "CellActor.h"
+#include "Math/UnrealMathUtility.h"
 #include "RunTime\Engine\Classes\Kismet\GameplayStatics.h"
 
 ABuildingsActors::ABuildingsActors()
@@ -19,12 +21,11 @@ ABuildingsActors::ABuildingsActors()
 
 	StaticMeshComponent->bIgnoreRadialForce = true;
 	StaticMeshComponent->bIgnoreRadialImpulse = true;
-	StaticMeshComponent->SetLinearDamping(2.f);
-	StaticMeshComponent->SetAngularDamping(2.f);
+	StaticMeshComponent->SetLinearDamping(10.f);
+	StaticMeshComponent->SetAngularDamping(10.f);
 
 	//StaticMeshComponent->SetRelativeScale3D(FVector(0.75f, 0.75f, 1.5f));
-
-
+	
 }
 
 void ABuildingsActors::BeginPlay()
@@ -33,12 +34,29 @@ void ABuildingsActors::BeginPlay()
 	
 	StaticMeshComponent->OnClicked.AddDynamic(this, &ABuildingsActors::OnClicked);
 	oldPos = GetActorLocation();
+
+	FTimerHandle StatManager;
+	GetWorld()->GetTimerManager().SetTimer(StatManager, [&]()
+		{
+			if (!isDragging) {
+			StaticMeshComponent->GetBodyInstance()->bLockXTranslation = true;
+			StaticMeshComponent->GetBodyInstance()->bLockYTranslation = true;
+			StaticMeshComponent->GetBodyInstance()->bLockZTranslation = true;
+			StaticMeshComponent->GetBodyInstance()->SetDOFLock(EDOFMode::SixDOF);
+			StaticMeshComponent->SetMobility(EComponentMobility::Static);
+			}
+		}, 1, false);
 }
 
 void ABuildingsActors::OnClicked(UPrimitiveComponent* ClickedComp, FKey ButtonClicked)
 {
 	//UE_LOG(LogTemp, Warning, TEXT("HERE Clicked %d"));
 	isDragging = true;
+	StaticMeshComponent->GetBodyInstance()->bLockXTranslation = false;
+	StaticMeshComponent->GetBodyInstance()->bLockYTranslation = false;
+	StaticMeshComponent->GetBodyInstance()->bLockZTranslation = false;
+	StaticMeshComponent->GetBodyInstance()->SetDOFLock(EDOFMode::Default);
+	StaticMeshComponent->SetMobility(EComponentMobility::Movable);
 }
 
 void ABuildingsActors::LockPosition(bool block)
@@ -75,15 +93,12 @@ void ABuildingsActors::MouseMove(FVector position)
 		//UE_LOG(LogTemp, Warning, TEXT("Moving"));
 		this->SetActorLocation(position);
 	    MyPawn = UGameplayStatics::GetPlayerController(this, 0)->GetPawn<ACameraPawn>();
+		
 		if(MyPawn)
 		MyPawn->SelectedToken = this;
 
 		FVector Start = GetActorLocation();
 		FVector End = ((GetActorUpVector() * -1 * 10000.f) + Start);
-		FHitResult Hit;
-		FCollisionQueryParams TraceParams;
-		TraceParams.AddIgnoredActor(this);
-		bool bHit = GetWorld()->LineTraceSingleByChannel(Hit, Start, End, ECC_Visibility, TraceParams);
 
 		FVector origin, boxExtent;
 		GetActorBounds(false , origin , boxExtent);
@@ -100,7 +115,7 @@ void ABuildingsActors::MouseMove(FVector position)
 		);
 
 		if (BoxHit) {
-			UE_LOG(LogTemp, Error, TEXT("Colliding"))
+			//UE_LOG(LogTemp, Error, TEXT("Colliding"))
 			ABuildingsActors* UnderHit = Cast<ABuildingsActors>(HitArray.GetActor());
 			//DrawDebugLine(GetWorld(), Start, End, FColor::Orange, false, 0.1f);
 			if (UnderHit) {
@@ -114,10 +129,19 @@ void ABuildingsActors::MouseMove(FVector position)
 
 void ABuildingsActors::MouseRelease()
 {
-	UE_LOG(LogTemp, Warning, TEXT("HERE release %d"));
+	//UE_LOG(LogTemp, Warning, TEXT("HERE release %d"));
 	isDragging = false;
 	if (MyPawn)
 		MyPawn->SelectedToken = nullptr;
+	FTimerHandle StatManager;
+	GetWorld()->GetTimerManager().SetTimer(StatManager, [&]()
+		{
+			StaticMeshComponent->GetBodyInstance()->bLockXTranslation = true;
+			StaticMeshComponent->GetBodyInstance()->bLockYTranslation = true;
+			StaticMeshComponent->GetBodyInstance()->bLockZTranslation = true;
+			StaticMeshComponent->GetBodyInstance()->SetDOFLock(EDOFMode::SixDOF);
+			StaticMeshComponent->SetMobility(EComponentMobility::Static);
+		}, 1, false);
 }
 
 void ABuildingsActors::DestroyBuildingActor()

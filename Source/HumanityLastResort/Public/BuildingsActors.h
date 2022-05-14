@@ -21,7 +21,7 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Functions")
 		void DestroyBuildingActor();
 	void MouseMove(FVector position);
-	void MouseRelease( );
+	void MouseRelease();
 
 protected:
 	virtual void BeginPlay() override;

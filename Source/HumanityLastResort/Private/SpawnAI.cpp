@@ -15,7 +15,6 @@ void ASpawnAI::BeginPlay()
 
 	FTimerHandle SpawningManager;
 	GetWorld()->GetTimerManager().SetTimer(SpawningManager, this, &ASpawnAI::SpawnAnAlien, SpawnRate, true);
-
 }
 
 void ASpawnAI::SpawnAnAlien()

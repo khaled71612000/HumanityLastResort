@@ -22,6 +22,7 @@ public:
 		void DestroyBuildingActor();
 	void MouseMove(FVector position);
 	void MouseRelease();
+	void ClearFloor();
 
 protected:
 	virtual void BeginPlay() override;

@@ -3,6 +3,7 @@
 
 #include "BuildingsActors.h"
 #include "CameraPawn.h"
+#include "AICharacterBase.h"
 #include "Kismet\KismetSystemLibrary.h"
 #include "DrawDebugHelpers.h"
 #include "CellActor.h"
@@ -39,24 +40,19 @@ void ABuildingsActors::BeginPlay()
 	GetWorld()->GetTimerManager().SetTimer(StatManager, [&]()
 		{
 			if (!isDragging) {
-			StaticMeshComponent->GetBodyInstance()->bLockXTranslation = true;
-			StaticMeshComponent->GetBodyInstance()->bLockYTranslation = true;
-			StaticMeshComponent->GetBodyInstance()->bLockZTranslation = true;
-			StaticMeshComponent->GetBodyInstance()->SetDOFLock(EDOFMode::SixDOF);
-			StaticMeshComponent->SetMobility(EComponentMobility::Static);
+				StaticMeshComponent->GetBodyInstance()->bLockXTranslation = true;
+				StaticMeshComponent->GetBodyInstance()->bLockYTranslation = true;
+				StaticMeshComponent->GetBodyInstance()->bLockZTranslation = true;
+				StaticMeshComponent->GetBodyInstance()->SetDOFLock(EDOFMode::SixDOF);
+				StaticMeshComponent->SetMobility(EComponentMobility::Static);
 			}
-		}, 1, false);
+		}, 1.3f, false);
 }
 
 void ABuildingsActors::OnClicked(UPrimitiveComponent* ClickedComp, FKey ButtonClicked)
 {
 	//UE_LOG(LogTemp, Warning, TEXT("HERE Clicked %d"));
 	isDragging = true;
-	StaticMeshComponent->GetBodyInstance()->bLockXTranslation = false;
-	StaticMeshComponent->GetBodyInstance()->bLockYTranslation = false;
-	StaticMeshComponent->GetBodyInstance()->bLockZTranslation = false;
-	StaticMeshComponent->GetBodyInstance()->SetDOFLock(EDOFMode::Default);
-	StaticMeshComponent->SetMobility(EComponentMobility::Movable);
 }
 
 void ABuildingsActors::LockPosition(bool block)
@@ -87,7 +83,7 @@ void ABuildingsActors::ResetRotation()
 
 void ABuildingsActors::MouseMove(FVector position)
 {
-
+	ClearFloor();
 	if (isDragging)
 	{
 		//UE_LOG(LogTemp, Warning, TEXT("Moving"));
@@ -109,8 +105,8 @@ void ABuildingsActors::MouseMove(FVector position)
 		FHitResult HitArray;
 
 		bool BoxHit = UKismetSystemLibrary::BoxTraceSingle(GetWorld(), Start, End, boxExtent,
-			FRotator(0, 0, 0), UEngineTypes::ConvertToTraceType(ECC_Visibility),
-			false, ActorsToIgnore, EDrawDebugTrace::ForDuration, HitArray,
+			FRotator(0, 0, 0), UEngineTypes::ConvertToTraceType(ECC_Pawn),
+			false, ActorsToIgnore, EDrawDebugTrace::None, HitArray,
 			true, FLinearColor::Red, FLinearColor::Green, 0.1f
 		);
 
@@ -127,21 +123,45 @@ void ABuildingsActors::MouseMove(FVector position)
 	}
 }
 
+void ABuildingsActors::ClearFloor()
+{
+	FVector Start = GetActorLocation() ;
+	FVector End = ((GetActorUpVector() * 60.f) + Start);
+
+	FVector origin, boxExtent;
+	GetActorBounds(false, origin, boxExtent);
+	boxExtent.Z = 1.f;
+
+	TArray<AActor*> ActorsToIgnore;
+	ActorsToIgnore.Add(this);
+	TArray<FHitResult> HitArray;
+
+	bool Hitiing = UKismetSystemLibrary::BoxTraceMulti(GetWorld(), Start, End, boxExtent,
+		FRotator(0, 0, 0), UEngineTypes::ConvertToTraceType(ECC_Visibility),
+		false, ActorsToIgnore, EDrawDebugTrace::ForDuration, HitArray,
+		true, FLinearColor::Green, FLinearColor::Yellow, 0.1f
+	);
+
+	if (Hitiing) {
+		UE_LOG(LogTemp, Error, TEXT("NPC FOUND"));
+		for (auto& NPC : HitArray)
+		{
+			AAICharacterBase* NPCHit = Cast<AAICharacterBase>(NPC.GetActor());
+			if (NPCHit) {
+				NPCHit->SetActorLocation(FVector(0,0,0));
+			}
+		}
+	}
+}
+
+
+
 void ABuildingsActors::MouseRelease()
 {
 	//UE_LOG(LogTemp, Warning, TEXT("HERE release %d"));
 	isDragging = false;
 	if (MyPawn)
 		MyPawn->SelectedToken = nullptr;
-	FTimerHandle StatManager;
-	GetWorld()->GetTimerManager().SetTimer(StatManager, [&]()
-		{
-			StaticMeshComponent->GetBodyInstance()->bLockXTranslation = true;
-			StaticMeshComponent->GetBodyInstance()->bLockYTranslation = true;
-			StaticMeshComponent->GetBodyInstance()->bLockZTranslation = true;
-			StaticMeshComponent->GetBodyInstance()->SetDOFLock(EDOFMode::SixDOF);
-			StaticMeshComponent->SetMobility(EComponentMobility::Static);
-		}, 1, false);
 }
 
 void ABuildingsActors::DestroyBuildingActor()

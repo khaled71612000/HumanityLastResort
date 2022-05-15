@@ -53,6 +53,11 @@ void ABuildingsActors::OnClicked(UPrimitiveComponent* ClickedComp, FKey ButtonCl
 {
 	//UE_LOG(LogTemp, Warning, TEXT("HERE Clicked %d"));
 	isDragging = true;
+	StaticMeshComponent->GetBodyInstance()->bLockXTranslation = false;
+	StaticMeshComponent->GetBodyInstance()->bLockYTranslation = false;
+	StaticMeshComponent->GetBodyInstance()->bLockZTranslation = false;
+	StaticMeshComponent->GetBodyInstance()->SetDOFLock(EDOFMode::Default);
+	StaticMeshComponent->SetMobility(EComponentMobility::Movable);
 }
 
 void ABuildingsActors::LockPosition(bool block)
@@ -83,9 +88,10 @@ void ABuildingsActors::ResetRotation()
 
 void ABuildingsActors::MouseMove(FVector position)
 {
-	ClearFloor();
+	
 	if (isDragging)
 	{
+		ClearFloor();
 		//UE_LOG(LogTemp, Warning, TEXT("Moving"));
 		this->SetActorLocation(position);
 	    MyPawn = UGameplayStatics::GetPlayerController(this, 0)->GetPawn<ACameraPawn>();
@@ -136,19 +142,19 @@ void ABuildingsActors::ClearFloor()
 	ActorsToIgnore.Add(this);
 	TArray<FHitResult> HitArray;
 
-	bool Hitiing = UKismetSystemLibrary::BoxTraceMulti(GetWorld(), Start, End, boxExtent,
+	bool Hiting = UKismetSystemLibrary::BoxTraceMulti(GetWorld(), Start, End, boxExtent,
 		FRotator(0, 0, 0), UEngineTypes::ConvertToTraceType(ECC_Visibility),
 		false, ActorsToIgnore, EDrawDebugTrace::ForDuration, HitArray,
 		true, FLinearColor::Green, FLinearColor::Yellow, 0.1f
 	);
 
-	if (Hitiing) {
+	if (Hiting) {
 		UE_LOG(LogTemp, Error, TEXT("NPC FOUND"));
 		for (auto& NPC : HitArray)
 		{
 			AAICharacterBase* NPCHit = Cast<AAICharacterBase>(NPC.GetActor());
 			if (NPCHit) {
-				NPCHit->SetActorLocation(FVector(0,0,0));
+				NPCHit->SetActorLocation(FVector(-1400,600,135));
 			}
 		}
 	}
@@ -162,6 +168,18 @@ void ABuildingsActors::MouseRelease()
 	isDragging = false;
 	if (MyPawn)
 		MyPawn->SelectedToken = nullptr;
+
+	FTimerHandle StatManager;
+	GetWorld()->GetTimerManager().SetTimer(StatManager, [&]()
+		{
+			if (!isDragging) {
+				StaticMeshComponent->GetBodyInstance()->bLockXTranslation = true;
+				StaticMeshComponent->GetBodyInstance()->bLockYTranslation = true;
+				StaticMeshComponent->GetBodyInstance()->bLockZTranslation = true;
+				StaticMeshComponent->GetBodyInstance()->SetDOFLock(EDOFMode::SixDOF);
+				StaticMeshComponent->SetMobility(EComponentMobility::Static);
+			}
+		}, 1.3f, false);
 }
 
 void ABuildingsActors::DestroyBuildingActor()

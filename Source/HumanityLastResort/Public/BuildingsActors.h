@@ -6,9 +6,6 @@
 #include "GameFramework/Actor.h"
 #include "BuildingsActors.generated.h"
 
-
-
-
 UCLASS()
 class HUMANITYLASTRESORT_API ABuildingsActors : public AActor
 {

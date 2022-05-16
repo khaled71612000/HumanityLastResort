@@ -22,6 +22,8 @@ AAICharacterBase::AAICharacterBase()
 	PrimaryActorTick.bCanEverTick = true;
 	NotHungry = 100;
 	NotSleepy = 100;
+	GetMesh()->SetLinearDamping(10.f);
+	GetMesh()->SetAngularDamping(10.f);
 
 }
 

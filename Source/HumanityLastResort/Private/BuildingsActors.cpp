@@ -22,8 +22,8 @@ ABuildingsActors::ABuildingsActors()
 
 	StaticMeshComponent->bIgnoreRadialForce = true;
 	StaticMeshComponent->bIgnoreRadialImpulse = true;
-	StaticMeshComponent->SetLinearDamping(10.f);
-	StaticMeshComponent->SetAngularDamping(10.f);
+	StaticMeshComponent->SetLinearDamping(1.f);
+	StaticMeshComponent->SetAngularDamping(1.f);
 
 	//StaticMeshComponent->SetRelativeScale3D(FVector(0.75f, 0.75f, 1.5f));
 	
@@ -154,7 +154,7 @@ void ABuildingsActors::ClearFloor()
 		{
 			AAICharacterBase* NPCHit = Cast<AAICharacterBase>(NPC.GetActor());
 			if (NPCHit) {
-				NPCHit->SetActorLocation(FVector(-1400,600,135));
+				NPCHit->SetActorLocation(FVector(200,7800,190), true);
 			}
 		}
 	}
@@ -168,6 +168,7 @@ void ABuildingsActors::MouseRelease()
 	isDragging = false;
 	if (MyPawn)
 		MyPawn->SelectedToken = nullptr;
+	oldPos = GetActorLocation();
 
 	FTimerHandle StatManager;
 	GetWorld()->GetTimerManager().SetTimer(StatManager, [&]()

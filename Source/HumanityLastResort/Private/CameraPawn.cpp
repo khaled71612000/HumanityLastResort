@@ -19,7 +19,7 @@ ACameraPawn::ACameraPawn()
 	SpringArm->SetupAttachment(RootScene);
 	SpringArm->bDoCollisionTest = false;
 	SpringArm->SetRelativeRotation(FRotator(-60, 0, 0));
-	SpringArm->TargetArmLength = 1500.f;
+	SpringArm->TargetArmLength = 3000.f;
 
 	CameraComp = CreateDefaultSubobject<UCameraComponent>(TEXT("Camera"));
 	CameraComp->SetupAttachment(SpringArm);

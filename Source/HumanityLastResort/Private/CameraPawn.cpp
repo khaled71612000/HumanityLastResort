@@ -92,10 +92,10 @@ void ACameraPawn::RotateToken(float value) {
 		//UE_LOG(LogTemp, Warning, TEXT("TUUUTs"));
 
 		auto const OriginalRotation = SelectedToken->GetActorRotation().GetDenormalized();
-		float const Remainder = FMath::Fmod(OriginalRotation.Yaw, 45.f);
+		float const Remainder = FMath::Fmod(OriginalRotation.Yaw, 90.f);
 
 		/** If we have a Yaw that is greater than or equal to 360 degrees, use 0 instead */
-		int Quotient = (OriginalRotation.Yaw > 337.5f ? 0 : OriginalRotation.Yaw) / 45;
+		int Quotient = (OriginalRotation.Yaw > 337.5f ? 0 : OriginalRotation.Yaw) / 90.f;
 
 		// UE_LOG(LogTemp, Warning, TEXT("Incoming Yaw: %f"), OriginalRotation.Yaw)
 		// UE_LOG(LogTemp, Warning, TEXT("Remainder: %f"), Remainder)
@@ -110,15 +110,15 @@ void ACameraPawn::RotateToken(float value) {
 			++Quotient;
 		}
 
-		Quotient *= 45;
+		Quotient *= 90.f;
 
 		if (value > 0)
 		{
-			Quotient += 45;
+			Quotient += 90.f;
 		}
 		else if (value < 0)
 		{
-			Quotient -= 45;
+			Quotient -= 90.f;
 			Quotient < 0 ? Quotient += 360 : Quotient;
 		}
 

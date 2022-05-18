@@ -111,8 +111,8 @@ void ABuildingsActors::MouseMove(FVector position)
 		FHitResult HitArray;
 
 		bool BoxHit = UKismetSystemLibrary::BoxTraceSingle(GetWorld(), Start, End, boxExtent,
-			FRotator(0, 0, 0), UEngineTypes::ConvertToTraceType(ECC_Pawn),
-			false, ActorsToIgnore, EDrawDebugTrace::None, HitArray,
+			GetActorRotation(), UEngineTypes::ConvertToTraceType(ECC_Pawn),
+			false, ActorsToIgnore, EDrawDebugTrace::ForDuration, HitArray,
 			true, FLinearColor::Red, FLinearColor::Green, 0.1f
 		);
 
@@ -143,8 +143,8 @@ void ABuildingsActors::ClearFloor()
 	TArray<FHitResult> HitArray;
 
 	bool Hiting = UKismetSystemLibrary::BoxTraceMulti(GetWorld(), Start, End, boxExtent,
-		FRotator(0, 0, 0), UEngineTypes::ConvertToTraceType(ECC_Visibility),
-		false, ActorsToIgnore, EDrawDebugTrace::ForDuration, HitArray,
+		GetActorRotation(), UEngineTypes::ConvertToTraceType(ECC_Visibility),
+		false, ActorsToIgnore, EDrawDebugTrace::None, HitArray,
 		true, FLinearColor::Green, FLinearColor::Yellow, 0.1f
 	);
 

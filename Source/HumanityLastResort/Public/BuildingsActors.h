@@ -20,6 +20,7 @@ public:
 	void MouseMove(FVector position);
 	void MouseRelease();
 	void ClearFloor();
+	FVector NewBoxSize;
 
 protected:
 	virtual void BeginPlay() override;

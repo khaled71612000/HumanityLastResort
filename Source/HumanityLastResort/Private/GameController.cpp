@@ -25,7 +25,7 @@ void AGameController::Tick(float dt) {
 		{FVector::ZeroVector},
 		{0.f,0.f,1.f}
 	};
-	const auto intersect = FMath::LinePlaneIntersection(start, end, plane);
+	//const auto intersect = FMath::LinePlaneIntersection(start, end, plane);
 
 	/*DrawDebugLine(GetWorld(), start, end, FColor::Orange, false, 0.1f);
 	DrawDebugSphere(GetWorld(), intersect, 5, 50, FColor::Red, true);*/
@@ -44,8 +44,11 @@ void AGameController::Tick(float dt) {
 			Tile->GetActorBounds(false, origin, boundsExtent);
 		}
 		//const auto middleIntersect = Hit.GetActor()->
-		//DrawDebugSphere(GetWorld(), origin, 5, 50, FColor::Red, true);
+		origin.X -= 195;
+		origin.Y -= 195;
 		origin.Z += 100.f;
+		//DrawDebugSphere(GetWorld(), origin, 5, 50, FColor::Red, true , 5);
+
 	}
 
 	TArray<AActor*> actorPtrs;

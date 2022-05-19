@@ -25,8 +25,6 @@ ABuildingsActors::ABuildingsActors()
 	StaticMeshComponent->SetLinearDamping(1.f);
 	StaticMeshComponent->SetAngularDamping(1.f);
 
-	//StaticMeshComponent->SetRelativeScale3D(FVector(0.75f, 0.75f, 1.5f));
-	
 }
 
 void ABuildingsActors::BeginPlay()
@@ -47,7 +45,19 @@ void ABuildingsActors::BeginPlay()
 				StaticMeshComponent->SetMobility(EComponentMobility::Static);
 			}
 		}, 1.3f, false);
+
+	FVector Min, Max;
+	StaticMeshComponent->GetLocalBounds(Min, Max);
+
+	NewBoxSize = (Max - Min) / 2;
+
+	NewBoxSize.Z = 0;
+
+	//StaticMeshComponent->AddRelativeLocation(NewBoxSize);
+	//StaticMeshComponent->SetRelativeScale3D(FVector(0.75f, 0.75f, 1.5f));
+
 }
+
 
 void ABuildingsActors::OnClicked(UPrimitiveComponent* ClickedComp, FKey ButtonClicked)
 {
@@ -88,37 +98,42 @@ void ABuildingsActors::ResetRotation()
 
 void ABuildingsActors::MouseMove(FVector position)
 {
-	
+
 	if (isDragging)
 	{
 		ClearFloor();
 		//UE_LOG(LogTemp, Warning, TEXT("Moving"));
-		this->SetActorLocation(position);
+
+		FVector origin, boxExtent;
+		GetActorBounds(false, origin, boxExtent);
+		boxExtent.Z = 1.f;
+
+	    DrawDebugBox(GetWorld(), GetActorLocation() , NewBoxSize, FColor::Green, false, 50.f);
+
+		this->SetActorLocation(position + NewBoxSize);
+
 	    MyPawn = UGameplayStatics::GetPlayerController(this, 0)->GetPawn<ACameraPawn>();
-		
 		if(MyPawn)
 		MyPawn->SelectedToken = this;
 
 		FVector Start = GetActorLocation();
 		FVector End = ((GetActorUpVector() * -1 * 10000.f) + Start);
 
-		FVector origin, boxExtent;
-		GetActorBounds(false , origin , boxExtent);
-		boxExtent.Z = 1.f;
+		
 
 		TArray<AActor*> ActorsToIgnore;
 		ActorsToIgnore.Add(this);
-		FHitResult HitArray;
+		FHitResult HitResult;
 
-		bool BoxHit = UKismetSystemLibrary::BoxTraceSingle(GetWorld(), Start, End, boxExtent,
+		bool BoxHit = UKismetSystemLibrary::BoxTraceSingle(GetWorld(), Start, End, boxExtent / 2 ,
 			GetActorRotation(), UEngineTypes::ConvertToTraceType(ECC_Pawn),
-			false, ActorsToIgnore, EDrawDebugTrace::ForDuration, HitArray,
+			false, ActorsToIgnore, EDrawDebugTrace::None, HitResult,
 			true, FLinearColor::Red, FLinearColor::Green, 0.1f
 		);
 
 		if (BoxHit) {
 			//UE_LOG(LogTemp, Error, TEXT("Colliding"))
-			ABuildingsActors* UnderHit = Cast<ABuildingsActors>(HitArray.GetActor());
+			ABuildingsActors* UnderHit = Cast<ABuildingsActors>(HitResult.GetActor());
 			//DrawDebugLine(GetWorld(), Start, End, FColor::Orange, false, 0.1f);
 			if (UnderHit) {
 				//GEngine->AddOnScreenDebugMessage(-1, 1 ,FColor::Yellow, FString::Printf(TEXT("HERE %s"), *Hit.GetActor()->GetName()));

@@ -43,7 +43,7 @@ void ACameraPawn::BeginPlay()
 	//Player->DefaultMouseCursor = EMouseCursor::Crosshairs;
 	FInputModeGameAndUI inputMode;
 	inputMode.SetHideCursorDuringCapture(false);
-	inputMode.SetLockMouseToViewportBehavior(EMouseLockMode::LockAlways);
+	//inputMode.SetLockMouseToViewportBehavior(EMouseLockMode::LockAlways);
 	Player->SetInputMode(inputMode);
 
 }

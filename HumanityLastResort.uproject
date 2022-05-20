@@ -1,18 +1,19 @@
 {
-  "Category": "",
-  "Description": "",
-  "EngineAssociation": "4.27",
-  "FileVersion": 3,
-  "Modules": [
-    {
-      "AdditionalDependencies": [
-        "Engine",
-        "AIModule",
-        "UMG"
-      ],
-      "LoadingPhase": "Default",
-      "Name": "HumanityLastResort",
-      "Type": "Runtime"
-    }
-  ]
+	"FileVersion": 3,
+	"EngineAssociation": "4.27",
+	"Category": "",
+	"Description": "",
+	"Modules": [
+		{
+			"Name": "HumanityLastResort",
+			"Type": "Runtime",
+			"LoadingPhase": "Default",
+			"AdditionalDependencies": [
+				"Engine",
+				"AIModule",
+				"UMG",
+				"CoreUObject"
+			]
+		}
+	]
 }

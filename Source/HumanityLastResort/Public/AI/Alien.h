@@ -6,6 +6,10 @@
 #include "GameFramework/Character.h"
 #include "Alien.generated.h"
 
+enum State {
+	Idle, Assigned, Leaving
+};
+
 UCLASS()
 class HUMANITYLASTRESORT_API AAlien : public ACharacter
 {
@@ -20,6 +24,7 @@ protected:
 	virtual void BeginPlay() override;
 
 public:
+	State AlienState;
 	class UNeedComponent* NeedToExcute;
 
 	void GetTask();

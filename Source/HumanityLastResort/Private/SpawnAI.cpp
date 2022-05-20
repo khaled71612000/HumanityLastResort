@@ -3,12 +3,14 @@
 
 #include "SpawnAI.h"
 #include "EconomySubsystem.h"
-
-#include "AICharacterBase.h"
+#include "AI/Alien.h"
+#include "AI/AlienSubsystem.h"
 #include "TimerManager.h"
 
 void ASpawnAI::BeginPlay() 
 {
+	AlienSubsystem = GetWorld()->GetSubsystem<UAlienSubsystem>();
+
 	SpawnParams.Owner = this;
 	SpawnLocation = this->GetActorLocation();
 	SpawnRotation = this->GetActorRotation();
@@ -19,8 +21,9 @@ void ASpawnAI::BeginPlay()
 
 void ASpawnAI::SpawnAnAlien()
 {
-	GetWorld()->SpawnActor<AAICharacterBase>(ActorToSpawn,SpawnLocation, SpawnRotation, SpawnParams);
+	AAlien* Alien = GetWorld()->SpawnActor<AAlien>(ActorToSpawn,SpawnLocation, SpawnRotation, SpawnParams);
+	AlienSubsystem->Aliens.Add(Alien);
 
-	//GEngine->AddOnScreenDebugMessage(-1, 10.f, FColor::Red, TEXT("Spawn"));
+	GEngine->AddOnScreenDebugMessage(-1, 10.f, FColor::Red, TEXT("Spawn"));
 
 }

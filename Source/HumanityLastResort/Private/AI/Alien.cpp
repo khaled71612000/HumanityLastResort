@@ -10,15 +10,13 @@ AAlien::AAlien()
 {
  	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = false;
-
+	AlienState = Idle;
 }
 
 // Called when the game starts or when spawned
 void AAlien::BeginPlay()
 {
 	Super::BeginPlay();
-	GetTask();
-	ExecuteTask();
 }
 
 void AAlien::GetTask()

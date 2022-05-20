@@ -14,10 +14,14 @@ void UAlienSubsystem::Tick(float DeltaTime)
 {
 	for (AAlien* Alien : Aliens)
 	{
-		Alien->GetTask();
-		Alien->ExecuteTask();
+		if (Alien->AlienState == Idle)
+		{
+			Alien->GetTask();
+			Alien->GoToTask();
+		}
+		else if (Alien->AlienState == Arrived)
+			Alien->DoTask();
 	}
-
 }
 
 

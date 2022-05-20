@@ -25,6 +25,9 @@ public:
 	UPROPERTY(EditDefaultsOnly, Category = "Properties")
 	float DecayRate;
 
+	UPROPERTY(EditDefaultsOnly, Category = "Properties")
+	float TaskTime;
+
 	UPROPERTY(EditDefaultsOnly)
 	TSubclassOf<class UNeedSatisfactionTask> TaskClass;
 

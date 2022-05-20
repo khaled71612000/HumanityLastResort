@@ -4,7 +4,11 @@
 #include "AI/NeedSatisfactionTask.h"
 #include "AI/Alien.h"
 
-void UNeedSatisfactionTask::Satisfy(AAlien* Alien)
+void UNeedSatisfactionTask::Satisfy(AAlien* Alien, class UNeedComponent* Need)
 {
 	UE_LOG(LogTemp, Warning, TEXT("Parent"));
+}
+
+void UNeedSatisfactionTask::Wait()
+{
 }

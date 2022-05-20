@@ -36,10 +36,16 @@ void AAlien::GetTask()
 	}
 }
 
-void AAlien::ExecuteTask()
+void AAlien::GoToTask()
 {
 	if(NeedToExcute)
-		NeedToExcute->Task->Satisfy(this);
+		NeedToExcute->Task->Satisfy(this, NeedToExcute);
+}
+
+void AAlien::DoTask()
+{
+	if (NeedToExcute)
+		NeedToExcute->Task->Wait();
 }
 
 

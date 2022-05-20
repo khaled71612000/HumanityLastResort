@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "AI/NeedSatisfactionTask.h"
+#include "TimerManager.h"
 #include "HungerSatisfactionTask.generated.h"
 
 /**
@@ -15,5 +16,15 @@ class HUMANITYLASTRESORT_API UHungerSatisfactionTask : public UNeedSatisfactionT
 	GENERATED_BODY()
 
 public:
-	void Satisfy(class AAlien* Alien) override;
+	void Satisfy(class AAlien* Alien, class UNeedComponent* Need) override;
+	void Wait() override;
+	class AResturant* GetResturant();
+	void MoveToResturant(class AResturant* Resturant);
+	void Eat();
+
+private:
+	float EatingTime;
+	FTimerHandle EatingTimeManager;
+	class AAlien* CurrentAlien;
+	class UNeedComponent* Hunger;
 };

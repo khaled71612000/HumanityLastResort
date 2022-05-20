@@ -46,7 +46,8 @@ void AResturant::OnOverlapEnd(UPrimitiveComponent* OverlappedComp, AActor* Other
 
 		if (Alien)
 		{
-			Alien->AlienState = Leaving;
+			//Alien->AlienState = Idle;
+			Capacity--;
 			//GEngine->AddOnScreenDebugMessage(-1, 10.f, FColor::Red, TEXT("Begin Overlap"));
 		}
 	}

@@ -7,7 +7,7 @@
 #include "Alien.generated.h"
 
 enum State {
-	Idle, Assigned, Arrived, Leaving
+	Idle, Assigned, Arrived, Waiting
 };
 
 UCLASS()
@@ -28,6 +28,6 @@ public:
 	class UNeedComponent* NeedToExcute;
 
 	void GetTask();
-	void ExecuteTask();
-
+	void GoToTask();
+	void DoTask();
 };

@@ -13,7 +13,7 @@
 ABuildingsActors::ABuildingsActors()
 {
 	PrimaryActorTick.bCanEverTick = false;
-
+	CurOccupant = 0;
 	StaticMeshComponent = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Static Mesh"));
 	RootComponent = StaticMeshComponent;
 

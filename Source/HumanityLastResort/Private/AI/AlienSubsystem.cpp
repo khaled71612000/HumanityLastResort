@@ -14,8 +14,8 @@ void UAlienSubsystem::Tick(float DeltaTime)
 {
 	for (AAlien* Alien : Aliens)
 	{
-		/*Alien->GetTask();
-		Alien->ExecuteTask();*/
+		Alien->GetTask();
+		Alien->ExecuteTask();
 	}
 
 }

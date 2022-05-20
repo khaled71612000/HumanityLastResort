@@ -2,9 +2,9 @@
 
 
 #include "AI/NeedSatisfactionTask.h"
+#include "AI/Alien.h"
 
-void UNeedSatisfactionTask::Satisfy()
+void UNeedSatisfactionTask::Satisfy(AAlien* Alien)
 {
 	UE_LOG(LogTemp, Warning, TEXT("Parent"));
-
 }

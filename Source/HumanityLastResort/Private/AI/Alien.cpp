@@ -39,7 +39,7 @@ void AAlien::GetTask()
 void AAlien::ExecuteTask()
 {
 	if(NeedToExcute)
-		NeedToExcute->Task->Satisfy();
+		NeedToExcute->Task->Satisfy(this);
 }
 
 

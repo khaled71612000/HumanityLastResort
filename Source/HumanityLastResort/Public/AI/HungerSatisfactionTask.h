@@ -15,5 +15,5 @@ class HUMANITYLASTRESORT_API UHungerSatisfactionTask : public UNeedSatisfactionT
 	GENERATED_BODY()
 
 public:
-	void Satisfy() override;
+	void Satisfy(class AAlien* Alien) override;
 };

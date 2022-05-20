@@ -16,7 +16,7 @@ void ASpawnAI::BeginPlay()
 	SpawnRotation = this->GetActorRotation();
 
 	FTimerHandle SpawningManager;
-	GetWorld()->GetTimerManager().SetTimer(SpawningManager, this, &ASpawnAI::SpawnAnAlien, SpawnRate, true);
+	GetWorld()->GetTimerManager().SetTimer(SpawningManager, this, &ASpawnAI::SpawnAnAlien, SpawnRate, false);
 }
 
 void ASpawnAI::SpawnAnAlien()
@@ -24,6 +24,6 @@ void ASpawnAI::SpawnAnAlien()
 	AAlien* Alien = GetWorld()->SpawnActor<AAlien>(ActorToSpawn,SpawnLocation, SpawnRotation, SpawnParams);
 	AlienSubsystem->Aliens.Add(Alien);
 
-	GEngine->AddOnScreenDebugMessage(-1, 10.f, FColor::Red, TEXT("Spawn"));
+	//GEngine->AddOnScreenDebugMessage(-1, 10.f, FColor::Red, TEXT("Spawn"));
 
 }

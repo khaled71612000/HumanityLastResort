@@ -15,6 +15,7 @@ class HUMANITYLASTRESORT_API UNeedSatisfactionTask : public UObject
 	GENERATED_BODY()
 
 public:
-	virtual void Satisfy();
+	virtual void Satisfy(class AAlien* Alien);
 
 };
+

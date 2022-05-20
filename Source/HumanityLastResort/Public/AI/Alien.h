@@ -7,7 +7,7 @@
 #include "Alien.generated.h"
 
 enum State {
-	Idle, Assigned, Leaving
+	Idle, Assigned, Arrived, Leaving
 };
 
 UCLASS()

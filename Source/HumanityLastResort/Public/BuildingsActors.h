@@ -13,6 +13,11 @@ class HUMANITYLASTRESORT_API ABuildingsActors : public AActor
 	
 public:	
 	ABuildingsActors();
+	UPROPERTY(EditDefaultsOnly, Category = "Capacity")
+	int Capacity;
+
+	int CurOccupant;
+
 	UFUNCTION(BlueprintCallable, Category = "Functions")
 		void LockPosition(bool block);
 	UFUNCTION(BlueprintCallable, Category = "Functions")

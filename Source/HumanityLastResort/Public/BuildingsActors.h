@@ -16,7 +16,7 @@ public:
 	UPROPERTY(EditDefaultsOnly, Category = "Capacity")
 	int Capacity;
 
-	int CurOccupant;
+	int CurOccupants;
 
 	UFUNCTION(BlueprintCallable, Category = "Functions")
 		void LockPosition(bool block);

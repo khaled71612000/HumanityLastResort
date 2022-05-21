@@ -18,6 +18,8 @@ void UAlienSubsystem::Tick(float DeltaTime)
 		{
 			Alien->GetTask();
 			Alien->GoToTask();
+			UE_LOG(LogTemp, Warning, TEXT("Value: %d"));
+
 		}
 		else if (Alien->AlienState == Arrived)
 			Alien->DoTask();

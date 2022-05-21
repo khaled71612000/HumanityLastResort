@@ -7,6 +7,7 @@
 
 AResturant::AResturant(const FObjectInitializer& objectInitializer)
 {
+	CurOccupants = 0;
 	RestCollision = CreateDefaultSubobject<USphereComponent>(TEXT("RootCollision"));
 
 	RestCollision->SetupAttachment(RootComponent);
@@ -46,8 +47,7 @@ void AResturant::OnOverlapEnd(UPrimitiveComponent* OverlappedComp, AActor* Other
 
 		if (Alien)
 		{
-			//Alien->AlienState = Idle;
-			Capacity--;
+			CurOccupants--;
 			//GEngine->AddOnScreenDebugMessage(-1, 10.f, FColor::Red, TEXT("Begin Overlap"));
 		}
 	}

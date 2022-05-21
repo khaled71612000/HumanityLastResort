@@ -32,7 +32,6 @@ void AAlien::GetTask()
 			NeedToExcute = Need;
 			MinValue = Need->CurValue;
 		}
-		//UE_LOG(LogTemp, Warning, TEXT("Value: %d"), Interest->Value);
 	}
 }
 

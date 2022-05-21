@@ -18,8 +18,6 @@ public:
 
 	UPROPERTY(EditDefaultsOnly, Category = "Properties")
 	float MaxCapacity;
-
-	UPROPERTY(EditDefaultsOnly, Category = "Properties")
 	float CurValue;
 
 	UPROPERTY(EditDefaultsOnly, Category = "Properties")

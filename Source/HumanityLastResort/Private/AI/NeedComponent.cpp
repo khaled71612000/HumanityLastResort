@@ -10,6 +10,7 @@
 UNeedComponent::UNeedComponent()
 {
 	PrimaryComponentTick.bCanEverTick = false;	
+	CurValue = MaxCapacity;
 }
 
 void UNeedComponent::OnRegister()

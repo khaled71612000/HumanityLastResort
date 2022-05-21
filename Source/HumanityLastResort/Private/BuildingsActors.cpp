@@ -53,7 +53,9 @@ void ABuildingsActors::BeginPlay()
 
 	NewBoxSize.Z = 0;
 
-	//StaticMeshComponent->AddRelativeLocation(NewBoxSize);
+	//UE_LOG(LogTemp, Error, TEXT("%f"), NewBoxSize.X);
+
+    //StaticMeshComponent->AddRelativeLocation(NewBoxSize);
 	//StaticMeshComponent->SetRelativeScale3D(FVector(0.75f, 0.75f, 1.5f));
 
 }
@@ -108,9 +110,16 @@ void ABuildingsActors::MouseMove(FVector position)
 		GetActorBounds(false, origin, boxExtent);
 		boxExtent.Z = 1.f;
 
-	    DrawDebugBox(GetWorld(), GetActorLocation() , NewBoxSize, FColor::Green, false, 50.f);
-
-		this->SetActorLocation(position + NewBoxSize);
+		// DrawDebugBox(GetWorld(), GetActorLocation() , NewBoxSize, FColor::Green, false, 50.f);
+		if (isOneCell) {
+			position.X += 195;
+			position.Y += 195;
+			this->SetActorLocation(position);
+			UE_LOG(LogTemp, Warning, TEXT("Hello"));
+		}
+		else {
+			this->SetActorLocation(position + NewBoxSize);
+		}
 
 	    MyPawn = UGameplayStatics::GetPlayerController(this, 0)->GetPawn<ACameraPawn>();
 		if(MyPawn)
@@ -119,13 +128,12 @@ void ABuildingsActors::MouseMove(FVector position)
 		FVector Start = GetActorLocation();
 		FVector End = ((GetActorUpVector() * -1 * 10000.f) + Start);
 
-		
-
 		TArray<AActor*> ActorsToIgnore;
 		ActorsToIgnore.Add(this);
 		FHitResult HitResult;
 
-		bool BoxHit = UKismetSystemLibrary::BoxTraceSingle(GetWorld(), Start, End, boxExtent / 2 ,
+		bool BoxHit = UKismetSystemLibrary::BoxTraceSingle(GetWorld(), Start, End,
+			NewBoxSize ,
 			GetActorRotation(), UEngineTypes::ConvertToTraceType(ECC_Pawn),
 			false, ActorsToIgnore, EDrawDebugTrace::None, HitResult,
 			true, FLinearColor::Red, FLinearColor::Green, 0.1f

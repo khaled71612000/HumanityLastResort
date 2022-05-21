@@ -22,6 +22,9 @@ public:
 	void ClearFloor();
 	FVector NewBoxSize;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Cells")
+	bool isOneCell = false;
+
 protected:
 	virtual void BeginPlay() override;
 

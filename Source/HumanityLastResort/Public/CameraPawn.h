@@ -46,7 +46,7 @@ public:
 	FVector GetCameraPanDirecton();
 
 	UPROPERTY(EditAnywhere, Category = "Panning")
-	float Margin = 20;
+	float Margin = 50;
 	int32 ScreenSizeX;
 	int32 ScreenSizeY;
 

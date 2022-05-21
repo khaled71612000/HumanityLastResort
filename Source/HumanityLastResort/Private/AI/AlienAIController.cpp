@@ -3,14 +3,19 @@
 
 #include "AI/AlienAIController.h"
 #include "AI/Alien.h"
+#include "BuildingsActors.h"
 
 void AAlienAIController::OnMoveCompleted(FAIRequestID RequestID, const FPathFollowingResult& Result)
 {
 	AAlien* Alien = Cast<AAlien>(GetPawn());
 	if (Alien)
 	{
-		if(Alien->AlienState == Assigned)
+		if (Alien->AlienState == Assigned)
+		{
+			UE_LOG(LogTemp, Warning, TEXT("AI here"));
+
 			Alien->AlienState = Idle;
-		//UE_LOG(LogTemp, Warning, TEXT("OnMoveCompleted"));
+			CurBuilding->CurOccupants--;
+		}
 	}
 }

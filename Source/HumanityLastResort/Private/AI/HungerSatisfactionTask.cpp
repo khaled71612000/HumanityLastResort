@@ -14,8 +14,10 @@ void UHungerSatisfactionTask::Satisfy(AAlien* Alien, UNeedComponent* Need)
 	TaskComponent = Need;
 	
 	AResturant* Resturant = GetResturant();
-	if(Resturant)
+	if (Resturant)
 		MoveToResturant(Resturant);
+	else
+		Alien->AlienState = Idle;
 
 	//UE_LOG(LogTemp, Warning, TEXT("Hungry"));
 }
@@ -30,6 +32,8 @@ AResturant* UHungerSatisfactionTask::GetResturant()
 	for (AActor* Resturant : Resturants)
 	{
 		AResturant* Rest = Cast<AResturant>(Resturant);
+		UE_LOG(LogTemp, Warning, TEXT("Rest: %d"), Rest->CurOccupants);
+
 		if (Rest)
 		{
 			if (Rest->CurOccupants < Rest->Capacity)
@@ -49,6 +53,7 @@ void UHungerSatisfactionTask::MoveToResturant(AResturant* Resturant)
 		{
 			Resturant->CurOccupants++;
 			CurrentAlien->AlienState = Assigned;
+			AI->CurBuilding = Resturant;
 			AI->MoveToLocation(Resturant->GetActorLocation());
 
 		}

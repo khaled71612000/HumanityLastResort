@@ -10,7 +10,6 @@
 UNeedComponent::UNeedComponent()
 {
 	PrimaryComponentTick.bCanEverTick = false;	
-	CurValue = MaxCapacity;
 }
 
 void UNeedComponent::OnRegister()
@@ -19,7 +18,7 @@ void UNeedComponent::OnRegister()
 	if (TaskClass) 
 	{
 		Task = NewObject<UNeedSatisfactionTask>(this, TaskClass);
-	}
+	}	
 
 }
 
@@ -27,6 +26,7 @@ void UNeedComponent::OnRegister()
 void UNeedComponent::BeginPlay()
 {
 	Super::BeginPlay();
+	CurValue = MaxCapacity;
 	StartDecreasingValue();
 }
 
@@ -43,4 +43,6 @@ void UNeedComponent::DecreaseValue()
 {
 	if (CurValue > 0)
 		CurValue -= DecayRate;
+	//UE_LOG(LogTemp, Warning, TEXT("CurValue: %d"), CurValue);
+
 }

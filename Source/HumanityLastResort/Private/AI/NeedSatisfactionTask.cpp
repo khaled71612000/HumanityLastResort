@@ -15,8 +15,7 @@ void UNeedSatisfactionTask::Satisfy(AAlien* Alien, class UNeedComponent* Need)
 
 void UNeedSatisfactionTask::Wait()
 {
-	CurrentAlien->AlienState = Waiting;
-	TaskTime = TaskComponent->TaskTime;
+	CurTaskTime = TaskComponent->TaskTime;
 	if (GetWorld()->GetTimerManager().IsTimerPaused(TaskTimeManager))
 		GetWorld()->GetTimerManager().UnPauseTimer(TaskTimeManager);
 	else
@@ -25,13 +24,14 @@ void UNeedSatisfactionTask::Wait()
 
 void UNeedSatisfactionTask::DoTask()
 {
-	TaskTime--;
+	CurTaskTime--;
 
-	if (TaskTime == 0)
+	if (CurTaskTime <= 0)
 	{
 		TaskComponent->CurValue = TaskComponent->MaxCapacity;
 		CurrentAlien->AlienState = Idle;
 		GetWorld()->GetTimerManager().PauseTimer(TaskTimeManager);
+		CurTaskTime = TaskComponent->TaskTime;
 	}
 }
 

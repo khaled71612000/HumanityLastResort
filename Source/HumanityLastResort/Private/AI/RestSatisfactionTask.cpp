@@ -47,7 +47,9 @@ void URestSatisfactionTask::MoveToHotel(AHotel* Hotel)
 		if (AI)
 		{
 			Hotel->CurOccupants++;
+			UE_LOG(LogTemp, Warning, TEXT("Rest: %d"), Hotel->CurOccupants);
 			CurrentAlien->AlienState = Assigned;
+			AI->CurBuilding = Hotel;
 			AI->MoveToLocation(Hotel->GetActorLocation());
 		}
 	}

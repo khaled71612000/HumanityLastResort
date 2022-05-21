@@ -25,7 +25,7 @@ public:
 protected:
 	class AAlien* CurrentAlien;
 	class UNeedComponent* TaskComponent;
-	float TaskTime;
+	float CurTaskTime;
 	FTimerHandle TaskTimeManager;
 };
 

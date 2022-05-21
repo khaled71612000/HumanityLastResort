@@ -27,6 +27,8 @@ void AAlien::GetTask()
 	int MinValue = 101;
 	for (UNeedComponent* Need : Needs)
 	{
+		//UE_LOG(LogTemp, Warning, TEXT("Task: %d"), Need->CurValue);
+
 		if (Need->CurValue < MinValue)
 		{
 			NeedToExcute = Need;
@@ -37,8 +39,10 @@ void AAlien::GetTask()
 
 void AAlien::GoToTask()
 {
-	if(NeedToExcute)
+	if (NeedToExcute)
 		NeedToExcute->Task->Satisfy(this, NeedToExcute);
+	else
+		AlienState = Idle;
 }
 
 void AAlien::DoTask()

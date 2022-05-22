@@ -14,6 +14,8 @@ class HUMANITYLASTRESORT_API ANewCell : public AActor
 public:	
 	// Sets default values for this actor's properties
 	ANewCell();
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Mesh")
 	UStaticMeshComponent* SphereMesh;
 
 protected:

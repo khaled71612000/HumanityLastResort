@@ -17,6 +17,8 @@ void URestSatisfactionTask::Satisfy(AAlien* Alien, UNeedComponent* Need)
 	AHotel* Hotel = GetHotel();
 	if (Hotel)
 		MoveToHotel(Hotel);
+	else
+		Alien->AlienState = Idle;
 }
 
 AHotel* URestSatisfactionTask::GetHotel()

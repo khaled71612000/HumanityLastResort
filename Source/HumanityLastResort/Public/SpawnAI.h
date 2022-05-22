@@ -25,9 +25,11 @@ private:
 	void SpawnAnAlien();
 
 	UPROPERTY(EditAnywhere, meta = (AllowPrivateAccess = "true"))
-		TSubclassOf<class AAICharacterBase> ActorToSpawn;
+		TSubclassOf<class AAlien> ActorToSpawn;
 
 public:
-	UPROPERTY(EditAnywhere, Category = "Spawn")
+	UPROPERTY(EditAnywhere, Category = "Spawn AI")
 		float SpawnRate = 8.f;
+
+	class UAlienSubsystem* AlienSubsystem;
 };

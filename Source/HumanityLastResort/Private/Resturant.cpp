@@ -3,10 +3,11 @@
 
 #include "Resturant.h"
 #include "Components/SphereComponent.h"
-#include "AICharacterBase.h"
+#include "AI/Alien.h"
 
 AResturant::AResturant(const FObjectInitializer& objectInitializer)
 {
+	CurOccupants = 0;
 	RestCollision = CreateDefaultSubobject<USphereComponent>(TEXT("RootCollision"));
 
 	RestCollision->SetupAttachment(RootComponent);
@@ -25,11 +26,12 @@ void AResturant::OnOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherAct
 {
 	if (OtherActor && OtherActor != this)
 	{
-		AAICharacterBase* Chr = Cast<AAICharacterBase>(OtherActor);
+		AAlien* Alien = Cast<AAlien>(OtherActor);
 
-		if (Chr)
+		if (Alien)
 		{
-			Chr->NotHungry = 100;
+			Alien->AlienState = Arrived;
+			GEngine->AddOnScreenDebugMessage(-1, 10.f, FColor::Red, TEXT("Begin Overlap"));
 			//GEngine->AddOnScreenDebugMessage(-1, 10.f, FColor::Red, TEXT("Begin Overlap"));
 		}
 	}
@@ -41,11 +43,11 @@ void AResturant::OnOverlapEnd(UPrimitiveComponent* OverlappedComp, AActor* Other
 	GEngine->AddOnScreenDebugMessage(-1, 10.f, FColor::Red, TEXT("End Overlap"));
 	if (OtherActor && OtherActor != this)
 	{
-		AAICharacterBase* Chr = Cast<AAICharacterBase>(OtherActor);
+		AAlien* Alien = Cast<AAlien>(OtherActor);
 
-		if (Chr)
+		if (Alien)
 		{
-			Chr->NotHungry = 100;
+			CurOccupants--;
 			//GEngine->AddOnScreenDebugMessage(-1, 10.f, FColor::Red, TEXT("Begin Overlap"));
 		}
 	}

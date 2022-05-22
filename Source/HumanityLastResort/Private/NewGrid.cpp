@@ -42,6 +42,10 @@ void ANewGrid::PopulateGrid()
 	}
 }
 
+void ANewGrid::GetClosestPosition(FVector InPosition)
+{
+}
+
 void ANewGrid::PreSave(const class ITargetPlatform* TargetPlatform)
 {
 

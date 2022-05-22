@@ -19,9 +19,14 @@ public:
 	int GridSize = 10;
 	int WorldGridSize = 1000;
 	TArray<AActor*> GridArray;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite , Category = "Cells")
+		TSubclassOf<class AActor> ActorToSpawn;
 
 	UFUNCTION(BlueprintCallable, Category = "Cells")
 	void PopulateGrid();
+
+	UFUNCTION(BlueprintCallable, Category = "Cells")
+	void GetClosestPosition(FVector InPosition);
 
 	virtual void PreSave(const class ITargetPlatform* TargetPlatform) override;
 

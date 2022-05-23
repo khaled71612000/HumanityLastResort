@@ -115,29 +115,31 @@ void ABuildingsActors::MouseMove(FVector position)
 			position.X += 195;
 			position.Y += 195;
 			this->SetActorLocation(position);
-			UE_LOG(LogTemp, Warning, TEXT("Hello"));
+			//UE_LOG(LogTemp, Warning, TEXT("Hello"));
 		}
 		else {
 			this->SetActorLocation(position + NewBoxSize);
 		}
+		this->SetActorLocation(position);
 
-	    MyPawn = UGameplayStatics::GetPlayerController(this, 0)->GetPawn<ACameraPawn>();
-		if(MyPawn)
-		MyPawn->SelectedToken = this;
+		 MyPawn = UGameplayStatics::GetPlayerController(this, 0)->GetPawn<ACameraPawn>();
+		   if(MyPawn)
+		   MyPawn->SelectedToken = this;
+		   
 
-		FVector Start = GetActorLocation();
-		FVector End = ((GetActorUpVector() * -1 * 10000.f) + Start);
+		   FVector Start = GetActorLocation();
+		   FVector End = ((GetActorUpVector() * 50.f) + Start);
 
-		TArray<AActor*> ActorsToIgnore;
-		ActorsToIgnore.Add(this);
-		FHitResult HitResult;
+		   TArray<AActor*> ActorsToIgnore;
+		   ActorsToIgnore.Add(this);
+		   FHitResult HitResult;
 
-		bool BoxHit = UKismetSystemLibrary::BoxTraceSingle(GetWorld(), Start, End,
-			NewBoxSize ,
-			GetActorRotation(), UEngineTypes::ConvertToTraceType(ECC_Pawn),
-			false, ActorsToIgnore, EDrawDebugTrace::None, HitResult,
-			true, FLinearColor::Red, FLinearColor::Green, 0.1f
-		);
+		   bool BoxHit = UKismetSystemLibrary::BoxTraceSingle(GetWorld(), Start, End,
+			   NewBoxSize ,
+			   GetActorRotation(), UEngineTypes::ConvertToTraceType(ECC_Pawn),
+			   false, ActorsToIgnore, EDrawDebugTrace::None, HitResult,
+			   true, FLinearColor::Red, FLinearColor::Green, 0.1f
+		   );
 
 		if (BoxHit) {
 			//UE_LOG(LogTemp, Error, TEXT("Colliding"))

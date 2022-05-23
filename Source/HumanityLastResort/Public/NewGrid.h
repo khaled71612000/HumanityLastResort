@@ -16,7 +16,9 @@ public:
 	// Sets default values for this actor's properties
 	ANewGrid();
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Cells")
 	int GridSize = 10;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Cells")
 	int WorldGridSize = 1000;
 	TArray<AActor*> GridArray;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite , Category = "Cells")
@@ -26,9 +28,11 @@ public:
 	void PopulateGrid();
 
 	UFUNCTION(BlueprintCallable, Category = "Cells")
-	void GetClosestPosition(FVector InPosition);
+	FVector GetClosestPosition(FVector InPosition);
+	FVector closestPos;
+	float closestDistance;
 
-	virtual void PreSave(const class ITargetPlatform* TargetPlatform) override;
+	virtual void PreSave(const class ITargetPlatform* TargetPlatform);
 
 protected:
 	// Called when the game starts or when spawned

@@ -31,9 +31,7 @@ public:
 	bool DoingTask;
 	int TaskInd;
 
-	TArray<AActor*> Resturants;
-	//TArray<AActor*> Hotels;
-
+	TMap<int32, AActor*> Resturants;
 	TMap<int32, AActor*> Hotels;
 
 public:
@@ -68,9 +66,5 @@ public:
 	TArray<bool*> AIState;
 	TArray<int32*> AIAttributes;
 	typedef void (AAICharacterBase::* Action)();
-	TArray<Action> Actions;
-
-
-	bool todelete = true;
-	
+	TArray<Action> Actions;	
 };

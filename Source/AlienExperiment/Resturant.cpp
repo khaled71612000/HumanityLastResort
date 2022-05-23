@@ -28,7 +28,14 @@ void AResturant::OnOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherAct
 
 		if (Chr)
 		{
+			if (Chr->HungryManager.IsValid())
+			{
+				GetWorld()->GetTimerManager().PauseTimer(Chr->HungryManager);
+			}
+
 			Chr->NotHungry = 100;
+			Chr->isHungry = false;
+			Chr->TaskState = Idle;
 			GEngine->AddOnScreenDebugMessage(-1, 10.f, FColor::Red, TEXT("Begin Overlap"));
 		}
 	}
@@ -37,15 +44,11 @@ void AResturant::OnOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherAct
 
 void AResturant::OnOverlapEnd(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
 {
-	GEngine->AddOnScreenDebugMessage(-1, 10.f, FColor::Red, TEXT("End Overlap"));
-	if (OtherActor && OtherActor != this)
-	{
-		AAICharacterBase* Chr = Cast<AAICharacterBase>(OtherActor);
+	Residents -= 1;
+	AAICharacterBase* Chr = Cast<AAICharacterBase>(OtherActor);
 
-		if (Chr)
-		{
-			Chr->NotHungry = 100;
-			GEngine->AddOnScreenDebugMessage(-1, 10.f, FColor::Red, TEXT("Begin Overlap"));
-		}
+	if (Chr && Chr->HungryManager.IsValid())
+	{
+		GetWorld()->GetTimerManager().UnPauseTimer(Chr->HungryManager);
 	}
 }

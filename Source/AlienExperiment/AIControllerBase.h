@@ -21,6 +21,8 @@ private:
 
 public:
 	void ArrangeHotelsArray();
+	void ArrangeResturantsArray();
+
 	int GetTaskToPerform();
 	void PerformTask();
 	void OnMoveCompleted(FAIRequestID RequestID, const FPathFollowingResult& Result) override;

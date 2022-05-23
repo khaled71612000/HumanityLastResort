@@ -12,7 +12,7 @@ void ASpawnAI::BeginPlay()
 	SpawnRotation = this->GetActorRotation();
 
 	FTimerHandle SpawningManager;
-	GetWorld()->GetTimerManager().SetTimer(SpawningManager, this, &ASpawnAI::SpawnAnAlien, SpawnRate, true);
+	GetWorld()->GetTimerManager().SetTimer(SpawningManager, this, &ASpawnAI::SpawnAnAlien, SpawnRate, false);
 
 }
 

@@ -26,16 +26,15 @@ AAICharacterBase::AAICharacterBase()
 	isSleepy = false;
 	DoingTask = false;
 
-	//AIState.Add(&isHungry);
+	AIState.Add(&isHungry);
 	AIState.Add(&isSleepy);
-	//AIAttributes.Add(&NotHungry);
+	AIAttributes.Add(&NotHungry);
 	AIAttributes.Add(&NotSleepy);
-	//Actions.Add(&AAICharacterBase::MoveToResturant);
+	Actions.Add(&AAICharacterBase::MoveToResturant);
 	Actions.Add(&AAICharacterBase::MoveToHotel);
 
 
 	TaskState = Idle;
-
 };
 	
 
@@ -44,14 +43,14 @@ AAICharacterBase::AAICharacterBase()
 void AAICharacterBase::BeginPlay()
 {
 	Super::BeginPlay();
-	//AI = Cast<AAIControllerBase>(GetController());
-
-	//GettingHungry();
+	GettingHungry();
 	GettingSleepy();
 }
 
 void AAICharacterBase::Tick(float DeltaTime)
 {
+	UE_LOG(LogTemp, Warning, TEXT("Task State: %d"), TaskState);
+
 	AAIControllerBase* AI = Cast<AAIControllerBase>(GetController());
 	if (!AI) 
 		return;
@@ -64,7 +63,7 @@ void AAICharacterBase::Tick(float DeltaTime)
 	}
 
 	if (TaskInd != -1 && (TaskState == Assigned || TaskState == Failed)) {
-		UE_LOG(LogTemp, Warning, TEXT("Task State before calling %d: "), TaskState);
+		//UE_LOG(LogTemp, Warning, TEXT("Task State before calling %d: "), TaskState);
 		TaskState = Moving;
 		AI->PerformTask();
 	}
@@ -87,10 +86,9 @@ void AAICharacterBase::ChangeNotHungryAttr()
 		NotHungry -= 1;
 
 	if (NotHungry < 95) {
-		MoveToResturant();
+		isHungry = true;
+		//UE_LOG(LogTemp, Warning, TEXT("Hungry"));
 	}
-
-	UE_LOG(LogTemp, Warning, TEXT("Not Hungry: %d"), NotHungry);
 }
 
 void AAICharacterBase::ChangeNotSleepyAttr()
@@ -116,22 +114,28 @@ void AAICharacterBase::SetupPlayerInputComponent(UInputComponent* PlayerInputCom
 
 void AAICharacterBase::MoveToResturant()
 {
-	//UGameplayStatics::GetAllActorsOfClass(GetWorld(), AResturant::StaticClass(), Resturants);
+	//UE_LOG(LogTemp, Warning, TEXT("Task State after calling: %d"), TaskState);
+	AAIControllerBase* AI = Cast<AAIControllerBase>(GetController());
+	if (!AI)
+		return;
 
-	//AAIController* AI = Cast<AAIController>(GetController());
-	//if (!AI)
-	//	return;
+	AI->ArrangeResturantsArray();
 
-	//for (AActor* Resturant : Resturants)
-	//{
-	//	AResturant* Rest = Cast<AResturant>(Resturant);
+	for (auto& Resturant : Resturants)
+	{
+		AResturant* Rest = Cast<AResturant>(Resturant.Value);
+		if (Rest && Rest->Residents < Rest->Capacity)
+		{
+			AI->MoveTo(Rest->GetActorLocation());
+			GEngine->AddOnScreenDebugMessage(-1, 10.f, FColor::Red, TEXT("Called"));
 
-	//	if (Rest && Rest->Residents < Rest->Capacity)
-	//	{
-	//		AI->MoveTo(Rest->GetActorLocation());
-	//		//GEngine->AddOnScreenDebugMessage(-1, 10.f, FColor::Red, TEXT("Moving"));
-	//	}
-	//}
+			Rest->Residents += 1;
+			break;
+		}
+
+		//UE_LOG(LogTemp, Warning, TEXT("Hotels: %d"), Hotels.Num());
+		//GEngine->AddOnScreenDebugMessage(-1, 10.f, FColor::Red, TEXT("Look"));
+	}
 }
 
 void AAICharacterBase::MoveToHotel()

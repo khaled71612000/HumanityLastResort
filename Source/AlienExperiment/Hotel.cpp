@@ -40,7 +40,6 @@ void AHotel::OnOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, 
 			
 		}
 	}
-
 }
 
 void AHotel::OnOverlapEnd(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)

@@ -2,9 +2,10 @@
 
 
 #include "AIControllerBase.h"
-#include "Hotel.h"
 #include "Kismet/GameplayStatics.h"
 #include "AICharacterBase.h"
+#include "Hotel.h"
+#include "Resturant.h"
 
 void AAIControllerBase::ArrangeHotelsArray()
 {
@@ -18,6 +19,22 @@ void AAIControllerBase::ArrangeHotelsArray()
 	{
 		int32 dist = (int32)FVector::Distance(H->GetActorLocation(), NPC->GetActorLocation());
 		NPC->Hotels.Add(dist, H);
+	}
+
+}
+
+void AAIControllerBase::ArrangeResturantsArray()
+{
+	AAICharacterBase* NPC = Cast<AAICharacterBase>(GetPawn());
+	if (!NPC)
+		return;
+	TArray<AActor*> WorldResturants;
+	UGameplayStatics::GetAllActorsOfClass(GetWorld(), AResturant::StaticClass(), WorldResturants);
+
+	for (AActor* R : WorldResturants)
+	{
+		int32 dist = (int32)FVector::Distance(R->GetActorLocation(), NPC->GetActorLocation());
+		NPC->Resturants.Add(dist, R);
 	}
 
 }

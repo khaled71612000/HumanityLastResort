@@ -2,6 +2,8 @@
 
 
 #include "CellActor.h"
+#include "GameFramework/PlayerController.h"
+
 
 ACellActor::ACellActor()
 {
@@ -16,7 +18,11 @@ ACellActor::ACellActor()
 void ACellActor::BeginPlay()
 {
 	Super::BeginPlay();
-	
+
+	FHitResult Hit;
+	//GetWorld()->GetFirstPlayerController()->GetHitResultUnderCursorByChannel()
+	//GetHitResultUnderCursorByChannel(ETraceTypeQuery::TraceTypeQuery_MAX, true, Hit);
+
 }
 
 

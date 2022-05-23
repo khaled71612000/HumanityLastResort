@@ -4,6 +4,7 @@
 #include "GameController.h"
 #include "BuildingsActors.h"
 #include "DrawDebugHelpers.h"
+#include "NewGrid.h"
 #include <CellActor.h>
 #include "RunTime\Engine\Classes\Kismet\GameplayStatics.h"
 
@@ -34,7 +35,7 @@ void AGameController::Tick(float dt) {
 	FCollisionQueryParams TraceParams;
 
 	bool bHit = GetWorld()->LineTraceSingleByChannel(Hit, start, end, ECC_Visibility, TraceParams);
-	
+
 	FVector origin;
 	FVector boundsExtent;
 	ACellActor* Tile;
@@ -52,7 +53,11 @@ void AGameController::Tick(float dt) {
 	}
 
 	TArray<AActor*> actorPtrs;
+	//AActor* FoundGrid;
+	//ANewGrid* GridPtr;
 	UGameplayStatics::GetAllActorsOfClass(GetWorld(), ABuildingsActors::StaticClass(), actorPtrs);
+	//FoundGrid = UGameplayStatics::GetActorOfClass(GetWorld(), ANewGrid::StaticClass());
+
 	//UE_LOG(LogTemp, Warning, TEXT("HERE Clicked %d"),actorPtrs.Num());
 	if (actorPtrs.Num() != 0) {
 		for (AActor* actor : actorPtrs) {
@@ -60,11 +65,18 @@ void AGameController::Tick(float dt) {
 			ABuildingsActors* current = Cast<ABuildingsActors>(actor);
 
 			if (current) {
+				//	if (FoundGrid) {
+						//GridPtr = Cast<ANewGrid>(FoundGrid);
+					//	if (GridPtr) {
+							//GridPtr->GetClosestPosition(origin);
+							//current->MouseMove(GridPtr->GetClosestPosition(intersect));
+						//}
 				current->MouseMove(origin);
 			}
 		}
 	}
 }
+
 void AGameController::OnLeftMouseRelease()
 {
 	TArray<AActor*> actorPtrs;

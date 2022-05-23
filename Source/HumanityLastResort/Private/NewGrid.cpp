@@ -1,8 +1,8 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "NewCell.h"
 #include "NewGrid.h"
+#include "NewCell.h"
 
 // Sets default values
 ANewGrid::ANewGrid()
@@ -42,8 +42,24 @@ void ANewGrid::PopulateGrid()
 	}
 }
 
-void ANewGrid::GetClosestPosition(FVector InPosition)
+FVector ANewGrid::GetClosestPosition(FVector InPosition)
 {
+	
+	closestPos = GridArray[0]->GetActorLocation();
+	
+	closestDistance = FVector::Dist(closestPos, InPosition);
+
+	for (AActor* element : GridArray)
+	{
+		element->GetActorLocation();
+		if (FVector::Dist(element->GetActorLocation(), InPosition) < closestDistance) {
+			closestPos = element->GetActorLocation();
+			closestDistance = FVector::Dist(element->GetActorLocation(), InPosition);
+		}
+
+	}
+
+	return closestPos;
 }
 
 void ANewGrid::PreSave(const class ITargetPlatform* TargetPlatform)

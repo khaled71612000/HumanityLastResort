@@ -17,14 +17,16 @@ public:
 	UNeedComponent();
 
 	UPROPERTY(EditDefaultsOnly, Category = "Properties")
-	int32 MaxCapacity;
-	int32 CurValue;
+	float MaxCapacity;
+
+	UPROPERTY(Transient)
+	float CurValue;
 
 	UPROPERTY(EditDefaultsOnly, Category = "Properties")
-	int32 DecayRate;
+	float DecayRate;
 
 	UPROPERTY(EditDefaultsOnly, Category = "Properties")
-	int32 TaskTime;
+	float TaskTime;
 
 	UPROPERTY(EditDefaultsOnly)
 	TSubclassOf<class UNeedSatisfactionTask> TaskClass;

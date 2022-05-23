@@ -14,10 +14,6 @@ AAEGameModeBase::AAEGameModeBase()
 void AAEGameModeBase::BeginPlay()
 {
 	Super::BeginPlay();
-	EconomySubsystem = GameInstanceRef->GetSubsystem<UEconomySubsystem>();
-	EconomySubsystem->PrintCash();
-	EconomySubsystem->AddCash();
-	EconomySubsystem->PrintCash();
 
 }
 

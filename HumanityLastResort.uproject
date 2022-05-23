@@ -1,0 +1,13 @@
+{
+  "Category": "",
+  "Description": "",
+  "EngineAssociation": "4.27",
+  "FileVersion": 3,
+  "Modules": [
+    {
+      "LoadingPhase": "Default",
+      "Name": "HumanityLastResort",
+      "Type": "Runtime"
+    }
+  ]
+}

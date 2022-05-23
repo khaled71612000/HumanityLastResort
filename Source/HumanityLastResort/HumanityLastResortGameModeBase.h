@@ -4,13 +4,13 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/GameModeBase.h"
-#include "AlienExperimentGameModeBase.generated.h"
+#include "HumanityLastResortGameModeBase.generated.h"
 
 /**
  * 
  */
 UCLASS()
-class HUMANITYLASTRESORT_API AAlienExperimentGameModeBase : public AGameModeBase
+class HUMANITYLASTRESORT_API AHumanityLastResortGameModeBase : public AGameModeBase
 {
 	GENERATED_BODY()
 	

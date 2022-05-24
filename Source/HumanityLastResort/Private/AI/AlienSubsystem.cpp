@@ -18,6 +18,7 @@ TStatId UAlienSubsystem::GetStatId() const
 	return TStatId();
 }
 
+
 void UAlienSubsystem::Tick(float DeltaTime)
 {
 	for (AAlien* Alien : Aliens)
@@ -40,15 +41,18 @@ void UAlienSubsystem::Tick(float DeltaTime)
 			UpdateNumOfAliens(Alien);
 			UpdateGlobalMood();
 			Alien->Leave();
+			break;
 		}
 	}
 }
 
 void UAlienSubsystem::UpdateNumOfAliens(class AAlien* Alien)
 {
+	
 	NumOfAliens--;
 	GlobalMood -= Alien->Mood;
 	Aliens.Remove(Alien);
+
 }
 
 void UAlienSubsystem::UpdateGlobalMood()

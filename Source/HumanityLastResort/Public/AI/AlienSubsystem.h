@@ -16,6 +16,7 @@ class HUMANITYLASTRESORT_API UAlienSubsystem : public UTickableWorldSubsystem
 
 public:
 	TArray<class AAlien*> Aliens;
+
 	int32 GlobalMood;
 	int32 NumOfAliens;
 

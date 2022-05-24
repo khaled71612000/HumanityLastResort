@@ -52,6 +52,10 @@ public:
 
 	
 
+	//UFUNCTION(BlueprintCallable, Category = "Movement")
+	//	void OrbitRotate(float Value);
+	//UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Movement")
+	//	float orbitSpeed = 1;
 
 	UFUNCTION(BlueprintCallable, Category = "Movement")
 		void MoveForward(float Value);

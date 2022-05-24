@@ -3,12 +3,14 @@
 
 #include "BuildingsActors.h"
 #include "CameraPawn.h"
-#include "AICharacterBase.h"
 #include "Kismet\KismetSystemLibrary.h"
 #include "DrawDebugHelpers.h"
 #include "CellActor.h"
 #include "Math/UnrealMathUtility.h"
 #include "RunTime\Engine\Classes\Kismet\GameplayStatics.h"
+
+#include "AI/Alien.h"
+#include "Economy/EconomySubsystem.h"
 
 ABuildingsActors::ABuildingsActors()
 {
@@ -30,7 +32,8 @@ ABuildingsActors::ABuildingsActors()
 void ABuildingsActors::BeginPlay()
 {
 	Super::BeginPlay();
-	
+	EconomySubSystem = GetWorld()->GetSubsystem<UEconomySubsystem>();
+
 	StaticMeshComponent->OnClicked.AddDynamic(this, &ABuildingsActors::OnClicked);
 	oldPos = GetActorLocation();
 
@@ -70,6 +73,16 @@ void ABuildingsActors::OnClicked(UPrimitiveComponent* ClickedComp, FKey ButtonCl
 	StaticMeshComponent->GetBodyInstance()->bLockZTranslation = false;
 	StaticMeshComponent->GetBodyInstance()->SetDOFLock(EDOFMode::Default);
 	StaticMeshComponent->SetMobility(EComponentMobility::Movable);
+}
+
+void ABuildingsActors::AddProfit()
+{
+	EconomySubSystem->AddCash(Profit);
+}
+
+void ABuildingsActors::SubtractLoss()
+{
+	EconomySubSystem->SubtractCash(Loss);
 }
 
 void ABuildingsActors::LockPosition(bool block)
@@ -177,7 +190,7 @@ void ABuildingsActors::ClearFloor()
 		UE_LOG(LogTemp, Error, TEXT("NPC FOUND"));
 		for (auto& NPC : HitArray)
 		{
-			AAICharacterBase* NPCHit = Cast<AAICharacterBase>(NPC.GetActor());
+			AAlien* NPCHit = Cast<AAlien>(NPC.GetActor());
 			if (NPCHit) {
 				NPCHit->SetActorLocation(FVector(200,7800,190), true);
 			}

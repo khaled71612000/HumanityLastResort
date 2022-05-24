@@ -27,6 +27,8 @@ AResturant* UHungerSatisfactionTask::GetResturant()
 	TArray<AActor*> Resturants;
 	UGameplayStatics::GetAllActorsOfClass(GetWorld(), AResturant::StaticClass(), Resturants);
 
+	
+
 	ShuffleBuildings(Resturants);
 
 	for (AActor* Resturant : Resturants)

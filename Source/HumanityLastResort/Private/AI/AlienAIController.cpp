@@ -10,12 +10,36 @@ void AAlienAIController::OnMoveCompleted(FAIRequestID RequestID, const FPathFoll
 	AAlien* Alien = Cast<AAlien>(GetPawn());
 	if (Alien)
 	{
-		if (Alien->AlienState == Assigned)
+		if (Alien->AlienState == Leaving)
 		{
-			UE_LOG(LogTemp, Warning, TEXT("AI here"));
+			Alien->Destroy();
+		}
+		else if (Alien->AlienState == Assigned)
+		{
+			//UE_LOG(LogTemp, Warning, TEXT("Assigned"));
 
-			Alien->AlienState = Idle;
+			//Alien Update
+			Alien->NumOfFailedTasks--;
+			if (Alien->NumOfFailedTasks == 0)
+				Alien->AlienState = Leaving;
+			else
+				Alien->AlienState = Idle;
+
 			CurBuilding->CurOccupants--;
+			Alien->ChangeMood(-Alien->BadMoodVal);
+
+			//Building Update
+			CurBuilding->SubtractLoss();
+		}
+		else
+		{
+			//UE_LOG(LogTemp, Warning, TEXT("Not Assigned"));
+			Alien->NumOfTasks--;
+			if (Alien->NumOfTasks == 0)
+				Alien->AlienState = Leaving;
+
+			Alien->ChangeMood(Alien->GoodMoodVal);
+			CurBuilding->AddProfit();
 		}
 	}
 }

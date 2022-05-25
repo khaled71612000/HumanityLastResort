@@ -131,10 +131,10 @@ void ACameraPawn::RotateToken(float value) {
 		
 	}
 }
-//void ACameraPawn::OrbitRotate(float Value)
-//{
-//	this->AddControllerYawInput(orbitSpeed * Value);
-//}
+void ACameraPawn::OrbitRotate(float Value)
+{
+	this->AddControllerYawInput(orbitSpeed * Value);
+}
 
 // Called every frame
 void ACameraPawn::Tick(float DeltaTime)
@@ -150,7 +150,7 @@ void ACameraPawn::SetupPlayerInputComponent(UInputComponent* PlayerInputComponen
 
 	InputComponent->BindAxis("MoveForward", this, &ACameraPawn::MoveForward);
 	InputComponent->BindAxis("MoveRight", this, &ACameraPawn::MoveRight);
-	//InputComponent->BindAxis("Orbit", this, &ACameraPawn::OrbitRotate);
+	InputComponent->BindAxis("Orbit", this, &ACameraPawn::OrbitRotate);
 
 	InputComponent->BindAxis("Rotate", this, &ACameraPawn::RotateToken);
 

@@ -3,6 +3,7 @@
 
 #include "CameraPawn.h"
 #include <BuildingsActors.h>
+#include "Math/UnrealMathUtility.h"
 #include "GameFramework/PawnMovementComponent.h"
 #include "GameFramework/FloatingPawnMovement.h"
 
@@ -19,6 +20,8 @@ ACameraPawn::ACameraPawn()
 	SpringArm->SetupAttachment(RootScene);
 	SpringArm->bDoCollisionTest = false;
 	SpringArm->SetRelativeRotation(FRotator(-60, 0, 0));
+	SpringArm->SocketOffset=FVector(-60, 0, 0);
+
 	SpringArm->TargetArmLength = 3000.f;
 
 	CameraComp = CreateDefaultSubobject<UCameraComponent>(TEXT("Camera"));
@@ -133,9 +136,32 @@ void ACameraPawn::RotateToken(float value) {
 }
 void ACameraPawn::OrbitRotate(float Value)
 {
-	this->AddControllerYawInput(orbitSpeed * Value);
+	//this->AddControllerYawInput(orbitSpeed * Value);
+	AddActorWorldRotation(FRotator(0 , orbitSpeed * Value, 0));
 }
 
+void ACameraPawn::CameraPitch(float Value)
+{
+	//this->AddControllerYawInput(orbitSpeed * Value);
+	float minClamp = 310.f;
+	float maxClamp = 350.f;
+
+	//FRotator NewRotation = FRotator(0, 0, CameraPitchSpeed * Value);
+	//NewRotation.Yaw = FMath::ClampAngle(NewRotation.Yaw, minClamp, maxClamp);
+	//AddActorWorldRotation(FRotator(0, 0, FMath::ClampAngle((CameraPitchSpeed * Value), minClamp, maxClamp)));
+	//SpringArm->GetRelativeRotation().Yaw + CameraPitchSpeed * Value
+	//FMath::ClampAngle((SpringArm->GetRelativeRotation().Yaw + CameraPitchSpeed * Value), minClamp, maxClamp)
+
+	//if ((GetActorRotation().Yaw + CameraPitchSpeed * Value) != 0) {
+
+	//}
+	FRotator NewRotation = SpringArm->GetComponentRotation();
+	NewRotation.Pitch = NewRotation.Pitch + CameraPitchSpeed * Value;
+	NewRotation.Pitch = FMath::ClampAngle(NewRotation.Pitch, minClamp, maxClamp);
+
+	SpringArm->SetWorldRotation(NewRotation);;
+}
+	
 // Called every frame
 void ACameraPawn::Tick(float DeltaTime)
 {
@@ -151,7 +177,10 @@ void ACameraPawn::SetupPlayerInputComponent(UInputComponent* PlayerInputComponen
 	InputComponent->BindAxis("MoveForward", this, &ACameraPawn::MoveForward);
 	InputComponent->BindAxis("MoveRight", this, &ACameraPawn::MoveRight);
 	InputComponent->BindAxis("Orbit", this, &ACameraPawn::OrbitRotate);
+	InputComponent->BindAxis("CameraPitch", this, &ACameraPawn::CameraPitch);
 
+	//InputComponent->BindAction("ZoomIn", IE_Pressed, this, &ACameraPawn::ZoomIn);
+	//InputComponent->BindKey(FKey{ "LeftMouseButton" }, EInputEvent::IE_Pressed, this, &ACameraPawn::ZoomIn);
 	InputComponent->BindAxis("Rotate", this, &ACameraPawn::RotateToken);
 
 }

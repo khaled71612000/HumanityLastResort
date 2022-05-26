@@ -37,6 +37,7 @@ public:
 		USceneComponent* RootScene;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		USpringArmComponent* SpringArm;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		UCameraComponent* CameraComp;
 
 	UPROPERTY(EditAnywhere, Category = "Panning")

@@ -32,6 +32,8 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Cells")
 	bool isOneCell = false;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Cells")
+	FText NameView;
 
 protected:
 	virtual void BeginPlay() override;

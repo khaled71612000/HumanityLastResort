@@ -52,8 +52,8 @@ void ACameraPawn::BeginPlay()
 }
 
 FVector ACameraPawn::GetCameraPanDirecton() {
-	float MousePosX;
-	float MousePosY;
+	float MousePosX = 0;
+	float MousePosY = 0;
 	
 	float CamDirectonX = 0;
 	float CamDirectonY = 0;
@@ -61,7 +61,7 @@ FVector ACameraPawn::GetCameraPanDirecton() {
 
 	Player->GetMousePosition(MousePosX, MousePosY);
 
-	if (MousePosX < Margin) {
+	/*if (MousePosX < Margin) {
 		CamDirectonY = -1;
 	}
 
@@ -75,9 +75,10 @@ FVector ACameraPawn::GetCameraPanDirecton() {
 
 	if (MousePosY > ScreenSizeY - Margin) {
 		CamDirectonX = -1;
-	}
+	}*/
 
-	return FVector(CamDirectonX, CamDirectonY, 0);
+	//return FVector(CamDirectonX, CamDirectonY, 0);
+	return FVector(0, 0, 0);
 
 }
 
@@ -166,7 +167,7 @@ void ACameraPawn::CameraPitch(float Value)
 void ACameraPawn::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-	//AddActorWorldOffset(GetCameraPanDirecton() * CamSpeed);
+	AddActorWorldOffset(GetCameraPanDirecton() * CamSpeed);
 }
 
 // Called to bind functionality to input

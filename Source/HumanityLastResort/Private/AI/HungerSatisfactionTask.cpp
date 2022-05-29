@@ -32,7 +32,7 @@ AResturant* UHungerSatisfactionTask::GetResturant()
 	for (AActor* Resturant : Resturants)
 	{
 		AResturant* Rest = Cast<AResturant>(Resturant);
-		UE_LOG(LogTemp, Warning, TEXT("Rest: %d"), Rest->CurOccupants);
+		//UE_LOG(LogTemp, Warning, TEXT("Rest: %d"), Rest->CurOccupants);
 
 		if (Rest)
 		{

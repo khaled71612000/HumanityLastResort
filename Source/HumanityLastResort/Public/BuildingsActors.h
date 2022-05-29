@@ -3,11 +3,12 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "PlacementInterface.h"
 #include "GameFramework/Actor.h"
 #include "BuildingsActors.generated.h"
 
 UCLASS()
-class HUMANITYLASTRESORT_API ABuildingsActors : public AActor
+class HUMANITYLASTRESORT_API ABuildingsActors : public AActor, public IPlacementInterface
 {
 	GENERATED_BODY()
 	
@@ -22,8 +23,10 @@ public:
 		void LockPosition(bool block);
 	UFUNCTION(BlueprintCallable, Category = "Functions")
 		void DestroyBuildingActor();
-	void MouseMove(FVector position);
-	void MouseRelease();
+
+	 virtual void MouseMove(FVector position) override;
+	 virtual void MouseRelease() override;
+
 	void ClearFloor();
 	FVector NewBoxSize;
 

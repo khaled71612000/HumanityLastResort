@@ -16,9 +16,11 @@ public:
 
 protected:
 	void Tick(float dt) override;
+	void BeginPlay() override;
 	void SetupInputComponent()override;
 
 	void OnLeftMouseRelease();
+	class USPSubsystem* SPSubsystem;
 
 	
 };

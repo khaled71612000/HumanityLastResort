@@ -64,7 +64,10 @@ FVector ANewGrid::GetClosestPosition(FVector InPosition)
 
 void ANewGrid::PreSave(const class ITargetPlatform* TargetPlatform)
 {
-
+	//KZ TODO
+	//Call Super
+	//FVectors instead of actors for arraygrid
+	//GET SIZE OF MESH
 }
 
 // Called when the game starts or when spawned

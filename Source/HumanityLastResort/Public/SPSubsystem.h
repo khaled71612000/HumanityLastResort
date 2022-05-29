@@ -10,7 +10,8 @@
  * 
  */
 UCLASS()
-class HUMANITYLASTRESORT_API USPSubsystem : public UWorldSubsystem
+class HUMANITYLASTRESORT_API USPSubsystem : public UWorldSubsystem 
+	//public FTickableGameObject
 {
 	GENERATED_BODY()
 public:

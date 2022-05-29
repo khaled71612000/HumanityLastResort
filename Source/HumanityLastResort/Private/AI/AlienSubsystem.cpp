@@ -7,7 +7,7 @@
 
 TStatId UAlienSubsystem::GetStatId() const
 {
-	return TStatId();
+		RETURN_QUICK_DECLARE_CYCLE_STAT(UAlienSubsystem, STATGROUP_Tickables);
 }
 
 void UAlienSubsystem::Tick(float DeltaTime)

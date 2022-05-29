@@ -57,15 +57,16 @@ void AGameController::Tick(float dt) {
 		origin.Y -= 195;
 		origin.Z += 100.f;
 		//DrawDebugSphere(GetWorld(), origin, 5, 50, FColor::Red, true , 5);
-
 	}
 
 	TArray<AActor*> actorPtrs;
 	//AActor* FoundGrid;
 	//ANewGrid* GridPtr;
-	UGameplayStatics::GetAllActorsOfClass(GetWorld(), ABuildingsActors::StaticClass(), actorPtrs);
-	UGameplayStatics::GetAllActorsWithInterface(GetWorld(), UPlacementInterface::StaticClass(), actorPtrs);
+	//UGameplayStatics::GetAllActorsOfClass(GetWorld(), ABuildingsActors::StaticClass(), actorPtrs);
+	
+	//BroadCast Selection, Selection has array of handlers , hotel buildings in subsystem
 
+	UGameplayStatics::GetAllActorsWithInterface(GetWorld(), UPlacementInterface::StaticClass(), actorPtrs);
 	//FoundGrid = UGameplayStatics::GetActorOfClass(GetWorld(), ANewGrid::StaticClass());
 
 	//UE_LOG(LogTemp, Warning, TEXT("HERE Clicked %d"),actorPtrs.Num());
@@ -92,6 +93,7 @@ void AGameController::OnLeftMouseRelease()
 {
 	SPSubsystem->OnLeftMouseRelease();
 }
+
 void AGameController::SetupInputComponent()
 {
 	Super::SetupInputComponent();

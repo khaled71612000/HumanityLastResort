@@ -2,7 +2,6 @@
 
 
 #include "SpawnAI.h"
-#include "EconomySubsystem.h"
 #include "AI/Alien.h"
 #include "AI/AlienSubsystem.h"
 #include "TimerManager.h"

@@ -3,7 +3,6 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "EconomySubsystem.h"
 #include "Kismet/GameplayStatics.h"
 #include "GameFramework/GameModeBase.h"
 #include "AEGameModeBase.generated.h"
@@ -25,9 +24,5 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Config")
 		TArray<TSubclassOf<class ABuildingsActors>> building;
 	
-	//UGameInstance* GameInstance = UGameplayStatics::GetGameInstance(GetWorld());
-	//UGameInstanceSubsystem* EconomySubsystem = GameInstance->GetSubsystem<UGameInstanceSubsystem>();
-	UGameInstance* GameInstanceRef = Cast<UGameInstance>(UGameplayStatics::GetGameInstance(GetWorld()));
-	UEconomySubsystem* EconomySubsystem;
 
 };

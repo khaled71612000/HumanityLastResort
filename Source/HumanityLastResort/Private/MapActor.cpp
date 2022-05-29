@@ -7,7 +7,6 @@
 AMapActor::AMapActor()
 {
 	PrimaryActorTick.bCanEverTick = true;
-
 }
 
 void AMapActor::BuildMap(const FVector CenterLocation, const int X, const int Y)
@@ -17,12 +16,11 @@ void AMapActor::BuildMap(const FVector CenterLocation, const int X, const int Y)
 	if (MapTiles.Num() == 0) {
 		MapSize.X = 0;
 		MapSize.Y = 0;
-	
+
 		for (int32 OuterIndex = 0; OuterIndex <= Y - 1; ++OuterIndex)
 		{
 			for (int32 InnerIndex = 0; InnerIndex <= X - 1; ++InnerIndex)
 			{
-
 				//Prepare Spawn Transform
 				FVector SpawnLocation =
 					FVector(static_cast<float>(InnerIndex) - static_cast<float>(X) / 2.f,
@@ -46,8 +44,7 @@ void AMapActor::BuildMap(const FVector CenterLocation, const int X, const int Y)
 					TileToSpawn->FinishSpawning(SpawnTransform);
 					MapTiles.Add(TileToSpawn);
 					TileToSpawn->AttachToActor(this, FAttachmentTransformRules::KeepRelativeTransform);
-				}
-				
+				}		
 			}
 		}
 	}
@@ -56,7 +53,6 @@ void AMapActor::BuildMap(const FVector CenterLocation, const int X, const int Y)
 void AMapActor::BeginPlay()
 {
 	Super::BeginPlay();
-	
 }
 
 

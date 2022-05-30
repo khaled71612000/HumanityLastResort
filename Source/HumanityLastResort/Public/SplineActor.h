@@ -55,6 +55,8 @@ struct FBGBuildBank : public FTableRowBase
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		FSlateBrush Icon;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		UStaticMesh* mesh;
 };
 
 UCLASS()

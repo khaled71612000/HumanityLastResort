@@ -4,11 +4,16 @@
 #include "AI/Alien.h"
 #include "AI/NeedComponent.h"
 #include "AI/NeedSatisfactionTask.h"
+#include "AI/AlienSubsystem.h"
+#include "AI/AlienAIController.h"
+#include "Engine/TargetPoint.h"
+#include "Kismet/GameplayStatics.h"
+
 
 // Sets default values
 AAlien::AAlien()
 {
- 	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
+	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = false;
 	AlienState = Idle;
 }
@@ -17,6 +22,7 @@ AAlien::AAlien()
 void AAlien::BeginPlay()
 {
 	Super::BeginPlay();
+	AlienSubsystem = GetWorld()->GetSubsystem<UAlienSubsystem>();
 }
 
 void AAlien::GetTask()
@@ -49,6 +55,24 @@ void AAlien::DoTask()
 {
 	if (NeedToExcute)
 		NeedToExcute->Task->Wait();
+
+}
+
+void AAlien::Leave()
+{
+	AAlienAIController* AI = Cast<AAlienAIController>(GetController());
+	AI->MoveToLocation(UGameplayStatics::GetActorOfClass(GetWorld(), ATargetPoint::StaticClass())->GetActorLocation(), 5.f);
+}
+
+void AAlien::ChangeMood(int MoodVal)
+{
+	AlienSubsystem->GlobalMood -= Mood;
+	Mood += MoodVal;
+	AlienSubsystem->GlobalMood += Mood;
+	AlienSubsystem->UpdateGlobalMood();
+
+	//UE_LOG(LogTemp, Warning, TEXT("Mood: %d"), AlienSubsystem->GlobalMood);
+
 }
 
 

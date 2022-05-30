@@ -14,4 +14,9 @@ class HUMANITYLASTRESORT_API UEconomySubsystem : public UWorldSubsystem
 {
 	GENERATED_BODY()
 	
+	int32 Cash;
+	virtual void Initialize(FSubsystemCollectionBase& Collection) override;
+public:
+	void AddCash(int32 Amount);
+	void SubtractCash(int32 Amount);
 };

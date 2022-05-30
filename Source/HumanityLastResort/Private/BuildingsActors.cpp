@@ -9,6 +9,7 @@
 #include "CellActor.h"
 #include "Math/UnrealMathUtility.h"
 #include "RunTime\Engine\Classes\Kismet\GameplayStatics.h"
+#include "Economy/EconomySubsystem.h"
 
 ABuildingsActors::ABuildingsActors()
 {
@@ -30,7 +31,8 @@ ABuildingsActors::ABuildingsActors()
 void ABuildingsActors::BeginPlay()
 {
 	Super::BeginPlay();
-	
+	EconomySubsystem = GetWorld()->GetSubsystem<UEconomySubsystem>();
+
 	StaticMeshComponent->OnClicked.AddDynamic(this, &ABuildingsActors::OnClicked);
 	oldPos = GetActorLocation();
 
@@ -211,4 +213,14 @@ void ABuildingsActors::MouseRelease()
 void ABuildingsActors::DestroyBuildingActor()
 {
 	Destroy();
+}
+
+void ABuildingsActors::AddProfit()
+{
+	EconomySubsystem->AddCash(Profit);
+}
+
+void ABuildingsActors::SubtractLoss()
+{
+	EconomySubsystem->SubtractCash(Loss);
 }

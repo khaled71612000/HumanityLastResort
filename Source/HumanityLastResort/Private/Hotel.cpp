@@ -40,7 +40,7 @@ void AHotel::OnOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, 
 
 void AHotel::OnOverlapEnd(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
 {
-	GEngine->AddOnScreenDebugMessage(-1, 10.f, FColor::Red, TEXT("End Overlap"));
+	//GEngine->AddOnScreenDebugMessage(-1, 10.f, FColor::Red, TEXT("End Overlap"));
 	if (OtherActor && OtherActor != this)
 	{
 		AAlien* Alien = Cast<AAlien>(OtherActor);

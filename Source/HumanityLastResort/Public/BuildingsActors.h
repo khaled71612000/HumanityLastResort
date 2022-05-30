@@ -61,6 +61,10 @@ protected:
 	FVector oldPos;
 
 public:
+
+	UFUNCTION(BlueprintImplementableEvent)
+		void ShowProfitUI(int cash);
+
 	class UEconomySubsystem* EconomySubsystem;
 	void AddProfit();
 	void SubtractLoss();

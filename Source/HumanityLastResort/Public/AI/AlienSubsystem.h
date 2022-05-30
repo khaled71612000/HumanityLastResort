@@ -29,4 +29,8 @@ private:
 	void UpdateNumOfAliens(class AAlien* Alien);
 public:
 	void UpdateGlobalMood();
+	UFUNCTION(BlueprintCallable)
+	float GetGlobalMoodPercentage();
+	UFUNCTION(BlueprintCallable)
+	int32 GetNumOfAliens();
 };

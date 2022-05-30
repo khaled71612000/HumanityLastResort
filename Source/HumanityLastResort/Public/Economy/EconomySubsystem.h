@@ -19,4 +19,7 @@ class HUMANITYLASTRESORT_API UEconomySubsystem : public UWorldSubsystem
 public:
 	void AddCash(int32 Amount);
 	void SubtractCash(int32 Amount);
+
+	UFUNCTION(BlueprintCallable)
+	int32 GetCash();
 };

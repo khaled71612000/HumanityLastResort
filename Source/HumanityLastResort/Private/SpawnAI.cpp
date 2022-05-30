@@ -22,7 +22,7 @@ void ASpawnAI::SpawnAnAlien()
 {
 	AAlien* Alien = GetWorld()->SpawnActor<AAlien>(ActorToSpawn,SpawnLocation, SpawnRotation, SpawnParams);
 	AlienSubsystem->Aliens.Add(Alien);
-
+	AlienSubsystem->NumOfAliens++;
 	//GEngine->AddOnScreenDebugMessage(-1, 10.f, FColor::Red, TEXT("Spawn"));
 
 }

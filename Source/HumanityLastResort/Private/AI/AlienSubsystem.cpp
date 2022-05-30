@@ -48,18 +48,30 @@ void UAlienSubsystem::Tick(float DeltaTime)
 
 void UAlienSubsystem::UpdateNumOfAliens(class AAlien* Alien)
 {
-
 	NumOfAliens--;
 	GlobalMood -= Alien->Mood;
 	Aliens.Remove(Alien);
-
 }
 
 void UAlienSubsystem::UpdateGlobalMood()
 {
 	if (NumOfAliens)
-		GlobalMoodPercentage = GlobalMood / NumOfAliens;
-	//Make the output a float
+		GlobalMoodPercentage = GlobalMood / (float)NumOfAliens;
+
+	UE_LOG(LogTemp, Warning, TEXT("Global Mood: %d"), GlobalMood);
+	UE_LOG(LogTemp, Warning, TEXT("Global Mood Percentage: %f"), GlobalMoodPercentage);
+	UE_LOG(LogTemp, Warning, TEXT("Num of Aliens: %d"), NumOfAliens);
+
+}
+
+float UAlienSubsystem::GetGlobalMoodPercentage()
+{
+	return GlobalMoodPercentage;
+}
+
+int32 UAlienSubsystem::GetNumOfAliens()
+{
+	return NumOfAliens;
 }
 
 

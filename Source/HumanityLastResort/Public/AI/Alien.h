@@ -7,7 +7,7 @@
 #include "Alien.generated.h"
 
 enum State {
-	Idle, Assigned, Arrived, Waiting
+	Idle, Assigned, Arrived, Waiting, Leaving
 };
 
 UCLASS()
@@ -24,10 +24,25 @@ protected:
 	virtual void BeginPlay() override;
 
 public:
+	int32 Mood;
+	UPROPERTY(EditDefaultsOnly, Category = "Properties")
+		int32 GoodMoodVal;
+	UPROPERTY(EditDefaultsOnly, Category = "Properties")
+		int32 BadMoodVal;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Properties")
+		int32 NumOfTasks;
+	UPROPERTY(EditDefaultsOnly, Category = "Properties")
+		int32 NumOfFailedTasks;
+
+
 	State AlienState;
 	class UNeedComponent* NeedToExcute;
+	class UAlienSubsystem* AlienSubsystem;
 
 	void GetTask();
 	void GoToTask();
 	void DoTask();
+	void Leave();
+	void ChangeMood(int MoodVal);
 };

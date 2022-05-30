@@ -14,10 +14,14 @@ class HUMANITYLASTRESORT_API ABuildingsActors : public AActor, public IPlacement
 	
 public:	
 	ABuildingsActors();
-	UPROPERTY(EditDefaultsOnly, Category = "Capacity")
-	int Capacity;
-
-	int CurOccupants;
+	UPROPERTY(EditDefaultsOnly, Category = "Properties")
+		int32 Capacity;
+	UPROPERTY(Transient)
+		int32 CurOccupants;
+	UPROPERTY(EditDefaultsOnly, Category = "Properties")
+		int32 Profit;
+	UPROPERTY(EditDefaultsOnly, Category = "Properties")
+		int32 Loss;
 
 	UFUNCTION(BlueprintCallable, Category = "Functions")
 		void LockPosition(bool block);
@@ -55,4 +59,9 @@ protected:
 	bool isDragging = false;
 	class ACameraPawn* MyPawn;
 	FVector oldPos;
+
+public:
+	class UEconomySubsystem* EconomySubsystem;
+	void AddProfit();
+	void SubtractLoss();
 };

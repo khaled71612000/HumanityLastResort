@@ -5,10 +5,19 @@
 #include "AI/Alien.h"
 
 
+void UAlienSubsystem::Initialize(FSubsystemCollectionBase& Collection)
+{
+	Super::Initialize(Collection);
+	GlobalMood = 0;
+	NumOfAliens = 0;
+	GlobalMoodPercentage = 1.f;
+}
+
 TStatId UAlienSubsystem::GetStatId() const
 {
-		RETURN_QUICK_DECLARE_CYCLE_STAT(UAlienSubsystem, STATGROUP_Tickables);
+	return TStatId();
 }
+
 
 void UAlienSubsystem::Tick(float DeltaTime)
 {
@@ -27,7 +36,30 @@ void UAlienSubsystem::Tick(float DeltaTime)
 			Alien->AlienState = Waiting;
 			Alien->DoTask();
 		}
+		else if (Alien->AlienState == Leaving)
+		{
+			UpdateNumOfAliens(Alien);
+			UpdateGlobalMood();
+			Alien->Leave();
+			break;
+		}
 	}
+}
+
+void UAlienSubsystem::UpdateNumOfAliens(class AAlien* Alien)
+{
+
+	NumOfAliens--;
+	GlobalMood -= Alien->Mood;
+	Aliens.Remove(Alien);
+
+}
+
+void UAlienSubsystem::UpdateGlobalMood()
+{
+	if (NumOfAliens)
+		GlobalMoodPercentage = GlobalMood / NumOfAliens;
+	//Make the output a float
 }
 
 

@@ -7,7 +7,7 @@
 
 AHotel::AHotel(const FObjectInitializer& objectInitializer)
 {
-	CurOccupants = 0;
+	/*CurOccupants = 0;
 
 	HotelCollision = CreateDefaultSubobject<USphereComponent>(TEXT("RootCollision"));
 
@@ -19,36 +19,36 @@ AHotel::AHotel(const FObjectInitializer& objectInitializer)
 	HotelCollision->OnComponentBeginOverlap.AddDynamic(this, &AHotel::OnOverlap);
 	HotelCollision->OnComponentEndOverlap.AddDynamic(this, &AHotel::OnOverlapEnd);
 	
-	
+	*/
 
 }
 
-void AHotel::OnOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
-{
-	if (OtherActor && OtherActor != this)
-	{
-		AAlien* Alien = Cast<AAlien>(OtherActor);
-
-		if (Alien)
-		{
-			Alien->AlienState = Arrived;
-			//GEngine->AddOnScreenDebugMessage(-1, 10.f, FColor::Red, TEXT("Begin Overlap"));
-			
-		}
-	}
-}
-
-void AHotel::OnOverlapEnd(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
-{
-	GEngine->AddOnScreenDebugMessage(-1, 10.f, FColor::Red, TEXT("End Overlap"));
-	if (OtherActor && OtherActor != this)
-	{
-		AAlien* Alien = Cast<AAlien>(OtherActor);
-
-		if (Alien)
-		{
-			CurOccupants--;
-			//GEngine->AddOnScreenDebugMessage(-1, 10.f, FColor::Red, TEXT("Begin Overlap"));
-		}
-	}
-}
+//void AHotel::OnOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
+//{
+//	if (OtherActor && OtherActor != this)
+//	{
+//		AAlien* Alien = Cast<AAlien>(OtherActor);
+//
+//		if (Alien)
+//		{
+//			Alien->AlienState = Arrived;
+//			//GEngine->AddOnScreenDebugMessage(-1, 10.f, FColor::Red, TEXT("Begin Overlap"));
+//			
+//		}
+//	}
+//}
+//
+//void AHotel::OnOverlapEnd(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
+//{
+//	GEngine->AddOnScreenDebugMessage(-1, 10.f, FColor::Red, TEXT("End Overlap"));
+//	if (OtherActor && OtherActor != this)
+//	{
+//		AAlien* Alien = Cast<AAlien>(OtherActor);
+//
+//		if (Alien)
+//		{
+//			CurOccupants--;
+//			//GEngine->AddOnScreenDebugMessage(-1, 10.f, FColor::Red, TEXT("Begin Overlap"));
+//		}
+//	}
+//}

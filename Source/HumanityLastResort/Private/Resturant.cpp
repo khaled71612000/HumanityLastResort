@@ -7,48 +7,48 @@
 
 AResturant::AResturant(const FObjectInitializer& objectInitializer)
 {
-	CurOccupants = 0;
-	RestCollision = CreateDefaultSubobject<USphereComponent>(TEXT("RootCollision"));
+	//CurOccupants = 0;
+	//RestCollision = CreateDefaultSubobject<USphereComponent>(TEXT("RootCollision"));
 
-	RestCollision->SetupAttachment(RootComponent);
+	//RestCollision->SetupAttachment(RootComponent);
 
-	RestCollision->SetSphereRadius(200.f);
-	RestCollision->SetHiddenInGame(false);
-
-
-	RestCollision->OnComponentBeginOverlap.AddDynamic(this, &AResturant::OnOverlap);
-	RestCollision->OnComponentEndOverlap.AddDynamic(this, &AResturant::OnOverlapEnd);
-
-}
+	//RestCollision->SetSphereRadius(200.f);
+	//RestCollision->SetHiddenInGame(false);
 
 
-void AResturant::OnOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
-{
-	if (OtherActor && OtherActor != this)
-	{
-		AAlien* Alien = Cast<AAlien>(OtherActor);
-
-		if (Alien)
-		{
-			Alien->AlienState = Arrived;
-			GEngine->AddOnScreenDebugMessage(-1, 10.f, FColor::Red, TEXT("Begin Overlap"));
-			//GEngine->AddOnScreenDebugMessage(-1, 10.f, FColor::Red, TEXT("Begin Overlap"));
-		}
-	}
+	//RestCollision->OnComponentBeginOverlap.AddDynamic(this, &AResturant::OnOverlap);
+	//RestCollision->OnComponentEndOverlap.AddDynamic(this, &AResturant::OnOverlapEnd);
 
 }
 
-void AResturant::OnOverlapEnd(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
-{
-	GEngine->AddOnScreenDebugMessage(-1, 10.f, FColor::Red, TEXT("End Overlap"));
-	if (OtherActor && OtherActor != this)
-	{
-		AAlien* Alien = Cast<AAlien>(OtherActor);
 
-		if (Alien)
-		{
-			CurOccupants--;
-			//GEngine->AddOnScreenDebugMessage(-1, 10.f, FColor::Red, TEXT("Begin Overlap"));
-		}
-	}
-}
+//void AResturant::OnOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
+//{
+//	if (OtherActor && OtherActor != this)
+//	{
+//		AAlien* Alien = Cast<AAlien>(OtherActor);
+//
+//		if (Alien)
+//		{
+//			Alien->AlienState = Arrived;
+//			GEngine->AddOnScreenDebugMessage(-1, 10.f, FColor::Red, TEXT("Begin Overlap"));
+//			//GEngine->AddOnScreenDebugMessage(-1, 10.f, FColor::Red, TEXT("Begin Overlap"));
+//		}
+//	}
+//
+//}
+//
+//void AResturant::OnOverlapEnd(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
+//{
+//	GEngine->AddOnScreenDebugMessage(-1, 10.f, FColor::Red, TEXT("End Overlap"));
+//	if (OtherActor && OtherActor != this)
+//	{
+//		AAlien* Alien = Cast<AAlien>(OtherActor);
+//
+//		if (Alien)
+//		{
+//			CurOccupants--;
+//			//GEngine->AddOnScreenDebugMessage(-1, 10.f, FColor::Red, TEXT("Begin Overlap"));
+//		}
+//	}
+//}

@@ -3,13 +3,15 @@
 
 #include "BuildingsActors.h"
 #include "CameraPawn.h"
-#include "AICharacterBase.h"
 #include "Kismet\KismetSystemLibrary.h"
 #include "DrawDebugHelpers.h"
 #include "CellActor.h"
 #include "Math/UnrealMathUtility.h"
 #include "RunTime\Engine\Classes\Kismet\GameplayStatics.h"
 #include "Economy/EconomySubsystem.h"
+#include "Components/SphereComponent.h"
+#include "AI/Alien.h"
+
 
 ABuildingsActors::ABuildingsActors()
 {
@@ -25,6 +27,17 @@ ABuildingsActors::ABuildingsActors()
 	StaticMeshComponent->bIgnoreRadialImpulse = true;
 	StaticMeshComponent->SetLinearDamping(1.f);
 	StaticMeshComponent->SetAngularDamping(1.f);
+
+	CurOccupants = 0;
+
+	BuildingCollision = CreateDefaultSubobject<USphereComponent>(TEXT("RootCollision"));
+
+	BuildingCollision->SetupAttachment(RootComponent);
+	BuildingCollision->SetSphereRadius(200.f);
+	BuildingCollision->SetHiddenInGame(false);
+
+	BuildingCollision->OnComponentBeginOverlap.AddDynamic(this, &ABuildingsActors::OnOverlap);
+	BuildingCollision->OnComponentEndOverlap.AddDynamic(this, &ABuildingsActors::OnOverlapEnd);
 
 }
 
@@ -52,20 +65,13 @@ void ABuildingsActors::BeginPlay()
 	StaticMeshComponent->GetLocalBounds(Min, Max);
 
 	NewBoxSize = (Max - Min) / 2;
-
 	NewBoxSize.Z = 0;
-
-	//UE_LOG(LogTemp, Error, TEXT("%f"), NewBoxSize.X);
-
-    //StaticMeshComponent->AddRelativeLocation(NewBoxSize);
-	//StaticMeshComponent->SetRelativeScale3D(FVector(0.75f, 0.75f, 1.5f));
 
 }
 
 
 void ABuildingsActors::OnClicked(UPrimitiveComponent* ClickedComp, FKey ButtonClicked)
 {
-	//UE_LOG(LogTemp, Warning, TEXT("HERE Clicked %d"));
 	isDragging = true;
 	StaticMeshComponent->GetBodyInstance()->bLockXTranslation = false;
 	StaticMeshComponent->GetBodyInstance()->bLockYTranslation = false;
@@ -99,25 +105,20 @@ void ABuildingsActors::ResetRotation()
 }
 
 
-
 void ABuildingsActors::MouseMove(FVector position)
 {
 
 	if (isDragging)
 	{
 		ClearFloor();
-		//UE_LOG(LogTemp, Warning, TEXT("Moving"));
-
 		FVector origin, boxExtent;
 		GetActorBounds(false, origin, boxExtent);
 		boxExtent.Z = 1.f;
 
-		// DrawDebugBox(GetWorld(), GetActorLocation() , NewBoxSize, FColor::Green, false, 50.f);
 		if (isOneCell) {
 			position.X += 195;
 			position.Y += 195;
 			this->SetActorLocation(position);
-			//UE_LOG(LogTemp, Warning, TEXT("Hello"));
 		}
 		else {
 			this->SetActorLocation(position + NewBoxSize);
@@ -128,7 +129,6 @@ void ABuildingsActors::MouseMove(FVector position)
 		   if(MyPawn)
 		   MyPawn->SelectedToken = this;
 		   
-
 		   FVector Start = GetActorLocation();
 		   FVector End = ((GetActorUpVector() * 50.f) + Start);
 
@@ -144,11 +144,8 @@ void ABuildingsActors::MouseMove(FVector position)
 		   );
 
 		if (BoxHit) {
-			//UE_LOG(LogTemp, Error, TEXT("Colliding"))
 			ABuildingsActors* UnderHit = Cast<ABuildingsActors>(HitResult.GetActor());
-			//DrawDebugLine(GetWorld(), Start, End, FColor::Orange, false, 0.1f);
 			if (UnderHit) {
-				//GEngine->AddOnScreenDebugMessage(-1, 1 ,FColor::Yellow, FString::Printf(TEXT("HERE %s"), *Hit.GetActor()->GetName()));
 				this->SetActorLocation(oldPos);
 			}
 		}
@@ -179,7 +176,7 @@ void ABuildingsActors::ClearFloor()
 		UE_LOG(LogTemp, Error, TEXT("NPC FOUND"));
 		for (auto& NPC : HitArray)
 		{
-			AAICharacterBase* NPCHit = Cast<AAICharacterBase>(NPC.GetActor());
+			AAlien* NPCHit = Cast<AAlien>(NPC.GetActor());
 			if (NPCHit) {
 				NPCHit->SetActorLocation(FVector(200,7800,190), true);
 			}
@@ -191,7 +188,6 @@ void ABuildingsActors::ClearFloor()
 
 void ABuildingsActors::MouseRelease()
 {
-	//UE_LOG(LogTemp, Warning, TEXT("HERE release %d"));
 	isDragging = false;
 	if (MyPawn)
 		MyPawn->SelectedToken = nullptr;
@@ -223,4 +219,30 @@ void ABuildingsActors::AddProfit()
 void ABuildingsActors::SubtractLoss()
 {
 	EconomySubsystem->SubtractCash(Loss);
+}
+
+void ABuildingsActors::OnOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
+{
+	if (OtherActor && OtherActor != this)
+	{
+		AAlien* Alien = Cast<AAlien>(OtherActor);
+		
+		if (Alien)
+		{
+			Alien->AlienState = Arrived;			
+		}
+	}
+}
+
+void ABuildingsActors::OnOverlapEnd(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
+{
+	if (OtherActor && OtherActor != this)
+	{
+		AAlien* Alien = Cast<AAlien>(OtherActor);
+		
+		if (Alien)
+		{
+			CurOccupants--;
+		}
+	}
 }

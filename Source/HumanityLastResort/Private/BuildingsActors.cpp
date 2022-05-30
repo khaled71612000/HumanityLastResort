@@ -218,13 +218,12 @@ void ABuildingsActors::DestroyBuildingActor()
 void ABuildingsActors::AddProfit()
 {
 	EconomySubsystem->AddCash(Profit);
-	UE_LOG(LogTemp, Error, TEXT("AAAAA"));
 	ShowProfitUI(Profit);
 }
 
 void ABuildingsActors::SubtractLoss()
 {
 	EconomySubsystem->SubtractCash(Loss);
-	ShowProfitUI(Profit);
+	ShowProfitUI(-Loss);
 
 }

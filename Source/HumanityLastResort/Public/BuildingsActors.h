@@ -18,9 +18,9 @@ public:
 		int32 Capacity;
 	UPROPERTY(Transient)
 		int32 CurOccupants;
-	UPROPERTY(EditDefaultsOnly, Category = "Properties")
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Properties")
 		int32 Profit;
-	UPROPERTY(EditDefaultsOnly, Category = "Properties")
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Properties")
 		int32 Loss;
 
 	UFUNCTION(BlueprintCallable, Category = "Functions")

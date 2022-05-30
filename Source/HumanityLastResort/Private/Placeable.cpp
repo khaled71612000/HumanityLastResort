@@ -1,19 +1,18 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "BuildingsActors.h"
+#include "Placeable.h"
 #include "CameraPawn.h"
 #include "Kismet\KismetSystemLibrary.h"
 #include "DrawDebugHelpers.h"
 #include "CellActor.h"
 #include "Math/UnrealMathUtility.h"
 #include "RunTime\Engine\Classes\Kismet\GameplayStatics.h"
-#include "Economy/EconomySubsystem.h"
-#include "Components/SphereComponent.h"
 #include "AI/Alien.h"
 
 
-ABuildingsActors::ABuildingsActors()
+
+APlaceable::APlaceable()
 {
 	PrimaryActorTick.bCanEverTick = false;
 
@@ -28,25 +27,14 @@ ABuildingsActors::ABuildingsActors()
 	StaticMeshComponent->SetLinearDamping(1.f);
 	StaticMeshComponent->SetAngularDamping(1.f);
 
-	CurOccupants = 0;
-
-	BuildingCollision = CreateDefaultSubobject<USphereComponent>(TEXT("RootCollision"));
-
-	BuildingCollision->SetupAttachment(RootComponent);
-	BuildingCollision->SetSphereRadius(200.f);
-	BuildingCollision->SetHiddenInGame(false);
-
-	BuildingCollision->OnComponentBeginOverlap.AddDynamic(this, &ABuildingsActors::OnOverlap);
-	BuildingCollision->OnComponentEndOverlap.AddDynamic(this, &ABuildingsActors::OnOverlapEnd);
 
 }
 
-void ABuildingsActors::BeginPlay()
+void APlaceable::BeginPlay()
 {
 	Super::BeginPlay();
-	EconomySubsystem = GetWorld()->GetSubsystem<UEconomySubsystem>();
 
-	StaticMeshComponent->OnClicked.AddDynamic(this, &ABuildingsActors::OnClicked);
+	StaticMeshComponent->OnClicked.AddDynamic(this, &APlaceable::OnClicked);
 	oldPos = GetActorLocation();
 
 	FTimerHandle StatManager;
@@ -70,7 +58,7 @@ void ABuildingsActors::BeginPlay()
 }
 
 
-void ABuildingsActors::OnClicked(UPrimitiveComponent* ClickedComp, FKey ButtonClicked)
+void APlaceable::OnClicked(UPrimitiveComponent* ClickedComp, FKey ButtonClicked)
 {
 	isDragging = true;
 	StaticMeshComponent->GetBodyInstance()->bLockXTranslation = false;
@@ -80,7 +68,7 @@ void ABuildingsActors::OnClicked(UPrimitiveComponent* ClickedComp, FKey ButtonCl
 	StaticMeshComponent->SetMobility(EComponentMobility::Movable);
 }
 
-void ABuildingsActors::LockPosition(bool block)
+void APlaceable::LockPosition(bool block)
 {
 	if (StaticMeshComponent->GetBodyInstance()->bLockXTranslation) {
 		StaticMeshComponent->GetBodyInstance()->bLockXTranslation = false;
@@ -99,13 +87,13 @@ void ABuildingsActors::LockPosition(bool block)
 }
 
 
-void ABuildingsActors::ResetRotation()
+void APlaceable::ResetRotation()
 {
 	SetActorRotation(FRotator::ZeroRotator);
 }
 
 
-void ABuildingsActors::MouseMove(FVector position)
+void APlaceable::MouseMove(FVector position)
 {
 
 	if (isDragging)
@@ -125,37 +113,37 @@ void ABuildingsActors::MouseMove(FVector position)
 		}
 		this->SetActorLocation(position);
 
-		 MyPawn = UGameplayStatics::GetPlayerController(this, 0)->GetPawn<ACameraPawn>();
-		   if(MyPawn)
-		   MyPawn->SelectedToken = this;
-		   
-		   FVector Start = GetActorLocation();
-		   FVector End = ((GetActorUpVector() * 50.f) + Start);
+		MyPawn = UGameplayStatics::GetPlayerController(this, 0)->GetPawn<ACameraPawn>();
+		if (MyPawn)
+			MyPawn->SelectedToken = this;
 
-		   TArray<AActor*> ActorsToIgnore;
-		   ActorsToIgnore.Add(this);
-		   FHitResult HitResult;
+		FVector Start = GetActorLocation();
+		FVector End = ((GetActorUpVector() * 50.f) + Start);
 
-		   bool BoxHit = UKismetSystemLibrary::BoxTraceSingle(GetWorld(), Start, End,
-			   NewBoxSize ,
-			   GetActorRotation(), UEngineTypes::ConvertToTraceType(ECC_Pawn),
-			   false, ActorsToIgnore, EDrawDebugTrace::None, HitResult,
-			   true, FLinearColor::Red, FLinearColor::Green, 0.1f
-		   );
+		TArray<AActor*> ActorsToIgnore;
+		ActorsToIgnore.Add(this);
+		FHitResult HitResult;
+
+		bool BoxHit = UKismetSystemLibrary::BoxTraceSingle(GetWorld(), Start, End,
+			NewBoxSize,
+			GetActorRotation(), UEngineTypes::ConvertToTraceType(ECC_Pawn),
+			false, ActorsToIgnore, EDrawDebugTrace::None, HitResult,
+			true, FLinearColor::Red, FLinearColor::Green, 0.1f
+		);
 
 		if (BoxHit) {
-			ABuildingsActors* UnderHit = Cast<ABuildingsActors>(HitResult.GetActor());
+			APlaceable* UnderHit = Cast<APlaceable>(HitResult.GetActor());
 			if (UnderHit) {
 				this->SetActorLocation(oldPos);
 			}
 		}
-		
+
 	}
 }
 
-void ABuildingsActors::ClearFloor()
+void APlaceable::ClearFloor()
 {
-	FVector Start = GetActorLocation() ;
+	FVector Start = GetActorLocation();
 	FVector End = ((GetActorUpVector() * 60.f) + Start);
 
 	FVector origin, boxExtent;
@@ -178,7 +166,7 @@ void ABuildingsActors::ClearFloor()
 		{
 			AAlien* NPCHit = Cast<AAlien>(NPC.GetActor());
 			if (NPCHit) {
-				NPCHit->SetActorLocation(FVector(200,7800,190), true);
+				NPCHit->SetActorLocation(FVector(200, 7800, 190), true);
 			}
 		}
 	}
@@ -186,7 +174,7 @@ void ABuildingsActors::ClearFloor()
 
 
 
-void ABuildingsActors::MouseRelease()
+void APlaceable::MouseRelease()
 {
 	isDragging = false;
 	if (MyPawn)
@@ -206,43 +194,10 @@ void ABuildingsActors::MouseRelease()
 		}, 1.3f, false);
 }
 
-void ABuildingsActors::DestroyBuildingActor()
+void APlaceable::DestroyBuildingActor()
 {
 	Destroy();
 }
 
-void ABuildingsActors::AddProfit()
-{
-	EconomySubsystem->AddCash(Profit);
-}
 
-void ABuildingsActors::SubtractLoss()
-{
-	EconomySubsystem->SubtractCash(Loss);
-}
 
-void ABuildingsActors::OnOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
-{
-	if (OtherActor && OtherActor != this)
-	{
-		AAlien* Alien = Cast<AAlien>(OtherActor);
-		
-		if (Alien)
-		{
-			Alien->AlienState = Arrived;			
-		}
-	}
-}
-
-void ABuildingsActors::OnOverlapEnd(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
-{
-	if (OtherActor && OtherActor != this)
-	{
-		AAlien* Alien = Cast<AAlien>(OtherActor);
-		
-		if (Alien)
-		{
-			CurOccupants--;
-		}
-	}
-}

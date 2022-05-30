@@ -3,7 +3,7 @@
 
 #include "AI/AlienAIController.h"
 #include "AI/Alien.h"
-#include "BuildingsActors.h"
+#include "Building.h"
 
 void AAlienAIController::OnMoveCompleted(FAIRequestID RequestID, const FPathFollowingResult& Result)
 {

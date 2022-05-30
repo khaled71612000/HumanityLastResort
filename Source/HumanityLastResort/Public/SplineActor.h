@@ -48,7 +48,7 @@ struct FBGBuildBank : public FTableRowBase
 		FText TokenName;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-		TSubclassOf <class ABuildingsActors> BuildingsActorsClassREFF;
+		TSubclassOf <class APlaceable> BuildingsActorsClassREFF;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		float PriceBuilding = 0.5f;

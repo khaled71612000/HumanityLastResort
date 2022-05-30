@@ -17,7 +17,7 @@ class HUMANITYLASTRESORT_API UHungerSatisfactionTask : public UNeedSatisfactionT
 
 public:
 	void Satisfy(class AAlien* Alien, class UNeedComponent* Need) override;
-	class AResturant* GetResturant();
-	void MoveToResturant(class AResturant* Resturant);
+	//class AResturant* GetResturant();
+	//void MoveToResturant(class AResturant* Resturant);
 
 };

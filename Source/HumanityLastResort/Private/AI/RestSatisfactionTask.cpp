@@ -2,7 +2,6 @@
 
 
 #include "AI/RestSatisfactionTask.h"
-#include "Hotel.h"
 #include "AI/AlienAIController.h"
 #include "AI/Alien.h"
 #include "AI/NeedComponent.h"
@@ -11,48 +10,48 @@
 
 void URestSatisfactionTask::Satisfy(AAlien* Alien, UNeedComponent* Need)
 {
-	CurrentAlien = Alien;
+	/*CurrentAlien = Alien;
 	TaskComponent = Need;
 
 	AHotel* Hotel = GetHotel();
 	if (Hotel)
 		MoveToHotel(Hotel);
 	else
-		Alien->AlienState = Idle;
+		Alien->AlienState = Idle;*/
 }
 
-AHotel* URestSatisfactionTask::GetHotel()
-{
-	TArray<AActor*> Hotels;
-	UGameplayStatics::GetAllActorsOfClass(GetWorld(), AHotel::StaticClass(), Hotels);
+//AHotel* URestSatisfactionTask::GetHotel()
+//{
+//	TArray<AActor*> Hotels;
+//	UGameplayStatics::GetAllActorsOfClass(GetWorld(), AHotel::StaticClass(), Hotels);
+//
+//	ShuffleBuildings(Hotels);
+//
+//	for (AActor* Hotel : Hotels)
+//	{
+//		AHotel* Hot = Cast<AHotel>(Hotel);
+//		if (Hot)
+//		{
+//			if (Hot->CurOccupants < Hot->Capacity)
+//				return Hot;
+//		}
+//	}
+//	return nullptr;
+//}
 
-	ShuffleBuildings(Hotels);
 
-	for (AActor* Hotel : Hotels)
-	{
-		AHotel* Hot = Cast<AHotel>(Hotel);
-		if (Hot)
-		{
-			if (Hot->CurOccupants < Hot->Capacity)
-				return Hot;
-		}
-	}
-	return nullptr;
-}
-
-
-void URestSatisfactionTask::MoveToHotel(AHotel* Hotel)
-{
-	if (Hotel)
-	{
-		AAlienAIController* AI = Cast<AAlienAIController>(CurrentAlien->GetController());
-		if (AI)
-		{
-			Hotel->CurOccupants++;
-			UE_LOG(LogTemp, Warning, TEXT("Rest: %d"), Hotel->CurOccupants);
-			CurrentAlien->AlienState = Assigned;
-			AI->CurBuilding = Hotel;
-			AI->MoveToLocation(Hotel->GetActorLocation());
-		}
-	}
-}
+//void URestSatisfactionTask::MoveToHotel(AHotel* Hotel)
+//{
+//	if (Hotel)
+//	{
+//		AAlienAIController* AI = Cast<AAlienAIController>(CurrentAlien->GetController());
+//		if (AI)
+//		{
+//			Hotel->CurOccupants++;
+//			UE_LOG(LogTemp, Warning, TEXT("Rest: %d"), Hotel->CurOccupants);
+//			CurrentAlien->AlienState = Assigned;
+//			AI->CurBuilding = Hotel;
+//			AI->MoveToLocation(Hotel->GetActorLocation());
+//		}
+//	}
+//}

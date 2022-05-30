@@ -5,15 +5,16 @@
 #include "CoreMinimal.h"
 #include "PlacementInterface.h"
 #include "GameFramework/Actor.h"
-#include "BuildingsActors.generated.h"
+#include "Placeable.generated.h"
 
 UCLASS()
-class HUMANITYLASTRESORT_API ABuildingsActors : public AActor, public IPlacementInterface
+class HUMANITYLASTRESORT_API APlaceable : public AActor, public IPlacementInterface
 {
 	GENERATED_BODY()
 	
 public:	
-	ABuildingsActors();
+	// Sets default values for this actor's properties
+	APlaceable();
 	UPROPERTY(EditDefaultsOnly, Category = "Properties")
 		int32 Capacity;
 	UPROPERTY(Transient)
@@ -29,16 +30,16 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Functions")
 		void DestroyBuildingActor();
 
-	 virtual void MouseMove(FVector position) override;
-	 virtual void MouseRelease() override;
+	virtual void MouseMove(FVector position) override;
+	virtual void MouseRelease() override;
 
 	void ClearFloor();
 	FVector NewBoxSize;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Cells")
-	bool isOneCell = false;
+		bool isOneCell = false;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Cells")
-	FText NameView;
+		FText NameView;
 
 protected:
 	virtual void BeginPlay() override;
@@ -46,32 +47,20 @@ protected:
 	UFUNCTION(BlueprintCallable, Category = "BuildTransform")
 		void ResetRotation();
 
-	UPROPERTY(VisibleAnywhere , BlueprintReadOnly, Category = "Components")
-	class UStaticMeshComponent* StaticMeshComponent;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
+		class UStaticMeshComponent* StaticMeshComponent;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
 		class USceneComponent* SceneComponent;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Config")
-	FText TokenName;
+		FText TokenName;
 
 	UFUNCTION()
-	void OnClicked(UPrimitiveComponent* ClickedComp, FKey ButtonClicked);
+		void OnClicked(UPrimitiveComponent* ClickedComp, FKey ButtonClicked);
 	bool isDragging = false;
 	class ACameraPawn* MyPawn;
 	FVector oldPos;
 
-public:
-	class UEconomySubsystem* EconomySubsystem;
-	void AddProfit();
-	void SubtractLoss();
 
-	class USphereComponent* BuildingCollision;
-
-	UFUNCTION()
-	void OnOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
-
-	UFUNCTION()
-	void OnOverlapEnd(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
-	
 };

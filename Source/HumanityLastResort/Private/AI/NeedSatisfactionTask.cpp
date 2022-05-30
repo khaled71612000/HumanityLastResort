@@ -4,8 +4,7 @@
 #include "AI/NeedSatisfactionTask.h"
 #include "AI/Alien.h"
 #include "AI/NeedComponent.h"
-#include "Resturant.h"
-#include "Hotel.h"
+
 
 
 void UNeedSatisfactionTask::Satisfy(AAlien* Alien, class UNeedComponent* Need)

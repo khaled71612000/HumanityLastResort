@@ -15,7 +15,7 @@ class HUMANITYLASTRESORT_API AAlienAIController : public AAIController
 	GENERATED_BODY()
 
 public:
-	class ABuildingsActors* CurBuilding;
+	class ABuilding* CurBuilding;
 	void OnMoveCompleted(FAIRequestID RequestID, const FPathFollowingResult& Result) override;
 	void AlienSucceedUpdate(class AAlien* Alien);
 	void AlienFailedUpdate(class AAlien* Alien);

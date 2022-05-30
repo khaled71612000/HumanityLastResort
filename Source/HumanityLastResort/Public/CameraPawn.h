@@ -73,7 +73,7 @@ public:
 	UPROPERTY(VisibleAnywhere, Category = "Movement")
 		class UFloatingPawnMovement* FloatingPawnMovement;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "BuildTransform")
-		class ABuildingsActors* SelectedToken;
+		class APlaceable* SelectedToken;
 
 
 };

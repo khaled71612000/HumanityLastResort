@@ -15,7 +15,7 @@ class HUMANITYLASTRESORT_API URestSatisfactionTask : public UNeedSatisfactionTas
 	GENERATED_BODY()
 	
 	void Satisfy(class AAlien* Alien, class UNeedComponent* Need) override;
-	class AHotel* GetHotel();
-	void MoveToHotel(class AHotel* Hotel);
+	//class AHotel* GetHotel();
+	//void MoveToHotel(class AHotel* Hotel);
 
 };

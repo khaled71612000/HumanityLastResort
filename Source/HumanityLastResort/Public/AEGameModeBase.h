@@ -22,7 +22,7 @@ protected:
 	virtual void Tick(float DeltaTime) override;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Config")
-		TArray<TSubclassOf<class ABuildingsActors>> building;
+		TArray<TSubclassOf<class APlaceable>> building;
 	
 
 };

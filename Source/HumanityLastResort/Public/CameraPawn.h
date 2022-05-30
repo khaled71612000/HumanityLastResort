@@ -37,6 +37,7 @@ public:
 		USceneComponent* RootScene;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		USpringArmComponent* SpringArm;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		UCameraComponent* CameraComp;
 
 	UPROPERTY(EditAnywhere, Category = "Panning")
@@ -50,8 +51,18 @@ public:
 	int32 ScreenSizeX;
 	int32 ScreenSizeY;
 
-	
+	/*UFUNCTION(BlueprintCallable, Category = "Zoom")
+		void ZoomIn(float Value);*/
 
+	UFUNCTION(BlueprintCallable, Category = "Movement")
+		void OrbitRotate(float Value);
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Movement")
+		float orbitSpeed = 1;
+
+	UFUNCTION(BlueprintCallable, Category = "Movement")
+		void CameraPitch(float Value);
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Movement")
+		float CameraPitchSpeed = 1;
 
 	UFUNCTION(BlueprintCallable, Category = "Movement")
 		void MoveForward(float Value);

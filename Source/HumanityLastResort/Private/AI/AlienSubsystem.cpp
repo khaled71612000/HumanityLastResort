@@ -15,7 +15,7 @@ void UAlienSubsystem::Initialize(FSubsystemCollectionBase& Collection)
 
 TStatId UAlienSubsystem::GetStatId() const
 {
-	return TStatId();
+		RETURN_QUICK_DECLARE_CYCLE_STAT(UAlienSubsystem, STATGROUP_Tickables);
 }
 
 

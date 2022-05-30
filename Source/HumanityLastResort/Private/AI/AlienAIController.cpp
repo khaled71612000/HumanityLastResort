@@ -17,29 +17,39 @@ void AAlienAIController::OnMoveCompleted(FAIRequestID RequestID, const FPathFoll
 		else if (Alien->AlienState == Assigned)
 		{
 			//UE_LOG(LogTemp, Warning, TEXT("Assigned"));
-
-			//Alien Update
-			Alien->NumOfFailedTasks--;
-			if (Alien->NumOfFailedTasks == 0)
-				Alien->AlienState = Leaving;
-			else
-				Alien->AlienState = Idle;
-
-			CurBuilding->CurOccupants--;
-			Alien->ChangeMood(-Alien->BadMoodVal);
-
-			//Building Update
-			CurBuilding->SubtractLoss();
+			AlienFailedUpdate(Alien);
 		}
 		else
 		{
 			//UE_LOG(LogTemp, Warning, TEXT("Not Assigned"));
-			Alien->NumOfTasks--;
-			if (Alien->NumOfTasks == 0)
-				Alien->AlienState = Leaving;
-
-			Alien->ChangeMood(Alien->GoodMoodVal);
-			CurBuilding->AddProfit();
+			AlienSucceedUpdate(Alien);
 		}
 	}
 }
+
+void AAlienAIController::AlienSucceedUpdate(AAlien* Alien)
+{
+	Alien->NumOfTasks--;
+	if (Alien->NumOfTasks == 0)
+		Alien->AlienState = Leaving;
+
+	Alien->ChangeMood(Alien->GoodMoodVal);
+
+	CurBuilding->AddProfit();
+}
+
+void AAlienAIController::AlienFailedUpdate(AAlien* Alien)
+{
+	Alien->NumOfFailedTasks--;
+	if (Alien->NumOfFailedTasks == 0)
+		Alien->AlienState = Leaving;
+	else
+		Alien->AlienState = Idle;
+
+	Alien->ChangeMood(-Alien->BadMoodVal);
+
+	//Building Update
+	CurBuilding->CurOccupants--;
+	CurBuilding->SubtractLoss();
+}
+

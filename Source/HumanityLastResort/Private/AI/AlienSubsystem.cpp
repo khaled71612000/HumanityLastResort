@@ -58,9 +58,9 @@ void UAlienSubsystem::UpdateGlobalMood()
 	if (NumOfAliens)
 		GlobalMoodPercentage = GlobalMood / (float)NumOfAliens;
 
-	UE_LOG(LogTemp, Warning, TEXT("Global Mood: %d"), GlobalMood);
+	/*UE_LOG(LogTemp, Warning, TEXT("Global Mood: %d"), GlobalMood);
 	UE_LOG(LogTemp, Warning, TEXT("Global Mood Percentage: %f"), GlobalMoodPercentage);
-	UE_LOG(LogTemp, Warning, TEXT("Num of Aliens: %d"), NumOfAliens);
+	UE_LOG(LogTemp, Warning, TEXT("Num of Aliens: %d"), NumOfAliens);*/
 
 }
 

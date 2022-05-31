@@ -32,6 +32,10 @@ public:
 	 virtual void MouseRelease() override;
 
 	void ClearFloor();
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Respawn")
+	FVector RespawnLoc = FVector(200, 7800, 190);
+
 	FVector NewBoxSize;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Cells")

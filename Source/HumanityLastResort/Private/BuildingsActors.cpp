@@ -3,7 +3,7 @@
 
 #include "BuildingsActors.h"
 #include "CameraPawn.h"
-#include "AICharacterBase.h"
+#include "AI/Alien.h"
 #include "Kismet\KismetSystemLibrary.h"
 #include "DrawDebugHelpers.h"
 #include "CellActor.h"
@@ -130,26 +130,29 @@ void ABuildingsActors::MouseMove(FVector position)
 		   
 
 		   FVector Start = GetActorLocation();
-		   FVector End = ((GetActorUpVector() * 50.f) + Start);
+		   FVector End = ((GetActorUpVector() * -100.f) + Start);
 
 		   TArray<AActor*> ActorsToIgnore;
 		   ActorsToIgnore.Add(this);
-		   FHitResult HitResult;
+		   TArray<FHitResult>  HitResult;
 
-		   bool BoxHit = UKismetSystemLibrary::BoxTraceSingle(GetWorld(), Start, End,
+		   bool BoxHit = UKismetSystemLibrary::BoxTraceMulti(GetWorld(), Start, End,
 			   NewBoxSize ,
 			   GetActorRotation(), UEngineTypes::ConvertToTraceType(ECC_Pawn),
-			   false, ActorsToIgnore, EDrawDebugTrace::None, HitResult,
+			   false, ActorsToIgnore, EDrawDebugTrace::ForDuration, HitResult,
 			   true, FLinearColor::Red, FLinearColor::Green, 0.1f
 		   );
 
 		if (BoxHit) {
-			//UE_LOG(LogTemp, Error, TEXT("Colliding"))
-			ABuildingsActors* UnderHit = Cast<ABuildingsActors>(HitResult.GetActor());
-			//DrawDebugLine(GetWorld(), Start, End, FColor::Orange, false, 0.1f);
-			if (UnderHit) {
-				//GEngine->AddOnScreenDebugMessage(-1, 1 ,FColor::Yellow, FString::Printf(TEXT("HERE %s"), *Hit.GetActor()->GetName()));
-				this->SetActorLocation(oldPos);
+			for (auto& Building : HitResult)
+			{
+				//UE_LOG(LogTemp, Error, TEXT("Colliding"))
+					ABuildingsActors* UnderHit = Cast<ABuildingsActors>(Building.GetActor());
+				//DrawDebugLine(GetWorld(), Start, End, FColor::Orange, false, 0.1f);
+				if (UnderHit) {
+					//GEngine->AddOnScreenDebugMessage(-1, 1 ,FColor::Yellow, FString::Printf(TEXT("HERE %s"), *Hit.GetActor()->GetName()));
+					this->SetActorLocation(oldPos);
+				}
 			}
 		}
 		
@@ -159,7 +162,7 @@ void ABuildingsActors::MouseMove(FVector position)
 void ABuildingsActors::ClearFloor()
 {
 	FVector Start = GetActorLocation() ;
-	FVector End = ((GetActorUpVector() * 60.f) + Start);
+	FVector End = ((GetActorUpVector() * 80.f) + Start);
 
 	FVector origin, boxExtent;
 	GetActorBounds(false, origin, boxExtent);
@@ -176,11 +179,11 @@ void ABuildingsActors::ClearFloor()
 	);
 
 	if (Hiting) {
-		UE_LOG(LogTemp, Error, TEXT("NPC FOUND"));
 		for (auto& NPC : HitArray)
 		{
-			AAICharacterBase* NPCHit = Cast<AAICharacterBase>(NPC.GetActor());
+			AAlien* NPCHit = Cast<AAlien>(NPC.GetActor());
 			if (NPCHit) {
+		//UE_LOG(LogTemp, Error, TEXT("NPC FOUND"));
 				NPCHit->SetActorLocation(FVector(200,7800,190), true);
 			}
 		}

@@ -45,5 +45,4 @@ void UNeedComponent::DecreaseValue()
 		CurValue -= DecayRate;
 	UE_LOG(LogTemp, Warning, TEXT("CurValue: %f"), CurValue);
 	UE_LOG(LogTemp, Warning, TEXT("MaxCapacity: %d"), MaxCapacity);
-
 }

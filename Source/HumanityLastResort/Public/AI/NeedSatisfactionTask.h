@@ -16,10 +16,8 @@ class HUMANITYLASTRESORT_API UNeedSatisfactionTask : public UObject
 
 public:
 	virtual void Satisfy(class AAlien* Alien, class UNeedComponent* Need);
-	
 	void Wait();
 	void DoTask();
-
 	void ShuffleBuildings(TArray<AActor*> &Buildings);
 
 protected:

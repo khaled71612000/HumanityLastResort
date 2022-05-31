@@ -16,11 +16,11 @@ void UHungerSatisfactionTask::Satisfy(AAlien* Alien, UNeedComponent* Need)
 	if (Resturant)
 		MoveToResturant(Resturant);
 	else
-		Alien->AlienState = Idle;*/
+		Alien->AlienState = Idle;
 
-	//UE_LOG(LogTemp, Warning, TEXT("Hungry"));
+	UE_LOG(LogTemp, Warning, TEXT("Hungry"));*/
 }
-//
+
 //AResturant* UHungerSatisfactionTask::GetResturant()
 //{
 //	TArray<AActor*> Resturants;
@@ -58,5 +58,5 @@ void UHungerSatisfactionTask::Satisfy(AAlien* Alien, UNeedComponent* Need)
 //		}
 //	}
 //}
-//
+
 

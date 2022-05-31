@@ -12,17 +12,9 @@ class HUMANITYLASTRESORT_API APlaceable : public AActor, public IPlacementInterf
 {
 	GENERATED_BODY()
 	
-public:	
 	// Sets default values for this actor's properties
+protected:
 	APlaceable();
-	UPROPERTY(EditDefaultsOnly, Category = "Properties")
-		int32 Capacity;
-	UPROPERTY(Transient)
-		int32 CurOccupants;
-	UPROPERTY(EditDefaultsOnly, Category = "Properties")
-		int32 Profit;
-	UPROPERTY(EditDefaultsOnly, Category = "Properties")
-		int32 Loss;
 
 public:
 	UFUNCTION(BlueprintCallable, Category = "Functions")
@@ -57,7 +49,7 @@ protected:
 		FText TokenName;
 
 	UFUNCTION()
-		void OnClicked(UPrimitiveComponent* ClickedComp, FKey ButtonClicked);
+	void OnClicked(UPrimitiveComponent* ClickedComp, FKey ButtonClicked);
 	bool isDragging = false;
 	class ACameraPawn* MyPawn;
 	FVector oldPos;

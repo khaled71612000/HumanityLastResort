@@ -6,19 +6,16 @@
 #include "AI/Alien.h"
 #include "Economy/EconomySubsystem.h"
 
-ABuilding::ABuilding() {
+ABuilding::ABuilding() 
+{
 	CurOccupants = 0;
 
 	BuildingCollision = CreateDefaultSubobject<USphereComponent>(TEXT("RootCollision"));
-
 	BuildingCollision->SetupAttachment(RootComponent);
 	BuildingCollision->SetSphereRadius(200.f);
 	BuildingCollision->SetHiddenInGame(false);
-
 	BuildingCollision->OnComponentBeginOverlap.AddDynamic(this, &ABuilding::OnOverlap);
 	BuildingCollision->OnComponentEndOverlap.AddDynamic(this, &ABuilding::OnOverlapEnd);
-
-
 }
 
 void ABuilding::BeginPlay()

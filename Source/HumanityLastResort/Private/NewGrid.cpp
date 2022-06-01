@@ -21,7 +21,7 @@ void ANewGrid::PopulateGrid()
 	float WorldOffsetY = WorldOffset;
 	FVector spawnPos;
 	//Y loop
-	for (float i = 0; i < GridSize -1 ; i++)
+	for (float i = 0; i < GridSize - 1 ; i++)
 	{
 		//X loop
 		for (float j = 0; j < GridSize - 1; j++)
@@ -33,10 +33,10 @@ void ANewGrid::PopulateGrid()
 
 			spawnPos = FVector(WorldOffsetX, WorldOffsetY, 0.f);
 
-
 			ANewCell* temp = GetWorld()->SpawnActor<ANewCell>(ActorToSpawn, spawnPos,
 				GetActorRotation());
 
+			//GridPoints.Add(spawnPos);
 			GridArray.Add(temp);
 		}
 	}

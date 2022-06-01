@@ -16,13 +16,19 @@ public:
 	// Sets default values for this actor's properties
 	ANewGrid();
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Mesh")
+	UStaticMeshComponent* SphereMesh;
+
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Cells")
 	int GridSize = 10;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Cells")
 	int WorldGridSize = 1000;
 	TArray<AActor*> GridArray;
+	TArray<FVector> GridPoints;
+
+
 	UPROPERTY(EditAnywhere, BlueprintReadWrite , Category = "Cells")
-		TSubclassOf<class AActor> ActorToSpawn;
+	TSubclassOf<class AActor> ActorToSpawn;
 
 	UFUNCTION(BlueprintCallable, Category = "Cells")
 	void PopulateGrid();

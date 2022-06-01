@@ -19,7 +19,7 @@ void UHunger::Satisfy(class AAlien* Alien, class UNeedComponent* Need)
 	else
 		Alien->AlienState = Idle;
 
-	UE_LOG(LogTemp, Warning, TEXT("Hungry"));
+	//UE_LOG(LogTemp, Warning, TEXT("Hungry"));
 }
 
 AResturant* UHunger::GetResturant()
@@ -39,8 +39,7 @@ AResturant* UHunger::GetResturant()
 			if (Rest->CurOccupants < Rest->Capacity)
 				return Rest;
 		}
-	}
-	
+	}	
 	return nullptr;
 }
 
@@ -55,7 +54,6 @@ void UHunger::MoveToResturant(AResturant* Resturant)
 			CurrentAlien->AlienState = Assigned;
 			AI->CurBuilding = Resturant;
 			AI->MoveToLocation(Resturant->GetActorLocation());
-		
 		}
 	}
 }

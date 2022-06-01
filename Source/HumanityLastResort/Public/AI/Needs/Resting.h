@@ -4,20 +4,18 @@
 
 #include "CoreMinimal.h"
 #include "AI/NeedSatisfactionTask.h"
-#include "TimerManager.h"
-#include "HungerSatisfactionTask.generated.h"
+#include "Resting.generated.h"
 
 /**
  * 
  */
 UCLASS()
-class HUMANITYLASTRESORT_API UHungerSatisfactionTask : public UNeedSatisfactionTask
+class HUMANITYLASTRESORT_API UResting : public UNeedSatisfactionTask
 {
 	GENERATED_BODY()
 
 public:
 	void Satisfy(class AAlien* Alien, class UNeedComponent* Need) override;
-	//class AResturant* GetResturant();
-	//void MoveToResturant(class AResturant* Resturant);
-
+	class AHotel* GetHotel();
+	void MoveToHotel(class AHotel* Hotel);
 };

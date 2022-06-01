@@ -3,7 +3,7 @@
 
 #include "AI/NeedComponent.h"
 #include "AI/NeedSatisfactionTask.h"
-#include "AI/HungerSatisfactionTask.h"
+#include "AI/Needs/Hunger.h"
 
 
 // Sets default values for this component's properties

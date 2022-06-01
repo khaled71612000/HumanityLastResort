@@ -29,7 +29,7 @@ public:
 	float TaskTime;
 
 	UPROPERTY(EditDefaultsOnly)
-	TSubclassOf<class UNeedSatisfactionTask> TaskClass;
+	TSubclassOf<class ABuilding> Building;
 
 	UPROPERTY(Transient)
 	class UNeedSatisfactionTask* Task;

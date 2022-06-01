@@ -35,7 +35,6 @@ public:
 	UPROPERTY(EditDefaultsOnly, Category = "Properties")
 		int32 NumOfFailedTasks;
 
-
 	State AlienState;
 	class UNeedComponent* NeedToExcute;
 	class UAlienSubsystem* AlienSubsystem;

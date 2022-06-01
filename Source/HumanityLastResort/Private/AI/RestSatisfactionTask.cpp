@@ -8,8 +8,8 @@
 #include "Kismet/GameplayStatics.h"
 
 
-void URestSatisfactionTask::Satisfy(AAlien* Alien, UNeedComponent* Need)
-{
+//void URestSatisfactionTask::Satisfy(AAlien* Alien, UNeedComponent* Need)
+//{
 	/*CurrentAlien = Alien;
 	TaskComponent = Need;
 
@@ -18,7 +18,7 @@ void URestSatisfactionTask::Satisfy(AAlien* Alien, UNeedComponent* Need)
 		MoveToHotel(Hotel);
 	else
 		Alien->AlienState = Idle;*/
-}
+//}
 
 //AHotel* URestSatisfactionTask::GetHotel()
 //{

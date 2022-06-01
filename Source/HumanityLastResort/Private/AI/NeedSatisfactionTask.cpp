@@ -3,13 +3,24 @@
 
 #include "AI/NeedSatisfactionTask.h"
 #include "AI/Alien.h"
+#include "AI/AlienAIController.h"
 #include "AI/NeedComponent.h"
+#include "Building.h"
+#include "Buildings/Resturant.h"
+#include "Kismet/GameplayStatics.h"
 
 
-
-void UNeedSatisfactionTask::Satisfy(AAlien* Alien, class UNeedComponent* Need)
+void UNeedSatisfactionTask::Satisfy(AAlien* Alien, class UNeedComponent* Need, TSubclassOf<class ABuilding> BuildingType)
 {
-	//UE_LOG(LogTemp, Warning, TEXT("Parent"));
+	CurrentBuildingType = BuildingType;
+	CurrentAlien = Alien;
+	TaskComponent = Need;
+
+	ABuilding* Building = GetBuilding();
+	if(Building)
+		MoveToBuilding(Building);
+	else
+		Alien->AlienState = Idle;
 }
 
 void UNeedSatisfactionTask::Wait()
@@ -51,6 +62,41 @@ void UNeedSatisfactionTask::ShuffleBuildings(TArray<AActor*>& Buildings)
 			Temp = Buildings[Index1];
 			Buildings[Index1] = Buildings[Index2];
 			Buildings[Index2] = Temp;
+		}
+	}
+}
+
+ABuilding* UNeedSatisfactionTask::GetBuilding()
+{
+	TArray<AActor*> Buildings;
+	UGameplayStatics::GetAllActorsOfClass(GetWorld(), CurrentBuildingType, Buildings);
+
+	ShuffleBuildings(Buildings);
+
+	for (AActor* Building : Buildings)
+	{
+		ABuilding* B = Cast<ABuilding>(Building);
+		if (B)
+		{
+			if (B->CurOccupants < B->Capacity)
+				return B;
+		}
+	}
+	return nullptr;
+}
+
+void UNeedSatisfactionTask::MoveToBuilding(ABuilding* Building)
+{
+	if (Building)
+	{
+		AAlienAIController* AI = Cast<AAlienAIController>(CurrentAlien->GetController());
+		if (AI)
+		{
+			Building->CurOccupants++;
+			//UE_LOG(LogTemp, Warning, TEXT("Rest: %d"), Hotel->CurOccupants);
+			CurrentAlien->AlienState = Assigned;
+			AI->CurBuilding = Building;
+			AI->MoveToLocation(Building->GetActorLocation());
 		}
 	}
 }

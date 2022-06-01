@@ -15,14 +15,18 @@ class HUMANITYLASTRESORT_API UNeedSatisfactionTask : public UObject
 	GENERATED_BODY()
 
 public:
-	virtual void Satisfy(class AAlien* Alien, class UNeedComponent* Need);
+	virtual void Satisfy(class AAlien* Alien, class UNeedComponent* Need, TSubclassOf<class ABuilding> CurrentBuilding);
 	void Wait();
 	void DoTask();
 	void ShuffleBuildings(TArray<AActor*> &Buildings);
 
+	class ABuilding* GetBuilding();
+	void MoveToBuilding(class ABuilding* Building);
+
 protected:
 	class AAlien* CurrentAlien;
 	class UNeedComponent* TaskComponent;
+	TSubclassOf<class ABuilding> CurrentBuildingType;
 	float CurTaskTime;
 	FTimerHandle TaskTimeManager;
 };

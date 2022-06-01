@@ -46,7 +46,7 @@ void AAlien::GetTask()
 void AAlien::GoToTask()
 {
 	if (NeedToExcute)
-		NeedToExcute->Task->Satisfy(this, NeedToExcute);
+		NeedToExcute->Task->Satisfy(this, NeedToExcute, NeedToExcute->Building);
 	else
 		AlienState = Idle;
 }

@@ -4,6 +4,7 @@
 #include "AI/NeedComponent.h"
 #include "AI/NeedSatisfactionTask.h"
 #include "AI/Needs/Hunger.h"
+#include "Buildings/Resturant.h"
 
 
 // Sets default values for this component's properties
@@ -15,10 +16,9 @@ UNeedComponent::UNeedComponent()
 void UNeedComponent::OnRegister()
 {
 	Super::OnRegister();
-	if (TaskClass) 
-	{
-		Task = NewObject<UNeedSatisfactionTask>(this, TaskClass);
-	}	
+	
+	Task = NewObject<UNeedSatisfactionTask>(this);
+	Building = AResturant::StaticClass();
 
 }
 
@@ -43,6 +43,6 @@ void UNeedComponent::DecreaseValue()
 {
 	if (CurValue > 0)
 		CurValue -= DecayRate;
-	UE_LOG(LogTemp, Warning, TEXT("CurValue: %f"), CurValue);
-	UE_LOG(LogTemp, Warning, TEXT("MaxCapacity: %d"), MaxCapacity);
+	//UE_LOG(LogTemp, Warning, TEXT("CurValue: %f"), CurValue);
+	//UE_LOG(LogTemp, Warning, TEXT("MaxCapacity: %d"), MaxCapacity);
 }

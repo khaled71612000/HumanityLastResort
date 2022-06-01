@@ -24,5 +24,4 @@ void ASpawnAI::SpawnAnAlien()
 	AlienSubsystem->Aliens.Add(Alien);
 	AlienSubsystem->NumOfAliens++;
 	//GEngine->AddOnScreenDebugMessage(-1, 10.f, FColor::Red, TEXT("Spawn"));
-
 }

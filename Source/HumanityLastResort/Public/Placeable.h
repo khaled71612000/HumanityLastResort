@@ -25,6 +25,9 @@ public:
 	virtual void MouseMove(FVector position) override;
 	virtual void MouseRelease() override;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Respawn")
+		FVector RespawnLoc = FVector(200, 7800, 190);
+
 	void ClearFloor();
 	FVector NewBoxSize;
 

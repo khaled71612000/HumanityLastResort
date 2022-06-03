@@ -16,7 +16,7 @@ public:
 	// Sets default values for this component's properties
 	UNeedComponent();
 
-	UPROPERTY(EditDefaultsOnly, Category = "Properties")
+	UPROPERTY(Transient)
 	float MaxCapacity;
 
 	UPROPERTY(Transient)

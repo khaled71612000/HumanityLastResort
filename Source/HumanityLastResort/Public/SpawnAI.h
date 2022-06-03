@@ -23,12 +23,13 @@ private:
 	virtual void BeginPlay() override;
 
 	void SpawnAnAlien();
+	void CreateAlienHungerNeed(class AAlien* Alien, int Capacity, int DecayRate, int TimeToSpend);
 
 	UPROPERTY(EditAnywhere, meta = (AllowPrivateAccess = "true"))
-		TSubclassOf<class AAlien> ActorToSpawn;
+		TArray<TSubclassOf<class AAlien>> Aliens;
 
 public:
-	UPROPERTY(EditAnywhere, Category = "Spawn AI")
+	UPROPERTY(EditAnywhere, Category = "SpawnAlien")
 		float SpawnRate = 8.f;
 
 	class UAlienSubsystem* AlienSubsystem;

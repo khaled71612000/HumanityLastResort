@@ -13,5 +13,8 @@ UCLASS()
 class HUMANITYLASTRESORT_API AWomanAlien : public AAlien
 {
 	GENERATED_BODY()
-	
+
+public:
+	void CallSetAlienNeedsValues() override;
+	void CallSetAlienAttributes() override;
 };

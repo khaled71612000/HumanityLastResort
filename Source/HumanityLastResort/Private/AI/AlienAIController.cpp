@@ -9,6 +9,7 @@
 void AAlienAIController::OnMoveCompleted(FAIRequestID RequestID, const FPathFollowingResult& Result)
 {		
 	AAlien* Alien = Cast<AAlien>(GetPawn());
+
 	if(RequestID.IsValid())
 		GEngine->AddOnScreenDebugMessage(-1, 10.f, FColor::Red, "Valid");
 	else

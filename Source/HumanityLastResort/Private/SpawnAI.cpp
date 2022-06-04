@@ -22,19 +22,12 @@ void ASpawnAI::BeginPlay()
 
 void ASpawnAI::SpawnAnAlien()
 {
-	int32 AlienInd = 0;
-	if (AlienSubsystem->NumOfAliens > 1)
-	{
-
-	}
-	else if (AlienInd == 0)
-	{
-		AAlien* Alien = GetWorld()->SpawnActor<AAlien>(Aliens[0], SpawnLocation, SpawnRotation, SpawnParams);
-		Alien->CallSetAlienAttributes();
-		Alien->CallSetAlienNeedsValues();
-		AlienSubsystem->Aliens.Add(Alien);
-		AlienSubsystem->NumOfAliens++;
-	}
+	int32 AlienInd = FMath::RandRange(0,  3);
+	AAlien* Alien = GetWorld()->SpawnActor<AAlien>(Aliens[AlienInd], SpawnLocation, SpawnRotation, SpawnParams);
+	Alien->CallSetAlienAttributes();
+	Alien->CallSetAlienNeedsValues();
+	AlienSubsystem->Aliens.Add(Alien);
+	AlienSubsystem->NumOfAliens++;
 	
 	//GEngine->AddOnScreenDebugMessage(-1, 10.f, FColor::Red, TEXT("Spawn"));
 }

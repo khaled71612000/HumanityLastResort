@@ -9,24 +9,18 @@
 void AAlienAIController::OnMoveCompleted(FAIRequestID RequestID, const FPathFollowingResult& Result)
 {		
 	AAlien* Alien = Cast<AAlien>(GetPawn());
-
-	if(RequestID.IsValid())
-		GEngine->AddOnScreenDebugMessage(-1, 10.f, FColor::Red, "Valid");
-	else
-		GEngine->AddOnScreenDebugMessage(-1, 10.f, FColor::Red, "InValid");
-
+	//UE_LOG(LogTemp, Warning, TEXT("Alien: %d"), Alien->AlienState);
 
 	if (Result.IsSuccess())
 	{
-		GEngine->AddOnScreenDebugMessage(-1, 10.f, FColor::Red, "Success");
-		StopMovement();
+		//GEngine->AddOnScreenDebugMessage(-1, 10.f, FColor::Red, "Success");
+		//UE_LOG(LogTemp, Warning, TEXT("Alien: %d"), Alien->AlienState);
 
 		if (Alien)
 		{
 			if (Alien->AlienState == Leaving)
 			{
 				//UE_LOG(LogTemp, Warning, TEXT("Leaving"));
-
 				Alien->Destroy();
 			}
 			else if (Alien->AlienState == Assigned)
@@ -36,29 +30,32 @@ void AAlienAIController::OnMoveCompleted(FAIRequestID RequestID, const FPathFoll
 			}
 			else
 			{
-				//UE_LOG(LogTemp, Warning, TEXT("Not Assigned"));
 				AlienSucceedUpdate(Alien);
+
 			}
 		}
 	}
 
 	else if (Result.IsFailure())
 	{
+		/*GEngine->AddOnScreenDebugMessage(-1, 10.f, FColor::Red, "Failure");
+		UE_LOG(LogTemp, Warning, TEXT("Failure"));
+		UE_LOG(LogTemp, Warning, TEXT("Alien: %d"), Alien->AlienState);*/
 		if (Alien) {
-			Alien->AlienState = Idle;
-			CurBuilding->CurOccupants--;
-		}
-			
-		GEngine->AddOnScreenDebugMessage(-1, 10.f, FColor::Red, "Failure");
-
+			if(Alien->AlienState == Assigned)
+			{
+				Alien->AlienState = Idle;
+				CurBuilding->CurOccupants--;
+			}
+			else if(Alien->AlienState == Waiting) 
+			{
+				AlienSucceedUpdate(Alien);
+			}
+		}		
 	}
 
-	else if(Result.IsInterrupted())
-		GEngine->AddOnScreenDebugMessage(-1, 10.f, FColor::Red, "Interrupted");
-	else 
-		GEngine->AddOnScreenDebugMessage(-1, 10.f, FColor::Red, "SomethingElse");
+	StopMovement();
 
-	
 }
 
 void AAlienAIController::AlienSucceedUpdate(AAlien* Alien)

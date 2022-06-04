@@ -96,7 +96,7 @@ void UNeedSatisfactionTask::MoveToBuilding(ABuilding* Building)
 			//UE_LOG(LogTemp, Warning, TEXT("Rest: %d"), Hotel->CurOccupants);
 			CurrentAlien->AlienState = Assigned;
 			AI->CurBuilding = Building;
-			AI->MoveToLocation(Building->GetActorLocation());
+			AI->MoveToLocation(Building->GetActorLocation(), 5.f);
 		}
 	}
 }

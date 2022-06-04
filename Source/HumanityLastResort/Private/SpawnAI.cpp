@@ -23,7 +23,11 @@ void ASpawnAI::BeginPlay()
 void ASpawnAI::SpawnAnAlien()
 {
 	int32 AlienInd = 0;
-	if (AlienInd == 0)
+	if (AlienSubsystem->NumOfAliens > 1)
+	{
+
+	}
+	else if (AlienInd == 0)
 	{
 		AAlien* Alien = GetWorld()->SpawnActor<AAlien>(Aliens[0], SpawnLocation, SpawnRotation, SpawnParams);
 		Alien->CallSetAlienAttributes();

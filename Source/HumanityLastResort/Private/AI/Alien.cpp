@@ -1,5 +1,3 @@
-// Fill out your copyright notice in the Description page of Project Settings.
-
 
 #include "AI/Alien.h"
 #include "AI/NeedComponent.h"
@@ -10,31 +8,25 @@
 #include "Kismet/GameplayStatics.h"
 
 
-// Sets default values
 AAlien::AAlien()
 {
-	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = false;
 	AlienState = Idle;
+	
 }
 
-// Called when the game starts or when spawned
 void AAlien::BeginPlay()
 {
 	Super::BeginPlay();
+	GetComponents(Needs);
 	AlienSubsystem = GetWorld()->GetSubsystem<UAlienSubsystem>();
 }
 
 void AAlien::GetTask()
 {
-	TArray<UNeedComponent*> Needs;
-	GetComponents(Needs);
-
 	int MinValue = 101;
 	for (UNeedComponent* Need : Needs)
 	{
-		//UE_LOG(LogTemp, Warning, TEXT("Task: %d"), Need->CurValue);
-
 		if (Need->CurValue < MinValue)
 		{
 			NeedToExcute = Need;
@@ -46,7 +38,7 @@ void AAlien::GetTask()
 void AAlien::GoToTask()
 {
 	if (NeedToExcute)
-		NeedToExcute->Task->Satisfy(this, NeedToExcute);
+		NeedToExcute->Task->Satisfy(this, NeedToExcute, NeedToExcute->Building);
 	else
 		AlienState = Idle;
 }
@@ -71,8 +63,37 @@ void AAlien::ChangeMood(int MoodVal)
 	AlienSubsystem->GlobalMood += Mood;
 	AlienSubsystem->UpdateGlobalMood();
 
-	//UE_LOG(LogTemp, Warning, TEXT("Mood: %d"), AlienSubsystem->GlobalMood);
+}
+
+
+void AAlien::SetAlienNeedsValues(TArray<AlienNeedsValue*> NeedsValues)
+{
+	for (int i = 0; i < NeedsValues.Num(); i++)
+	{
+		Needs[i]->DecayRate = FMath::RandRange(NeedsValues[i]->DecayRate.from, NeedsValues[i]->DecayRate.to);
+		Needs[i]->TaskTime = FMath::RandRange(NeedsValues[i]->TimeSpent.from, NeedsValues[i]->TimeSpent.to);
+	}
+}
+
+void AAlien::SetAlienAttributes(AlienAttributes AlienAttributes)
+{
+	GoodMoodVal = FMath::RandRange(AlienAttributes.GoodMoodVal.from, AlienAttributes.GoodMoodVal.to);
+	BadMoodVal = FMath::RandRange(AlienAttributes.BadMoodVal.from, AlienAttributes.BadMoodVal.to);
+	NumOfTasks = FMath::RandRange(AlienAttributes.NumOfTasks.from, AlienAttributes.NumOfTasks.to);
+	NumOfTasks = FMath::RandRange(AlienAttributes.NumOfTasks.from, AlienAttributes.NumOfTasks.to);
 
 }
+
+void AAlien::CallSetAlienNeedsValues()
+{
+}
+
+void AAlien::CallSetAlienAttributes()
+{
+
+}
+
+
+
 
 

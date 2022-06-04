@@ -5,6 +5,8 @@
 #include "AI/Alien.h"
 #include "AI/AlienSubsystem.h"
 #include "TimerManager.h"
+#include "AI/NeedComponent.h"
+#include "Buildings/Resturant.h"
 
 void ASpawnAI::BeginPlay() 
 {
@@ -20,9 +22,20 @@ void ASpawnAI::BeginPlay()
 
 void ASpawnAI::SpawnAnAlien()
 {
-	AAlien* Alien = GetWorld()->SpawnActor<AAlien>(ActorToSpawn,SpawnLocation, SpawnRotation, SpawnParams);
-	AlienSubsystem->Aliens.Add(Alien);
-	AlienSubsystem->NumOfAliens++;
+	int32 AlienInd = 0;
+	if (AlienInd == 0)
+	{
+		AAlien* Alien = GetWorld()->SpawnActor<AAlien>(Aliens[0], SpawnLocation, SpawnRotation, SpawnParams);
+		Alien->CallSetAlienAttributes();
+		Alien->CallSetAlienNeedsValues();
+		AlienSubsystem->Aliens.Add(Alien);
+		AlienSubsystem->NumOfAliens++;
+	}
+	
 	//GEngine->AddOnScreenDebugMessage(-1, 10.f, FColor::Red, TEXT("Spawn"));
-
 }
+
+
+
+
+

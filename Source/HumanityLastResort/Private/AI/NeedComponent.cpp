@@ -4,33 +4,27 @@
 #include "AI/NeedComponent.h"
 #include "AI/NeedSatisfactionTask.h"
 #include "AI/Needs/Hunger.h"
+#include "Buildings/Resturant.h"
 
 
-// Sets default values for this component's properties
 UNeedComponent::UNeedComponent()
 {
 	PrimaryComponentTick.bCanEverTick = false;	
+	MaxCapacity = 100;
 }
 
 void UNeedComponent::OnRegister()
 {
 	Super::OnRegister();
-	if (TaskClass) 
-	{
-		Task = NewObject<UNeedSatisfactionTask>(this, TaskClass);
-	}	
-
+	Task = NewObject<UNeedSatisfactionTask>(this);
 }
 
-// Called when the game starts
 void UNeedComponent::BeginPlay()
 {
 	Super::BeginPlay();
 	CurValue = MaxCapacity;
 	StartDecreasingValue();
 }
-
-
 
 void UNeedComponent::StartDecreasingValue()
 {
@@ -44,5 +38,5 @@ void UNeedComponent::DecreaseValue()
 	if (CurValue > 0)
 		CurValue -= DecayRate;
 	UE_LOG(LogTemp, Warning, TEXT("CurValue: %f"), CurValue);
-	UE_LOG(LogTemp, Warning, TEXT("MaxCapacity: %d"), MaxCapacity);
+	UE_LOG(LogTemp, Warning, TEXT("DecayRate: %f"), DecayRate);
 }

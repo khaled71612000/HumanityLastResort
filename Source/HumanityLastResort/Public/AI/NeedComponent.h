@@ -16,7 +16,7 @@ public:
 	// Sets default values for this component's properties
 	UNeedComponent();
 
-	UPROPERTY(EditDefaultsOnly, Category = "Properties")
+	UPROPERTY(Transient)
 	float MaxCapacity;
 
 	UPROPERTY(Transient)
@@ -29,7 +29,7 @@ public:
 	float TaskTime;
 
 	UPROPERTY(EditDefaultsOnly)
-	TSubclassOf<class UNeedSatisfactionTask> TaskClass;
+	TSubclassOf<class ABuilding> Building;
 
 	UPROPERTY(Transient)
 	class UNeedSatisfactionTask* Task;

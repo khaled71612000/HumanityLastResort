@@ -14,7 +14,7 @@ class HUMANITYLASTRESORT_API UHunger : public UNeedSatisfactionTask
 {
 	GENERATED_BODY()
 public:
-	void Satisfy(class AAlien* Alien, class UNeedComponent* Need) override;
+	/*void Satisfy(class AAlien* Alien, class UNeedComponent* Need) override;
 	class AResturant* GetResturant();
-	void MoveToResturant(class AResturant* Resturant);
+	void MoveToResturant(class AResturant* Resturant);*/
 };

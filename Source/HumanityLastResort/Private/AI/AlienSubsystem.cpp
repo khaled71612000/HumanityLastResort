@@ -4,7 +4,6 @@
 #include "AI/AlienSubsystem.h"
 #include "AI/Alien.h"
 
-
 void UAlienSubsystem::Initialize(FSubsystemCollectionBase& Collection)
 {
 	Super::Initialize(Collection);
@@ -18,12 +17,11 @@ TStatId UAlienSubsystem::GetStatId() const
 	return TStatId();
 }
 
-
 void UAlienSubsystem::Tick(float DeltaTime)
 {
 	for (AAlien* Alien : Aliens)
 	{
-		UE_LOG(LogTemp, Warning, TEXT("Value: %d"), Alien->AlienState);
+		//UE_LOG(LogTemp, Warning, TEXT("Value: %d"), Alien->AlienState);
 		if (Alien->AlienState == Idle)
 		{
 			Alien->AlienState = Waiting;
@@ -57,11 +55,6 @@ void UAlienSubsystem::UpdateGlobalMood()
 {
 	if (NumOfAliens)
 		GlobalMoodPercentage = GlobalMood / (float)NumOfAliens;
-
-	/*UE_LOG(LogTemp, Warning, TEXT("Global Mood: %d"), GlobalMood);
-	UE_LOG(LogTemp, Warning, TEXT("Global Mood Percentage: %f"), GlobalMoodPercentage);
-	UE_LOG(LogTemp, Warning, TEXT("Num of Aliens: %d"), NumOfAliens);*/
-
 }
 
 float UAlienSubsystem::GetGlobalMoodPercentage()

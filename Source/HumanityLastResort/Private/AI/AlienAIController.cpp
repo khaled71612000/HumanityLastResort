@@ -4,27 +4,60 @@
 #include "AI/AlienAIController.h"
 #include "AI/Alien.h"
 #include "Building.h"
+#include "Buildings/Casino.h"
 
 void AAlienAIController::OnMoveCompleted(FAIRequestID RequestID, const FPathFollowingResult& Result)
-{
+{		
 	AAlien* Alien = Cast<AAlien>(GetPawn());
-	if (Alien)
+	if(RequestID.IsValid())
+		GEngine->AddOnScreenDebugMessage(-1, 10.f, FColor::Red, "Valid");
+	else
+		GEngine->AddOnScreenDebugMessage(-1, 10.f, FColor::Red, "InValid");
+
+
+	if (Result.IsSuccess())
 	{
-		if (Alien->AlienState == Leaving)
+		GEngine->AddOnScreenDebugMessage(-1, 10.f, FColor::Red, "Success");
+		StopMovement();
+
+		if (Alien)
 		{
-			Alien->Destroy();
-		}
-		else if (Alien->AlienState == Assigned)
-		{
-			//UE_LOG(LogTemp, Warning, TEXT("Assigned"));
-			AlienFailedUpdate(Alien);
-		}
-		else
-		{
-			//UE_LOG(LogTemp, Warning, TEXT("Not Assigned"));
-			AlienSucceedUpdate(Alien);
+			if (Alien->AlienState == Leaving)
+			{
+				//UE_LOG(LogTemp, Warning, TEXT("Leaving"));
+
+				Alien->Destroy();
+			}
+			else if (Alien->AlienState == Assigned)
+			{
+				//UE_LOG(LogTemp, Warning, TEXT("Assigned"));
+				AlienFailedUpdate(Alien);
+			}
+			else
+			{
+				//UE_LOG(LogTemp, Warning, TEXT("Not Assigned"));
+				AlienSucceedUpdate(Alien);
+			}
 		}
 	}
+
+	else if (Result.IsFailure())
+	{
+		if (Alien) {
+			Alien->AlienState = Idle;
+			CurBuilding->CurOccupants--;
+		}
+			
+		GEngine->AddOnScreenDebugMessage(-1, 10.f, FColor::Red, "Failure");
+
+	}
+
+	else if(Result.IsInterrupted())
+		GEngine->AddOnScreenDebugMessage(-1, 10.f, FColor::Red, "Interrupted");
+	else 
+		GEngine->AddOnScreenDebugMessage(-1, 10.f, FColor::Red, "SomethingElse");
+
+	
 }
 
 void AAlienAIController::AlienSucceedUpdate(AAlien* Alien)
@@ -36,6 +69,10 @@ void AAlienAIController::AlienSucceedUpdate(AAlien* Alien)
 	Alien->ChangeMood(Alien->GoodMoodVal);
 
 	CurBuilding->AddProfit();
+	if (Cast<ACasino>(CurBuilding))
+	{
+		Alien->isDancing = true;
+	}
 }
 
 void AAlienAIController::AlienFailedUpdate(AAlien* Alien)

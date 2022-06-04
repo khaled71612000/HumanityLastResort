@@ -1,5 +1,3 @@
-// Fill out your copyright notice in the Description page of Project Settings.
-
 
 #include "AI/NeedComponent.h"
 #include "AI/NeedSatisfactionTask.h"
@@ -37,6 +35,6 @@ void UNeedComponent::DecreaseValue()
 {
 	if (CurValue > 0)
 		CurValue -= DecayRate;
-	UE_LOG(LogTemp, Warning, TEXT("CurValue: %f"), CurValue);
-	UE_LOG(LogTemp, Warning, TEXT("DecayRate: %f"), DecayRate);
+	//UE_LOG(LogTemp, Warning, TEXT("CurValue: %f"), CurValue);
+	//UE_LOG(LogTemp, Warning, TEXT("DecayRate: %f"), DecayRate);
 }

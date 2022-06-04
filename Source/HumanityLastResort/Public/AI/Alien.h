@@ -39,20 +39,20 @@ protected:
 	virtual void BeginPlay() override;
 
 public:
+	bool isDancing;
 	int32 Mood;
 	UPROPERTY(EditDefaultsOnly, Category = "Properties")
-		int32 GoodMoodVal;
+	int32 GoodMoodVal;
 	UPROPERTY(EditDefaultsOnly, Category = "Properties")
-		int32 BadMoodVal;
+	int32 BadMoodVal;
 	UPROPERTY(EditDefaultsOnly, Category = "Properties")
-		int32 NumOfTasks;
+	int32 NumOfTasks;
 	UPROPERTY(EditDefaultsOnly, Category = "Properties")
-		int32 NumOfFailedTasks;
+	int32 NumOfFailedTasks;
 
 	State AlienState;
 	class UNeedComponent* NeedToExcute;
 	class UAlienSubsystem* AlienSubsystem;
-
 	TArray<UNeedComponent*> Needs;
 
 	void GetTask();
@@ -60,8 +60,11 @@ public:
 	void DoTask();
 	void Leave();
 	void ChangeMood(int MoodVal);
-	void SetAlienNeedsValues(TArray<AlienNeedsValue*> NeedsValues);
+	void SetAlienNeedsValues(TArray<AlienNeedsValue*> &NeedsValues);
 	void SetAlienAttributes(AlienAttributes AlienAttributes);
 	virtual void CallSetAlienNeedsValues();
 	virtual void CallSetAlienAttributes();
+
+	UFUNCTION(BlueprintCallable)
+	bool GetisDancing();
 };

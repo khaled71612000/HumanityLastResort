@@ -12,7 +12,7 @@ AAlien::AAlien()
 {
 	PrimaryActorTick.bCanEverTick = false;
 	AlienState = Idle;
-	
+	isDancing = false;
 }
 
 void AAlien::BeginPlay()
@@ -66,7 +66,7 @@ void AAlien::ChangeMood(int MoodVal)
 }
 
 
-void AAlien::SetAlienNeedsValues(TArray<AlienNeedsValue*> NeedsValues)
+void AAlien::SetAlienNeedsValues(TArray<AlienNeedsValue*>& NeedsValues)
 {
 	for (int i = 0; i < NeedsValues.Num(); i++)
 	{
@@ -81,19 +81,17 @@ void AAlien::SetAlienAttributes(AlienAttributes AlienAttributes)
 	BadMoodVal = FMath::RandRange(AlienAttributes.BadMoodVal.from, AlienAttributes.BadMoodVal.to);
 	NumOfTasks = FMath::RandRange(AlienAttributes.NumOfTasks.from, AlienAttributes.NumOfTasks.to);
 	NumOfTasks = FMath::RandRange(AlienAttributes.NumOfTasks.from, AlienAttributes.NumOfTasks.to);
-
 }
 
 void AAlien::CallSetAlienNeedsValues()
 {
 }
-
 void AAlien::CallSetAlienAttributes()
 {
 
 }
 
-
-
-
-
+bool AAlien::GetisDancing()
+{
+	return isDancing;
+}

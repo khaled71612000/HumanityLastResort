@@ -26,7 +26,6 @@ void ANewGrid::PopulateGrid()
 		for (float j = 0; j < GridSize - 1; j++)
 		{
 
-
 			WorldOffsetX = WorldGridSize * j - WorldOffset;
 			WorldOffsetY = WorldGridSize * i - WorldOffset;
 
@@ -67,6 +66,8 @@ void ANewGrid::PreSave(const class ITargetPlatform* TargetPlatform)
 	//KZ TODO
 	//FVectors instead of actors for arraygrid
 	//GET SIZE OF MESH
+	//PopulateGrid();
+
 }
 
 // Called when the game starts or when spawned

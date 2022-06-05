@@ -17,7 +17,8 @@ void ASpawnAI::BeginPlay()
 	SpawnRotation = this->GetActorRotation();
 
 	FTimerHandle SpawningManager;
-	GetWorld()->GetTimerManager().SetTimer(SpawningManager, this, &ASpawnAI::SpawnAnAlien, SpawnRate, true);
+	GetWorld()->GetTimerManager().SetTimer(SpawningManager, this,
+		&ASpawnAI::SpawnAnAlien, SpawnRate, true);
 }
 
 void ASpawnAI::SpawnAnAlien()
@@ -29,7 +30,6 @@ void ASpawnAI::SpawnAnAlien()
 	AlienSubsystem->Aliens.Add(Alien);
 	AlienSubsystem->NumOfAliens++;
 	
-	//GEngine->AddOnScreenDebugMessage(-1, 10.f, FColor::Red, TEXT("Spawn"));
 }
 
 

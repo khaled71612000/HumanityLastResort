@@ -11,10 +11,6 @@ UCLASS()
 class HUMANITYLASTRESORT_API APlaceable : public AActor, public IPlacementInterface
 {
 	GENERATED_BODY()
-	
-	// Sets default values for this actor's properties
-protected:
-	APlaceable();
 
 public:
 	UFUNCTION(BlueprintCallable, Category = "Functions")
@@ -37,6 +33,8 @@ public:
 		FText NameView;
 
 protected:
+	APlaceable();
+
 	virtual void BeginPlay() override;
 
 	UFUNCTION(BlueprintCallable, Category = "BuildTransform")
@@ -44,18 +42,16 @@ protected:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
 		class UStaticMeshComponent* StaticMeshComponent;
-
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
 		class USceneComponent* SceneComponent;
-
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Config")
 		FText TokenName;
 
 	UFUNCTION()
-	void OnClicked(UPrimitiveComponent* ClickedComp, FKey ButtonClicked);
+		void OnClicked(UPrimitiveComponent* ClickedComp, FKey ButtonClicked);
+
 	bool isDragging = false;
 	class ACameraPawn* MyPawn;
 	FVector oldPos;
-
 
 };

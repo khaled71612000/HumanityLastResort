@@ -11,30 +11,28 @@ UCLASS()
 class HUMANITYLASTRESORT_API ANewGrid : public AActor
 {
 	GENERATED_BODY()
-	
-public:	
-	// Sets default values for this actor's properties
+
+public:
 	ANewGrid();
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Mesh")
-	UStaticMeshComponent* SphereMesh;
+		UStaticMeshComponent* SphereMesh;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Cells")
+		int GridSize = 10;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Cells")
+		int WorldGridSize = 1000;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Cells")
+		TSubclassOf<class AActor> ActorToSpawn;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Cells")
-	int GridSize = 10;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Cells")
-	int WorldGridSize = 1000;
 	TArray<AActor*> GridArray;
 	TArray<FVector> GridPoints;
 
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite , Category = "Cells")
-	TSubclassOf<class AActor> ActorToSpawn;
-
 	UFUNCTION(BlueprintCallable, Category = "Cells")
-	void PopulateGrid();
-
+		void PopulateGrid();
 	UFUNCTION(BlueprintCallable, Category = "Cells")
-	FVector GetClosestPosition(FVector InPosition);
+		FVector GetClosestPosition(FVector InPosition);
+
 	FVector closestPos;
 	float closestDistance;
 
@@ -44,7 +42,7 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
-public:	
+public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 

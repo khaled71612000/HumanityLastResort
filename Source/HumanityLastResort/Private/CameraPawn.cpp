@@ -4,6 +4,8 @@
 #include "CameraPawn.h"
 #include "Placeable.h"
 #include "Math/UnrealMathUtility.h"
+#include "GameFramework/SpringArmComponent.h"
+#include "Camera/CameraComponent.h"
 #include "GameFramework/PawnMovementComponent.h"
 #include "GameFramework/FloatingPawnMovement.h"
 
@@ -43,10 +45,8 @@ void ACameraPawn::BeginPlay()
 	Player->GetViewportSize(ScreenSizeX, ScreenSizeY);
 
 	Player->bShowMouseCursor = true;
-	//Player->DefaultMouseCursor = EMouseCursor::Crosshairs;
 	FInputModeGameAndUI inputMode;
 	inputMode.SetHideCursorDuringCapture(false);
-	//inputMode.SetLockMouseToViewportBehavior(EMouseLockMode::LockAlways);
 	Player->SetInputMode(inputMode);
 
 }
@@ -61,8 +61,7 @@ FVector ACameraPawn::GetCameraPanDirecton() {
 
 	Player->GetMousePosition(MousePosX, MousePosY);
 
-	//return FVector(CamDirectonX, CamDirectonY, 0);
-	return FVector(0, 0, 0);
+	return FVector(CamDirectonX, CamDirectonY, 0);
 
 }
 
@@ -77,7 +76,6 @@ void ACameraPawn::MoveRight(float Value)
 }
 void ACameraPawn::RotateToken(float value) {
 	if (SelectedToken) {
-		//UE_LOG(LogTemp, Warning, TEXT("TUUUTs"));
 
 		auto const OriginalRotation = SelectedToken->GetActorRotation().GetDenormalized();
 		float const Remainder = FMath::Fmod(OriginalRotation.Yaw, 90.f);

@@ -15,7 +15,11 @@ UCLASS()
 class HUMANITYLASTRESORT_API ASpawnAI : public AVolume
 {
 	GENERATED_BODY()
+public:
+	UPROPERTY(EditAnywhere, Category = "SpawnAlien")
+		float SpawnRate = 8.f;
 
+	class UAlienSubsystem* AlienSubsystem;
 private:
 	FActorSpawnParameters SpawnParams;
 	FVector SpawnLocation;
@@ -28,9 +32,5 @@ private:
 	UPROPERTY(EditAnywhere, meta = (AllowPrivateAccess = "true"))
 		TArray<TSubclassOf<class AAlien>> Aliens;
 
-public:
-	UPROPERTY(EditAnywhere, Category = "SpawnAlien")
-		float SpawnRate = 8.f;
 
-	class UAlienSubsystem* AlienSubsystem;
 };

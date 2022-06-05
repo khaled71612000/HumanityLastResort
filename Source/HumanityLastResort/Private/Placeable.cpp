@@ -127,7 +127,7 @@ void APlaceable::MouseMove(FVector position)
 		bool BoxHit = UKismetSystemLibrary::BoxTraceMulti(GetWorld(), Start, End,
 			NewBoxSize,
 			GetActorRotation(), UEngineTypes::ConvertToTraceType(ECC_Pawn),
-			false, ActorsToIgnore, EDrawDebugTrace::ForDuration, HitResult,
+			false, ActorsToIgnore, EDrawDebugTrace::None, HitResult,
 			true, FLinearColor::Red, FLinearColor::Green, 0.1f
 		);
 
@@ -135,9 +135,7 @@ void APlaceable::MouseMove(FVector position)
 			for (auto& Building : HitResult)
 			{
 				APlaceable* UnderHit = Cast<APlaceable>(Building.GetActor());
-				//DrawDebugLine(GetWorld(), Start, End, FColor::Orange, false, 0.1f);
 				if (UnderHit) {
-					//GEngine->AddOnScreenDebugMessage(-1, 1 ,FColor::Yellow, FString::Printf(TEXT("HERE %s"), *Hit.GetActor()->GetName()));
 					this->SetActorLocation(oldPos);
 				}
 				
@@ -165,7 +163,6 @@ void APlaceable::MouseMove(FVector position)
 		);
 
 		if (Hiting) {
-			//UE_LOG(LogTemp, Error, TEXT("NPC FOUND"));
 			for (auto& NPC : HitArray)
 			{
 				AAlien* NPCHit = Cast<AAlien>(NPC.GetActor());

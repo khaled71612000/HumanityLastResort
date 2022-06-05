@@ -7,7 +7,6 @@
 // Sets default values
 ANewGrid::ANewGrid()
 {
- 	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
 }
@@ -64,8 +63,8 @@ FVector ANewGrid::GetClosestPosition(FVector InPosition)
 
 void ANewGrid::PreSave(const class ITargetPlatform* TargetPlatform)
 {
+	Super::PreSave(TargetPlatform);
 	//KZ TODO
-	//Call Super
 	//FVectors instead of actors for arraygrid
 	//GET SIZE OF MESH
 }

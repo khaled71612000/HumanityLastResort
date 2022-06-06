@@ -19,6 +19,7 @@ void ANewGrid::PopulateGrid()
 	float WorldOffsetX = WorldOffset; 
 	float WorldOffsetY = WorldOffset;
 	FVector spawnPos;
+
 	//Y loop
 	for (float i = 0; i < GridSize - 1 ; i++)
 	{
@@ -34,8 +35,7 @@ void ANewGrid::PopulateGrid()
 			ANewCell* temp = GetWorld()->SpawnActor<ANewCell>(ActorToSpawn, spawnPos,
 				GetActorRotation());
 
-			//GridPoints.Add(spawnPos);
-			GridArray.Add(temp);
+			GridPoints.Add(spawnPos);
 		}
 	}
 }
@@ -43,16 +43,15 @@ void ANewGrid::PopulateGrid()
 FVector ANewGrid::GetClosestPosition(FVector InPosition)
 {
 	
-	closestPos = GridArray[0]->GetActorLocation();
+	closestPos = GridPoints[0];
 	
 	closestDistance = FVector::Dist(closestPos, InPosition);
 
-	for (AActor* element : GridArray)
+	for (FVector element : GridPoints)
 	{
-		element->GetActorLocation();
-		if (FVector::Dist(element->GetActorLocation(), InPosition) < closestDistance) {
-			closestPos = element->GetActorLocation();
-			closestDistance = FVector::Dist(element->GetActorLocation(), InPosition);
+		if (FVector::Dist(element, InPosition) < closestDistance) {
+			closestPos = element;
+			closestDistance = FVector::Dist(element, InPosition);
 		}
 
 	}
@@ -63,10 +62,7 @@ FVector ANewGrid::GetClosestPosition(FVector InPosition)
 void ANewGrid::PreSave(const class ITargetPlatform* TargetPlatform)
 {
 	Super::PreSave(TargetPlatform);
-	//KZ TODO
-	//FVectors instead of actors for arraygrid
 	//GET SIZE OF MESH
-	//PopulateGrid();
 
 }
 

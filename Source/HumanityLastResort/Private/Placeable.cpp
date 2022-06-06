@@ -103,14 +103,6 @@ void APlaceable::MouseMove(FVector position)
 		GetActorBounds(false, origin, boxExtent);
 		boxExtent.Z = 1.f;
 
-		if (isOneCell) {
-			position.X += 195;
-			position.Y += 195;
-			this->SetActorLocation(position);
-		}
-		else {
-			this->SetActorLocation(position + NewBoxSize);
-		}
 		this->SetActorLocation(position);
 
 		MyPawn = UGameplayStatics::GetPlayerController(this, 0)->GetPawn<ACameraPawn>();

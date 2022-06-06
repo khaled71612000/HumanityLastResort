@@ -29,38 +29,39 @@ void AGameController::Tick(float dt) {
 	FVector start, dir;
 	DeprojectMousePositionToWorld(start, dir);
 	const FVector end = start + dir * 10000.0f;
+	const FPlane plane{
+	{FVector::ZeroVector},
+	{0.f,0.f,1.f}
+	};
+const auto intersect = FMath::LinePlaneIntersection(start, end, plane);
 
 
 	FHitResult Hit;
 	FCollisionQueryParams TraceParams;
 
 	bool bHit = GetWorld()->LineTraceSingleByChannel(Hit, start, end, ECC_Visibility, TraceParams);
-
-	FVector origin;
-	FVector boundsExtent;
-	ACellActor* Tile;
-	if (bHit) {
-		Tile = Cast<ACellActor>(Hit.GetActor());
-		if (Tile) {
-			Tile->GetActorBounds(false, origin, boundsExtent);
-		}
-		origin.X -= 195;
-		origin.Y -= 195;
-		origin.Z += 100.f;
-	}
-
+	
 	TArray<AActor*> actorPtrs;
 
 	UGameplayStatics::GetAllActorsWithInterface(GetWorld(), UPlacementInterface::StaticClass(), actorPtrs);
 
+	AActor* FoundGrid;
+	ANewGrid* GridPtr;
+	FoundGrid = UGameplayStatics::GetActorOfClass(GetWorld(), ANewGrid::StaticClass());
+
 	if (actorPtrs.Num() != 0) {
 		for (AActor* actor : actorPtrs) {
-
 			IPlacementInterface* current = Cast<IPlacementInterface>(actor);
-
 			if (current) {
-
-				current->MouseMove(origin);
+				if (FoundGrid) {
+					GridPtr = Cast<ANewGrid>(FoundGrid);
+					if (GridPtr) {
+						if (bHit) {
+						GridPtr->GetClosestPosition(intersect);
+						current->MouseMove(GridPtr->GetClosestPosition(intersect));
+						}
+					}
+				}
 			}
 		}
 	}

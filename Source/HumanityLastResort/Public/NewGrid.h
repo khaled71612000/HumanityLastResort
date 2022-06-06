@@ -24,7 +24,6 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Cells")
 		TSubclassOf<class AActor> ActorToSpawn;
 
-	TArray<AActor*> GridArray;
 	TArray<FVector> GridPoints;
 
 
@@ -39,11 +38,9 @@ public:
 	virtual void PreSave(const class ITargetPlatform* TargetPlatform);
 
 protected:
-	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
 public:
-	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
 };

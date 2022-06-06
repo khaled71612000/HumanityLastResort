@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "ISelectionHandler.h"
 #include "Placeable.h"
 #include "Building.generated.h"
 
@@ -10,7 +11,7 @@
  * 
  */
 UCLASS()
-class HUMANITYLASTRESORT_API ABuilding : public APlaceable
+class HUMANITYLASTRESORT_API ABuilding : public APlaceable, public IISelectionHandler
 {
 	GENERATED_BODY()
 public:
@@ -23,8 +24,11 @@ public:
 	UPROPERTY(EditDefaultsOnly, Category = "Properties")
 		int32 Loss;
 	class UEconomySubsystem* EconomySubsystem;
+	class USelectionSubsystem* SelectionSubSystem;
+
 	void AddProfit();
 	void SubtractLoss();
+	virtual ABuilding* Selected(const FHitResult& selectionInfoRay) override;
 
 protected:
 	ABuilding();

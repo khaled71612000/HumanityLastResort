@@ -6,6 +6,7 @@
 #include "DrawDebugHelpers.h"
 #include "PlacementInterface.h"
 #include "SPSubsystem.h"
+#include "SelectionSubsystem.h"
 #include "NewGrid.h"
 #include "CellActor.h"
 #include "RunTime\Engine\Classes\Kismet\GameplayStatics.h"
@@ -15,12 +16,12 @@ AGameController::AGameController() {
 	bShowMouseCursor = true;
 	bEnableClickEvents = true;
 	DefaultMouseCursor = EMouseCursor::Hand;
-
 }
 
 void AGameController::BeginPlay()
 {
 	SPSubsystem = GetWorld()->GetSubsystem<USPSubsystem>();
+	SelectionSubSystem = GetWorld()->GetSubsystem<USelectionSubsystem>();
 
 }
 void AGameController::Tick(float dt) {
@@ -33,14 +34,14 @@ void AGameController::Tick(float dt) {
 	{FVector::ZeroVector},
 	{0.f,0.f,1.f}
 	};
-const auto intersect = FMath::LinePlaneIntersection(start, end, plane);
+	const auto intersect = FMath::LinePlaneIntersection(start, end, plane);
 
 
 	FHitResult Hit;
 	FCollisionQueryParams TraceParams;
 
 	bool bHit = GetWorld()->LineTraceSingleByChannel(Hit, start, end, ECC_Visibility, TraceParams);
-	
+
 	TArray<AActor*> actorPtrs;
 
 	UGameplayStatics::GetAllActorsWithInterface(GetWorld(), UPlacementInterface::StaticClass(), actorPtrs);
@@ -57,8 +58,9 @@ const auto intersect = FMath::LinePlaneIntersection(start, end, plane);
 					GridPtr = Cast<ANewGrid>(FoundGrid);
 					if (GridPtr) {
 						if (bHit) {
-						GridPtr->GetClosestPosition(intersect);
-						current->MouseMove(GridPtr->GetClosestPosition(intersect));
+							OnLeftMouseClicked(Hit);
+							GridPtr->GetClosestPosition(intersect);
+							current->MouseMove(GridPtr->GetClosestPosition(intersect));
 						}
 					}
 				}
@@ -73,10 +75,16 @@ void AGameController::OnLeftMouseRelease()
 	SPSubsystem->OnLeftMouseRelease();
 }
 
+void AGameController::OnLeftMouseClicked(const FHitResult& selectionInfoRay)
+{
+	SelectionSubSystem->TrySelect(selectionInfoRay);
+}
+
 void AGameController::SetupInputComponent()
 {
 	Super::SetupInputComponent();
 	InputComponent->BindKey(FKey{ "LeftMouseButton" }, EInputEvent::IE_Released, this, &AGameController::OnLeftMouseRelease);
+
 }
 
 

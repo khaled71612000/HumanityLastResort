@@ -5,6 +5,8 @@
 #include "Components/SphereComponent.h"
 #include "AI/Alien.h"
 #include "Economy/EconomySubsystem.h"
+#include "SelectionSubsystem.h"
+
 
 ABuilding::ABuilding() 
 {
@@ -22,6 +24,9 @@ void ABuilding::BeginPlay()
 {
 	Super::BeginPlay();
 	EconomySubsystem = GetWorld()->GetSubsystem<UEconomySubsystem>();
+	
+	SelectionSubSystem = GetWorld()->GetSubsystem<USelectionSubsystem>();
+	SelectionSubSystem->RegisterSelectionHandler(Cast<IISelectionHandler>(this));
 }
 
 void ABuilding::AddProfit()
@@ -34,6 +39,12 @@ void ABuilding::SubtractLoss()
 	EconomySubsystem->SubtractCash(Loss);
 }
 
+
+ABuilding* ABuilding::Selected(const FHitResult& selectionInfoRay)
+{
+	UE_LOG(LogTemp, Error, TEXT("SELECTED")); 
+	return this;
+}
 
 void ABuilding::OnOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {

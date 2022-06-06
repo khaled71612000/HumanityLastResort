@@ -3,6 +3,10 @@
 
 #include "AI/Aliens/GirlAlien.h"
 
+AGirlAlien::AGirlAlien()
+{
+	AlienType = 3;
+}
 void AGirlAlien::CallSetAlienNeedsValues()
 {
 	TArray<AlienNeedsValue*> NeedsValues;

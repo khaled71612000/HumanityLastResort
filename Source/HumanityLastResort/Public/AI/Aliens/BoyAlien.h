@@ -14,6 +14,7 @@ class HUMANITYLASTRESORT_API ABoyAlien : public AAlien
 {
 	GENERATED_BODY()
 
+	ABoyAlien();
 public:
 	void CallSetAlienNeedsValues() override;
 	void CallSetAlienAttributes() override;

@@ -36,9 +36,12 @@ void UNeedSatisfactionTask::Wait()
 void UNeedSatisfactionTask::DoTask()
 {
 	CurTaskTime--;
+	UE_LOG(LogTemp, Warning, TEXT("Value: %d"), CurTaskTime);
 
 	if (CurTaskTime <= 0)
 	{
+		if (CurrentAlien->isDancing == true)
+			CurrentAlien->isDancing = false;
 		TaskComponent->CurValue = TaskComponent->MaxCapacity;
 		CurrentAlien->AlienState = Idle;
 		GetWorld()->GetTimerManager().PauseTimer(TaskTimeManager);

@@ -50,6 +50,7 @@ public:
 	UPROPERTY(EditDefaultsOnly, Category = "Properties")
 	int32 NumOfFailedTasks;
 
+	int32 AlienType;
 	State AlienState;
 	class UNeedComponent* NeedToExcute;
 	class UAlienSubsystem* AlienSubsystem;
@@ -62,6 +63,7 @@ public:
 	void ChangeMood(int MoodVal);
 	void SetAlienNeedsValues(TArray<AlienNeedsValue*> &NeedsValues);
 	void SetAlienAttributes(AlienAttributes AlienAttributes);
+	void AddAlienToPool();
 	virtual void CallSetAlienNeedsValues();
 	virtual void CallSetAlienAttributes();
 

@@ -2,4 +2,9 @@
 
 
 #include "Buildings/Resturant.h"
+#include "BuildingType.h"
 
+AResturant::AResturant()
+{
+	BuildingType = Resturant;
+}

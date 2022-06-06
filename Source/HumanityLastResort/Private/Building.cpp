@@ -6,6 +6,7 @@
 #include "AI/Alien.h"
 #include "Economy/EconomySubsystem.h"
 
+
 ABuilding::ABuilding() 
 {
 	CurOccupants = 0;

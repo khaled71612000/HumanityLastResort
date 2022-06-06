@@ -31,6 +31,9 @@ public:
 	UPROPERTY(EditDefaultsOnly)
 	TSubclassOf<class ABuilding> Building;
 
+	UPROPERTY(EditDefaultsOnly)
+	int32 BuildingType;
+
 	UPROPERTY(Transient)
 	class UNeedSatisfactionTask* Task;
 

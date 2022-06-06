@@ -9,6 +9,7 @@
 #include "Math/UnrealMathUtility.h"
 #include "RunTime\Engine\Classes\Kismet\GameplayStatics.h"
 #include "AI/Alien.h"
+#include "Buildings/BuildingSubsystem.h"
 
 
 
@@ -191,5 +192,6 @@ void APlaceable::MouseRelease()
 
 void APlaceable::DestroyBuildingActor()
 {
+
 	Destroy();
 }

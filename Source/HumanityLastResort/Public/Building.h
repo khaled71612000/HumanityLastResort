@@ -14,14 +14,15 @@ class HUMANITYLASTRESORT_API ABuilding : public APlaceable
 {
 	GENERATED_BODY()
 public:
+	int32 BuildingType;
 	UPROPERTY(EditDefaultsOnly, Category = "Properties")
-		int32 Capacity;
+	int32 Capacity;
 	UPROPERTY(Transient)
-		int32 CurOccupants;
+	int32 CurOccupants;
 	UPROPERTY(EditDefaultsOnly, Category = "Properties")
-		int32 Profit;
+	int32 Profit;
 	UPROPERTY(EditDefaultsOnly, Category = "Properties")
-		int32 Loss;
+	int32 Loss;
 	class UEconomySubsystem* EconomySubsystem;
 	void AddProfit();
 	void SubtractLoss();

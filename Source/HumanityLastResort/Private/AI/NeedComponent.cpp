@@ -1,9 +1,6 @@
-
 #include "AI/NeedComponent.h"
 #include "AI/NeedSatisfactionTask.h"
-#include "AI/Needs/Hunger.h"
-#include "Buildings/Resturant.h"
-
+#include "Buildings/BuildingSubsystem.h"
 
 UNeedComponent::UNeedComponent()
 {
@@ -14,12 +11,14 @@ UNeedComponent::UNeedComponent()
 void UNeedComponent::OnRegister()
 {
 	Super::OnRegister();
-	Task = NewObject<UNeedSatisfactionTask>(this);
+
 }
 
 void UNeedComponent::BeginPlay()
 {
 	Super::BeginPlay();
+	BuildingSubsystem = GetWorld()->GetSubsystem<UBuildingSubsystem>();
+	Task = NewObject<UNeedSatisfactionTask>(this);
 	CurValue = MaxCapacity;
 	StartDecreasingValue();
 }

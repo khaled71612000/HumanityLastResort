@@ -193,6 +193,3 @@ void APlaceable::DestroyBuildingActor()
 {
 	Destroy();
 }
-
-
-

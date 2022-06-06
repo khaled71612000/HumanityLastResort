@@ -55,6 +55,10 @@ struct FBGBuildBank : public FTableRowBase
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		FSlateBrush Icon;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		FString PlaceableType;
+
 };
 
 UCLASS()

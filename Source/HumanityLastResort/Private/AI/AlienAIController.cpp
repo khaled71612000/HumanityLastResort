@@ -1,6 +1,5 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
-
 #include "AI/AlienAIController.h"
 #include "AI/Alien.h"
 #include "Building.h"
@@ -34,6 +33,7 @@ void AAlienAIController::OnMoveCompleted(FAIRequestID RequestID, const FPathFoll
 	else if (Result.IsFailure())
 	{
 		if (Alien) {
+
 			if(Alien->AlienState == Assigned)
 			{
 				Alien->AlienState = Idle;
@@ -47,7 +47,6 @@ void AAlienAIController::OnMoveCompleted(FAIRequestID RequestID, const FPathFoll
 	}
 
 	StopMovement();
-
 }
 
 void AAlienAIController::AlienSucceedUpdate(AAlien* Alien)

@@ -15,7 +15,7 @@ class HUMANITYLASTRESORT_API UAlienSubsystem : public UTickableWorldSubsystem
 	GENERATED_BODY()
 
 public:
-	int32 NumOfAliensType = 4;
+	int32 NumOfAlienTypes = 4;
 	TArray<class AAlien*> SpawnedAliens;
 	TArray <TArray<class AAlien*>> AliensPool;
 

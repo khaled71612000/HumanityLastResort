@@ -22,10 +22,11 @@ struct FBGBuildBank : public FTableRowBase
 		TSubclassOf <class APlaceable> BuildingsActorsClassREFF;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-		float PriceBuilding = 0.5f;
+		int32 BuildingPrice = 10;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		FSlateBrush Icon;
+
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		FString PlaceableType;
 

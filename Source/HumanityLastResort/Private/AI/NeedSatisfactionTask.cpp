@@ -36,16 +36,10 @@ void UNeedSatisfactionTask::Wait()
 void UNeedSatisfactionTask::DoTask()
 {
 	CurTaskTime--;
-	UE_LOG(LogTemp, Warning, TEXT("Value: %d"), CurTaskTime);
 
 	if (CurTaskTime <= 0)
 	{
-		if (CurrentAlien->isDancing == true)
-			CurrentAlien->isDancing = false;
-		TaskComponent->CurValue = TaskComponent->MaxCapacity;
-		CurrentAlien->AlienState = Idle;
-		GetWorld()->GetTimerManager().PauseTimer(TaskTimeManager);
-		CurTaskTime = TaskComponent->TaskTime;
+		ResetAlien();
 	}
 }
 
@@ -68,6 +62,21 @@ void UNeedSatisfactionTask::ShuffleBuildings(TArray<ABuilding*>& Buildings)
 			Buildings[Index2] = Temp;
 		}
 	}
+}
+
+void UNeedSatisfactionTask::ResetAlien()
+{
+	if (CurrentAlien->isDancing == true)
+		CurrentAlien->isDancing = false;
+
+	TaskComponent->CurValue = TaskComponent->MaxCapacity;
+	if(CurrentAlien->NumOfTasks == 0 || CurrentAlien->NumOfFailedTasks == 0)
+		CurrentAlien->AlienState = Leaving;
+	else
+		CurrentAlien->AlienState = Idle;
+
+	GetWorld()->GetTimerManager().PauseTimer(TaskTimeManager);
+	CurTaskTime = TaskComponent->TaskTime;
 }
 
 ABuilding* UNeedSatisfactionTask::GetBuilding()

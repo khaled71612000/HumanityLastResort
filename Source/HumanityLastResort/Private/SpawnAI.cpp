@@ -1,6 +1,5 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
-
 #include "SpawnAI.h"
 #include "AI/Alien.h"
 #include "AI/AlienSubsystem.h"

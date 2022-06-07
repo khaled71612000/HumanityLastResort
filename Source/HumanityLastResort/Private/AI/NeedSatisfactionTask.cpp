@@ -1,6 +1,5 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
-
 #include "AI/NeedSatisfactionTask.h"
 #include "AI/Alien.h"
 #include "AI/AlienAIController.h"
@@ -107,5 +106,3 @@ void UNeedSatisfactionTask::MoveToBuilding(ABuilding* Building)
 		}
 	}
 }
-
-

@@ -1,6 +1,5 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
-
 #include "Placeable.h"
 #include "CameraPawn.h"
 #include "Kismet\KismetSystemLibrary.h"
@@ -10,8 +9,6 @@
 #include "RunTime\Engine\Classes\Kismet\GameplayStatics.h"
 #include "AI/Alien.h"
 #include "Buildings/BuildingSubsystem.h"
-
-
 
 APlaceable::APlaceable()
 {
@@ -27,13 +24,12 @@ APlaceable::APlaceable()
 	StaticMeshComponent->bIgnoreRadialImpulse = true;
 	StaticMeshComponent->SetLinearDamping(1.f);
 	StaticMeshComponent->SetAngularDamping(1.f);
-
-
 }
 
 void APlaceable::BeginPlay()
 {
 	Super::BeginPlay();
+	BuildingSubsystem = GetWorld()->GetSubsystem<UBuildingSubsystem>();
 
 	StaticMeshComponent->OnClicked.AddDynamic(this, &APlaceable::OnClicked);
 	oldPos = GetActorLocation();
@@ -136,38 +132,37 @@ void APlaceable::MouseMove(FVector position)
 		}
 	}
 }
-	void APlaceable::ClearFloor()
-	{
-		FVector Start = GetActorLocation();
-		FVector End = ((GetActorUpVector() * 80.f) + Start);
 
-		FVector origin, boxExtent;
-		GetActorBounds(false, origin, boxExtent);
-		boxExtent.Z = 1.f;
+void APlaceable::ClearFloor()
+{
+	FVector Start = GetActorLocation();
+	FVector End = ((GetActorUpVector() * 80.f) + Start);
 
-		TArray<AActor*> ActorsToIgnore;
-		ActorsToIgnore.Add(this);
-		TArray<FHitResult> HitArray;
+	FVector origin, boxExtent;
+	GetActorBounds(false, origin, boxExtent);
+	boxExtent.Z = 1.f;
 
-		bool Hiting = UKismetSystemLibrary::BoxTraceMulti(GetWorld(), Start, End, boxExtent,
-			GetActorRotation(), UEngineTypes::ConvertToTraceType(ECC_Visibility),
-			false, ActorsToIgnore, EDrawDebugTrace::None, HitArray,
-			true, FLinearColor::Green, FLinearColor::Yellow, 0.1f
-		);
+	TArray<AActor*> ActorsToIgnore;
+	ActorsToIgnore.Add(this);
+	TArray<FHitResult> HitArray;
 
-		if (Hiting) {
-			for (auto& NPC : HitArray)
-			{
-				AAlien* NPCHit = Cast<AAlien>(NPC.GetActor());
-				if (NPCHit) {
-					NPCHit->SetActorLocation(RespawnLoc, true);
-				}
+	bool Hiting = UKismetSystemLibrary::BoxTraceMulti(GetWorld(), Start, End, boxExtent,
+		GetActorRotation(), UEngineTypes::ConvertToTraceType(ECC_Visibility),
+		false, ActorsToIgnore, EDrawDebugTrace::None, HitArray,
+		true, FLinearColor::Green, FLinearColor::Yellow, 0.1f
+	);
+
+	if (Hiting) {
+		for (auto& NPC : HitArray)
+		{
+			AAlien* NPCHit = Cast<AAlien>(NPC.GetActor());
+			if (NPCHit) {
+				NPCHit->SetActorLocation(RespawnLoc, true);
 			}
 		}
-
 	}
 
-
+}
 
 
 void APlaceable::MouseRelease()
@@ -192,6 +187,6 @@ void APlaceable::MouseRelease()
 
 void APlaceable::DestroyBuildingActor()
 {
-
+	BuildingSubsystem->RemoveBuilding(this);
 	Destroy();
 }

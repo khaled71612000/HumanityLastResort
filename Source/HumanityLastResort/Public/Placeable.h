@@ -51,5 +51,5 @@ protected:
 	bool isDragging = false;
 	class ACameraPawn* MyPawn;
 	FVector oldPos;
-
+	class UBuildingSubsystem* BuildingSubsystem;
 };

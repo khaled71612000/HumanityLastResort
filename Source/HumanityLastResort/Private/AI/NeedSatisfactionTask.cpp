@@ -6,13 +6,14 @@
 #include "AI/AlienAIController.h"
 #include "AI/NeedComponent.h"
 #include "Building.h"
-#include "Buildings/Resturant.h"
 #include "Kismet/GameplayStatics.h"
+#include "Buildings/BuildingSubsystem.h"
 
 
-void UNeedSatisfactionTask::Satisfy(AAlien* Alien, class UNeedComponent* Need, TSubclassOf<class ABuilding> BuildingType)
+
+void UNeedSatisfactionTask::Satisfy(AAlien* Alien, class UNeedComponent* Need)
 {
-	CurrentBuildingType = BuildingType;
+	CurBuildingType = Need->BuildingType;
 	CurrentAlien = Alien;
 	TaskComponent = Need;
 
@@ -35,9 +36,12 @@ void UNeedSatisfactionTask::Wait()
 void UNeedSatisfactionTask::DoTask()
 {
 	CurTaskTime--;
+	UE_LOG(LogTemp, Warning, TEXT("Value: %d"), CurTaskTime);
 
 	if (CurTaskTime <= 0)
 	{
+		if (CurrentAlien->isDancing == true)
+			CurrentAlien->isDancing = false;
 		TaskComponent->CurValue = TaskComponent->MaxCapacity;
 		CurrentAlien->AlienState = Idle;
 		GetWorld()->GetTimerManager().PauseTimer(TaskTimeManager);
@@ -45,13 +49,13 @@ void UNeedSatisfactionTask::DoTask()
 	}
 }
 
-void UNeedSatisfactionTask::ShuffleBuildings(TArray<AActor*>& Buildings)
+void UNeedSatisfactionTask::ShuffleBuildings(TArray<ABuilding*>& Buildings)
 {
 	int32 NumOfBuildings = Buildings.Num();
 	int32 ShuffleTurns = NumOfBuildings / 2;
 	int32 Index1;
 	int32 Index2;
-	AActor* Temp;
+	ABuilding* Temp;
 
 	if (NumOfBuildings > 1)
 	{
@@ -68,19 +72,13 @@ void UNeedSatisfactionTask::ShuffleBuildings(TArray<AActor*>& Buildings)
 
 ABuilding* UNeedSatisfactionTask::GetBuilding()
 {
-	TArray<AActor*> Buildings;
-	UGameplayStatics::GetAllActorsOfClass(GetWorld(), CurrentBuildingType, Buildings);
 
-	ShuffleBuildings(Buildings);
+	ShuffleBuildings(TaskComponent->BuildingSubsystem->Buildings[CurBuildingType]);
 
-	for (AActor* Building : Buildings)
+	for (ABuilding* Building : TaskComponent->BuildingSubsystem->Buildings[CurBuildingType])
 	{
-		ABuilding* B = Cast<ABuilding>(Building);
-		if (B)
-		{
-			if (B->CurOccupants < B->Capacity)
-				return B;
-		}
+		if (Building->CurOccupants < Building->Capacity)
+			return Building;
 	}
 	return nullptr;
 }

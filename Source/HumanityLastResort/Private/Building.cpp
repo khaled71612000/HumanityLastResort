@@ -8,6 +8,7 @@
 #include "SelectionSubsystem.h"
 
 
+
 ABuilding::ABuilding() 
 {
 	CurOccupants = 0;

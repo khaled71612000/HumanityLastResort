@@ -3,12 +3,16 @@
 
 #include "AI/Aliens/BoyAlien.h"
 
+ABoyAlien::ABoyAlien()
+{
+	AlienType = 2;
+}
 void ABoyAlien::CallSetAlienNeedsValues()
 {
 	TArray<AlienNeedsValue*> NeedsValues;
 	//AlienNeedsValue Eat{ {2, 7}, {50, 100} };
 	//AlienNeedsValue Rest{ {2, 8}, {60, 100} };
-	AlienNeedsValue Dance{ {4, 9}, {70, 100} };
+	AlienNeedsValue Dance{ {4, 9}, {7, 10} };
 	//NeedsValues.Add(&Eat);
 	//NeedsValues.Add(&Rest);
 	NeedsValues.Add(&Dance);

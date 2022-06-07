@@ -7,6 +7,7 @@
 void UAlienSubsystem::Initialize(FSubsystemCollectionBase& Collection)
 {
 	Super::Initialize(Collection);
+	AliensPool.SetNum(NumOfAliensType);
 	GlobalMood = 0;
 	NumOfAliens = 0;
 	GlobalMoodPercentage = 1.f;
@@ -19,7 +20,7 @@ TStatId UAlienSubsystem::GetStatId() const
 
 void UAlienSubsystem::Tick(float DeltaTime)
 {
-	for (AAlien* Alien : Aliens)
+	for (AAlien* Alien : SpawnedAliens)
 	{
 		//UE_LOG(LogTemp, Warning, TEXT("Value: %d"), Alien->AlienState);
 		if (Alien->AlienState == Idle)
@@ -48,7 +49,7 @@ void UAlienSubsystem::UpdateNumOfAliens(class AAlien* Alien)
 {
 	NumOfAliens--;
 	GlobalMood -= Alien->Mood;
-	Aliens.Remove(Alien);
+	SpawnedAliens.Remove(Alien);
 }
 
 void UAlienSubsystem::UpdateGlobalMood()

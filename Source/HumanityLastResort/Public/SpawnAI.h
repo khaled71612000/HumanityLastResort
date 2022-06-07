@@ -27,7 +27,6 @@ private:
 	virtual void BeginPlay() override;
 
 	void SpawnAnAlien();
-	void CreateAlienHungerNeed(class AAlien* Alien, int Capacity, int DecayRate, int TimeToSpend);
 
 	UPROPERTY(EditAnywhere, meta = (AllowPrivateAccess = "true"))
 		TArray<TSubclassOf<class AAlien>> Aliens;

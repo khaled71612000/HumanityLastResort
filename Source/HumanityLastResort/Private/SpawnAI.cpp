@@ -5,7 +5,6 @@
 #include "AI/Alien.h"
 #include "AI/AlienSubsystem.h"
 #include "TimerManager.h"
-#include "AI/NeedComponent.h"
 #include "Buildings/Resturant.h"
 
 void ASpawnAI::BeginPlay() 
@@ -23,11 +22,24 @@ void ASpawnAI::BeginPlay()
 
 void ASpawnAI::SpawnAnAlien()
 {
-	int32 AlienInd = FMath::RandRange(0,  3);
-	AAlien* Alien = GetWorld()->SpawnActor<AAlien>(Aliens[AlienInd], SpawnLocation, SpawnRotation, SpawnParams);
-	Alien->CallSetAlienAttributes();
-	Alien->CallSetAlienNeedsValues();
-	AlienSubsystem->Aliens.Add(Alien);
+	int32 AlienInd = FMath::RandRange(0,  Aliens.Num()-1);
+	AAlien* AlienToSpawn;
+	if (AlienSubsystem->AliensPool[AlienInd].Num() > 0)
+	{
+		AlienToSpawn = AlienSubsystem->AliensPool[AlienInd].Last();
+		AlienToSpawn->SetActorEnableCollision(true);
+		AlienToSpawn->SetActorHiddenInGame(false);
+		AlienToSpawn->SetActorLocation(SpawnLocation);
+		AlienToSpawn->AlienState = Idle;
+		AlienSubsystem->AliensPool[AlienInd].Pop();
+	}
+	else
+	{
+		AlienToSpawn = GetWorld()->SpawnActor<AAlien>(Aliens[AlienInd], SpawnLocation, SpawnRotation, SpawnParams);
+	}
+	AlienToSpawn->CallSetAlienAttributes();
+	AlienToSpawn->CallSetAlienNeedsValues();
+	AlienSubsystem->SpawnedAliens.Add(AlienToSpawn);
 	AlienSubsystem->NumOfAliens++;
 	
 }

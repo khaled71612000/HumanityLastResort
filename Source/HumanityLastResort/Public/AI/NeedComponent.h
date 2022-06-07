@@ -29,10 +29,12 @@ public:
 	float TaskTime;
 
 	UPROPERTY(EditDefaultsOnly)
-	TSubclassOf<class ABuilding> Building;
+	int32 BuildingType;
 
 	UPROPERTY(Transient)
 	class UNeedSatisfactionTask* Task;
+
+	class UBuildingSubsystem* BuildingSubsystem;
 
 private:
 	void OnRegister() override;

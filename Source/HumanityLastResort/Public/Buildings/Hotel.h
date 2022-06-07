@@ -13,5 +13,5 @@ UCLASS()
 class HUMANITYLASTRESORT_API AHotel : public ABuilding
 {
 	GENERATED_BODY()
-	
+	AHotel();
 };

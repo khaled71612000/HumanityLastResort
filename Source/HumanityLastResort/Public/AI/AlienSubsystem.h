@@ -15,7 +15,9 @@ class HUMANITYLASTRESORT_API UAlienSubsystem : public UTickableWorldSubsystem
 	GENERATED_BODY()
 
 public:
-	TArray<class AAlien*> Aliens;
+	int32 NumOfAliensType = 4;
+	TArray<class AAlien*> SpawnedAliens;
+	TArray <TArray<class AAlien*>> AliensPool;
 
 	int32 GlobalMood;
 	int32 NumOfAliens;
@@ -26,6 +28,7 @@ private:
 	TStatId GetStatId() const override;
 	void Tick(float DeltaTime) override;
 	void UpdateNumOfAliens(class AAlien* Alien);
+
 
 public:
 	void UpdateGlobalMood();

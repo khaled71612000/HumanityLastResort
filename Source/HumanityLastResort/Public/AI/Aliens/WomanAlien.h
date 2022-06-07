@@ -14,6 +14,7 @@ class HUMANITYLASTRESORT_API AWomanAlien : public AAlien
 {
 	GENERATED_BODY()
 
+	AWomanAlien();
 public:
 	void CallSetAlienNeedsValues() override;
 	void CallSetAlienAttributes() override;

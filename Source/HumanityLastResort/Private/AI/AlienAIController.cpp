@@ -9,38 +9,30 @@
 void AAlienAIController::OnMoveCompleted(FAIRequestID RequestID, const FPathFollowingResult& Result)
 {		
 	AAlien* Alien = Cast<AAlien>(GetPawn());
-	//UE_LOG(LogTemp, Warning, TEXT("Alien: %d"), Alien->AlienState);
 
 	if (Result.IsSuccess())
 	{
-		//GEngine->AddOnScreenDebugMessage(-1, 10.f, FColor::Red, "Success");
-		//UE_LOG(LogTemp, Warning, TEXT("Alien: %d"), Alien->AlienState);
-
 		if (Alien)
 		{
 			if (Alien->AlienState == Leaving)
 			{
-				//UE_LOG(LogTemp, Warning, TEXT("Leaving"));
-				Alien->Destroy();
+				Alien->SetActorHiddenInGame(true);
+				Alien->SetActorEnableCollision(false);
+				Alien->AddAlienToPool();
 			}
 			else if (Alien->AlienState == Assigned)
 			{
-				//UE_LOG(LogTemp, Warning, TEXT("Assigned"));
 				AlienFailedUpdate(Alien);
 			}
 			else
 			{
 				AlienSucceedUpdate(Alien);
-
 			}
 		}
 	}
 
 	else if (Result.IsFailure())
 	{
-		/*GEngine->AddOnScreenDebugMessage(-1, 10.f, FColor::Red, "Failure");
-		UE_LOG(LogTemp, Warning, TEXT("Failure"));
-		UE_LOG(LogTemp, Warning, TEXT("Alien: %d"), Alien->AlienState);*/
 		if (Alien) {
 			if(Alien->AlienState == Assigned)
 			{
@@ -67,7 +59,7 @@ void AAlienAIController::AlienSucceedUpdate(AAlien* Alien)
 	Alien->ChangeMood(Alien->GoodMoodVal);
 
 	CurBuilding->AddProfit();
-	if (Cast<ACasino>(CurBuilding))
+	if (CurBuilding->BuildingType == 2)
 	{
 		Alien->isDancing = true;
 	}

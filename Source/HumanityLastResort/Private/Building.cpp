@@ -43,7 +43,6 @@ void ABuilding::SubtractLoss()
 
 ABuilding* ABuilding::Selected(const FHitResult& selectionInfoRay)
 {
-	UE_LOG(LogTemp, Error, TEXT("Selected"));
 	return this;
 }
 

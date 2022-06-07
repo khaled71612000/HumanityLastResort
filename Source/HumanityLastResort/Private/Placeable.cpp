@@ -9,6 +9,8 @@
 #include "RunTime\Engine\Classes\Kismet\GameplayStatics.h"
 #include "AI/Alien.h"
 #include "Buildings/BuildingSubsystem.h"
+#include "SelectionSubsystem.h"
+
 
 APlaceable::APlaceable()
 {
@@ -51,6 +53,7 @@ void APlaceable::BeginPlay()
 
 	NewBoxSize = (Max - Min) / 2;
 	NewBoxSize.Z = 0;
+	SelectionSubSystem = GetWorld()->GetSubsystem<USelectionSubsystem>();
 
 }
 
@@ -188,5 +191,7 @@ void APlaceable::MouseRelease()
 void APlaceable::DestroyBuildingActor()
 {
 	BuildingSubsystem->RemoveBuilding(this);
+	if(IISelectionHandler* CurrentSelect = Cast<IISelectionHandler>(this))
+	SelectionSubSystem->RemoveSelectionHandler(CurrentSelect);
 	Destroy();
 }

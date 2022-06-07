@@ -26,6 +26,11 @@ struct FBGBuildBank : public FTableRowBase
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		FSlateBrush Icon;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		FString PlaceableType;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		UStaticMesh* Mesh;
 };
 UCLASS()
 class HUMANITYLASTRESORT_API UDataCollection : public UObject

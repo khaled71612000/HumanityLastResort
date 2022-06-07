@@ -12,7 +12,8 @@ ABuilding* USelectionSubsystem::TrySelect(const FHitResult& selectionInfoRay)
 {
 	for (IISelectionHandler* handler : Handlers)
 	{
-		if (ABuilding* selection = handler->Selected(selectionInfoRay))
+		ABuilding* selection = handler->Selected(selectionInfoRay);
+		if (selection)
 		{
 			return selection;
 		}

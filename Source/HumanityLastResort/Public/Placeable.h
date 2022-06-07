@@ -28,8 +28,6 @@ public:
 	FVector NewBoxSize;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Cells")
-		bool isOneCell = false;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Cells")
 		FText NameView;
 
 protected:

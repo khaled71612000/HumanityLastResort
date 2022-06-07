@@ -59,6 +59,10 @@ struct FBGBuildBank : public FTableRowBase
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		FString PlaceableType;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		UStaticMesh* Mesh;
+
+
 };
 
 UCLASS()

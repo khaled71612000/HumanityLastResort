@@ -18,7 +18,7 @@ ABuilding* USelectionSubsystem::TrySelect(const FHitResult& selectionInfoRay)
 		ABuilding* selection = handler->Selected(selectionInfoRay);
 		if (selection == selectionInfoRay.GetActor())
 		{
-
+			handler->HightLight();
 			return selection;
 		}
 	}

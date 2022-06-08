@@ -13,6 +13,7 @@ AAlien::AAlien()
 	PrimaryActorTick.bCanEverTick = false;
 	AlienState = Idle;
 	isDancing = false;
+	Mood = 100;
 }
 
 void AAlien::BeginPlay()
@@ -58,10 +59,15 @@ void AAlien::Leave()
 
 void AAlien::ChangeMood(int MoodVal)
 {
+	//UE_LOG(LogTemp, Warning, TEXT("Mood: %d"), MoodVal);
+
 	AlienSubsystem->GlobalMood -= Mood;
 	Mood += MoodVal;
-	AlienSubsystem->GlobalMood += Mood;
-	AlienSubsystem->UpdateGlobalMood();
+	if (Mood < 0)
+		Mood = 0;
+	else if (Mood > 100)
+		Mood = 100;
+	AlienSubsystem->UpdateGlobalMood(Mood);
 
 }
 
@@ -72,20 +78,8 @@ void AAlien::SetAlienNeedsValues(TArray<AlienNeedsValue*>& NeedsValues)
 	{
 		int32 temp = FMath::RandRange(NeedsValues[i]->DecayRate.from, NeedsValues[i]->DecayRate.to);
 		Needs[i]->DecayRate = temp;
-		UE_LOG(LogTemp, Warning, TEXT("Temp: %d"), temp);
-
-		UE_LOG(LogTemp, Warning, TEXT("DecayRate: %d"), Needs[i]->DecayRate);
-		UE_LOG(LogTemp, Warning, TEXT("DecayRateFrom: %d"), NeedsValues[i]->DecayRate.from);
-		UE_LOG(LogTemp, Warning, TEXT("DecayRateTo: %d"), NeedsValues[i]->DecayRate.to);
-
 		Needs[i]->DecayRate = FMath::RandRange(NeedsValues[i]->DecayRate.from, NeedsValues[i]->DecayRate.to);
 		Needs[i]->TaskTime = FMath::RandRange(NeedsValues[i]->TimeSpent.from, NeedsValues[i]->TimeSpent.to);
-
-		
-		UE_LOG(LogTemp, Warning, TEXT("TaskTime: %d"), Needs[i]->TaskTime);
-		UE_LOG(LogTemp, Warning, TEXT("TaskTimefrom: %d"), NeedsValues[i]->TimeSpent.from);
-		UE_LOG(LogTemp, Warning, TEXT("TaskTimeTo: %d"), NeedsValues[i]->TimeSpent.to);
-
 	}
 }
 

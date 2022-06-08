@@ -72,4 +72,3 @@ void AAlienAIController::AlienFailedUpdate(AAlien* Alien)
 	CurBuilding->CurOccupants--;
 	CurBuilding->SubtractLoss();
 }
-

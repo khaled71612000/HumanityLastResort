@@ -40,6 +40,7 @@ void ASpawnAI::SpawnAnAlien()
 	AlienToSpawn->CallSetAlienNeedsValues();
 	AlienSubsystem->SpawnedAliens.Add(AlienToSpawn);
 	AlienSubsystem->NumOfAliens++;
+	AlienSubsystem->GlobalMood += 100;
 	
 }
 

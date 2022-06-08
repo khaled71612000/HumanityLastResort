@@ -34,8 +34,8 @@ void AGameController::Tick(float dt) {
 	{FVector::ZeroVector},
 	{0.f,0.f,1.f}
 	};
-	const auto intersect = FMath::LinePlaneIntersection(start, end, plane);
-
+	 FVector intersect = FMath::LinePlaneIntersection(start, end, plane);
+	 intersect.Z = 100;
 
 	FHitResult Hit;
 	FCollisionQueryParams TraceParams;

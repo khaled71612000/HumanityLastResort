@@ -43,15 +43,8 @@ void ABuilding::SubtractLoss()
 
 ABuilding* ABuilding::Selected(const FHitResult& selectionInfoRay)
 {
+	//UE_LOG(LogTemp, Error, TEXT("Selected"));
 	return this;
-}
-
-void ABuilding::HightLight()
-{
-	//UE_LOG(LogTemp, Error, TEXT("HIGHTLIGHTED"));
-	//UMaterial* Material = (UMaterial*)StaticMeshComponent->GetMaterial(0);
-	//if(Material)
-	//Material->SetScalarParameterValueEditorOnly(TEXT("Selected"), 1);
 }
 
 void ABuilding::OnOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)

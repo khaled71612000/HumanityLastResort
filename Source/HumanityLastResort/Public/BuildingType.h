@@ -3,5 +3,5 @@
 UENUM()
 enum BuildingType
 {
-	Hotel, Resturant, Casino
+	Hotel, Resturant, Casino, Club, JuiceShop, CandyShop, KidsArea
 };

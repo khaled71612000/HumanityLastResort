@@ -10,39 +10,63 @@ enum State {
 	Idle, Assigned, Arrived, Waiting, Leaving
 };
 
+struct Range {
+	int32 from;
+	int32 to;
+};
+
+struct AlienNeedsValue {
+	Range DecayRate;
+	Range TimeSpent;
+};
+
+struct AlienAttributes {
+	Range GoodMoodVal;
+	Range BadMoodVal;
+	Range NumOfTasks;
+	Range NumOfFailedTasks;
+};
+
 UCLASS()
 class HUMANITYLASTRESORT_API AAlien : public ACharacter
 {
 	GENERATED_BODY()
 
 public:
-	// Sets default values for this character's properties
 	AAlien();
 
 protected:
-	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
 public:
+	bool isDancing;
 	int32 Mood;
 	UPROPERTY(EditDefaultsOnly, Category = "Properties")
-	int32 GoodMoodVal;
+		int32 GoodMoodVal;
 	UPROPERTY(EditDefaultsOnly, Category = "Properties")
-	int32 BadMoodVal;
-
+		int32 BadMoodVal;
 	UPROPERTY(EditDefaultsOnly, Category = "Properties")
-	int32 NumOfTasks;
+		int32 NumOfTasks;
 	UPROPERTY(EditDefaultsOnly, Category = "Properties")
-	int32 NumOfFailedTasks;
+		int32 NumOfFailedTasks;
 
-
+	int32 AlienType;
 	State AlienState;
 	class UNeedComponent* NeedToExcute;
 	class UAlienSubsystem* AlienSubsystem;
+	TArray<UNeedComponent*> Needs;
 
 	void GetTask();
 	void GoToTask();
 	void DoTask();
 	void Leave();
 	void ChangeMood(int MoodVal);
+	void SetAlienNeedsValues(TArray<AlienNeedsValue*>& NeedsValues);
+	void SetAlienAttributes(AlienAttributes AlienAttributes);
+	void AddAlienToPool();
+	virtual void CallSetAlienNeedsValues();
+	virtual void CallSetAlienAttributes();
+
+	UFUNCTION(BlueprintCallable)
+		bool GetisDancing();
 };

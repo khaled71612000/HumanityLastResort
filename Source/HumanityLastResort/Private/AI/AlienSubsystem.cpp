@@ -1,27 +1,25 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
-
 #include "AI/AlienSubsystem.h"
 #include "AI/Alien.h"
-
 
 void UAlienSubsystem::Initialize(FSubsystemCollectionBase& Collection)
 {
 	Super::Initialize(Collection);
+	AliensPool.SetNum(NumOfAlienTypes);
 	GlobalMood = 0;
 	NumOfAliens = 0;
-	GlobalMoodPercentage = 1.f;
+	GlobalMoodPercentage = 100;
 }
 
 TStatId UAlienSubsystem::GetStatId() const
 {
-		RETURN_QUICK_DECLARE_CYCLE_STAT(UAlienSubsystem, STATGROUP_Tickables);
+	return TStatId();
 }
-
 
 void UAlienSubsystem::Tick(float DeltaTime)
 {
-	for (AAlien* Alien : Aliens)
+	for (AAlien* Alien : SpawnedAliens)
 	{
 		//UE_LOG(LogTemp, Warning, TEXT("Value: %d"), Alien->AlienState);
 		if (Alien->AlienState == Idle)
@@ -38,28 +36,46 @@ void UAlienSubsystem::Tick(float DeltaTime)
 		}
 		else if (Alien->AlienState == Leaving)
 		{
-			UpdateNumOfAliens(Alien);
-			UpdateGlobalMood();
+			SubtractAlienInfo(Alien);
 			Alien->Leave();
 			break;
 		}
 	}
 }
 
-void UAlienSubsystem::UpdateNumOfAliens(class AAlien* Alien)
+void UAlienSubsystem::SubtractAlienInfo(class AAlien* Alien)
 {
-	
 	NumOfAliens--;
-	GlobalMood -= Alien->Mood;
-	Aliens.Remove(Alien);
+	UpdateGlobalMood(-Alien->Mood);
+	SpawnedAliens.Remove(Alien);
+}
+
+void UAlienSubsystem::UpdateGlobalMood(int32 Amount)
+{
+	GlobalMood += Amount;
+	if (GlobalMood < 0)
+		GlobalMood = 0;
+	UE_LOG(LogTemp, Warning, TEXT("GlobalMood: %d"), GlobalMood);
+
+	UpdateGlobalMoodPercentage();
+}
+
+void UAlienSubsystem::UpdateGlobalMoodPercentage()
+{
+	if (NumOfAliens)
+		GlobalMoodPercentage = (GlobalMood / (float)(NumOfAliens * 100)) * 100;
+	UE_LOG(LogTemp, Warning, TEXT("Aliens: %d"), NumOfAliens);
 
 }
 
-void UAlienSubsystem::UpdateGlobalMood()
+int32 UAlienSubsystem::GetGlobalMoodPercentage()
 {
-	if(NumOfAliens)
-		GlobalMoodPercentage = GlobalMood / NumOfAliens;
-	//Make the output a float
+	return GlobalMoodPercentage;
+}
+
+int32 UAlienSubsystem::GetNumOfAliens()
+{
+	return NumOfAliens;
 }
 
 

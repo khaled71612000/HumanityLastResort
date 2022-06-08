@@ -7,7 +7,7 @@
 #include "AlienSubsystem.generated.h"
 
 /**
- * 
+ *
  */
 UCLASS()
 class HUMANITYLASTRESORT_API UAlienSubsystem : public UTickableWorldSubsystem
@@ -15,18 +15,26 @@ class HUMANITYLASTRESORT_API UAlienSubsystem : public UTickableWorldSubsystem
 	GENERATED_BODY()
 
 public:
-	TArray<class AAlien*> Aliens;
+	int32 NumOfAlienTypes = 4;
+	TArray<class AAlien*> SpawnedAliens;
+	TArray <TArray<class AAlien*>> AliensPool;
 
 	int32 GlobalMood;
 	int32 NumOfAliens;
-
-	float GlobalMoodPercentage;
+	int32 GlobalMoodPercentage;
 
 private:
 	void Initialize(FSubsystemCollectionBase& Collection) override;
 	TStatId GetStatId() const override;
 	void Tick(float DeltaTime) override;
-	void UpdateNumOfAliens(class AAlien* Alien);
+	void SubtractAlienInfo(class AAlien* Alien);
+
+
 public:
-	void UpdateGlobalMood();
+	void UpdateGlobalMood(int32 Amount);
+	void UpdateGlobalMoodPercentage();
+	UFUNCTION(BlueprintCallable)
+		int32 GetGlobalMoodPercentage();
+	UFUNCTION(BlueprintCallable)
+		int32 GetNumOfAliens();
 };

@@ -49,9 +49,9 @@ ABuilding* ABuilding::Selected(const FHitResult& selectionInfoRay)
 void ABuilding::HightLight()
 {
 	//UE_LOG(LogTemp, Error, TEXT("HIGHTLIGHTED"));
-	//UMaterial* Material = (UMaterial*)StaticMeshComponent->GetMaterial(0);
-	//if(Material)
-	//Material->SetScalarParameterValueEditorOnly(TEXT("Selected"), 1);
+	UMaterial* Material = (UMaterial*)StaticMeshComponent->GetMaterial(0);
+	if (Material)
+		Material->SetScalarParameterValueEditorOnly(TEXT("Selected"), 1);
 }
 
 void ABuilding::OnOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)

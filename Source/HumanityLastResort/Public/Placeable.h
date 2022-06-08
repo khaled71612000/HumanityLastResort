@@ -29,6 +29,8 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Cells")
 		FText NameView;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
+		class UStaticMeshComponent* StaticMeshComponent;
 
 protected:
 	APlaceable();
@@ -38,8 +40,6 @@ protected:
 	UFUNCTION(BlueprintCallable, Category = "BuildTransform")
 		void ResetRotation();
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
-		class UStaticMeshComponent* StaticMeshComponent;
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
 		class USceneComponent* SceneComponent;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Config")

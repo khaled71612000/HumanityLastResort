@@ -109,8 +109,11 @@ void APlaceable::MouseMove(FVector position)
 		if (MyPawn)
 			MyPawn->SelectedToken = this;
 
-		FVector Start = GetActorLocation();
-		FVector End = ((GetActorUpVector() * -100.f) + Start);
+		FVector Start = position;
+		Start.Z += 1;
+
+		FVector End = Start;
+		End.Z += 100;
 
 		TArray<AActor*> ActorsToIgnore;
 		ActorsToIgnore.Add(this);
@@ -119,19 +122,18 @@ void APlaceable::MouseMove(FVector position)
 		bool BoxHit = UKismetSystemLibrary::BoxTraceMulti(GetWorld(), Start, End,
 			NewBoxSize,
 			GetActorRotation(), UEngineTypes::ConvertToTraceType(ECC_Pawn),
-			false, ActorsToIgnore, EDrawDebugTrace::None, HitResult,
+			false, ActorsToIgnore, EDrawDebugTrace::ForDuration, HitResult,
 			true, FLinearColor::Red, FLinearColor::Green, 0.1f
 		);
 
 		if (BoxHit) {
-			for (auto& Building : HitResult)
-			{
-				APlaceable* UnderHit = Cast<APlaceable>(Building.GetActor());
-				if (UnderHit) {
+			//for (FHitResult Building : HitResult)
+			//{
+			//	APlaceable* UnderHit = Cast<APlaceable>(Building.GetActor());
+				//if (UnderHit) {
 					this->SetActorLocation(oldPos);
-				}
-				
-			}
+				//}
+			//}
 		}
 	}
 }

@@ -23,5 +23,6 @@ class HUMANITYLASTRESORT_API IISelectionHandler
 	// Add interface functions to this class. This is the class that will be inherited to implement this interface.
 public:
 	virtual class ABuilding* Selected(const FHitResult& selectionInfoRay) = 0;
+	virtual void HightLight() = 0;
 
 };

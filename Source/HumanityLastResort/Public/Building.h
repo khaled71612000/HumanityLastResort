@@ -30,6 +30,7 @@ public:
 	void AddProfit();
 	void SubtractLoss();
 	virtual ABuilding* Selected(const FHitResult& selectionInfoRay) override;
+	virtual void HightLight() override;
 
 protected:
 	ABuilding();

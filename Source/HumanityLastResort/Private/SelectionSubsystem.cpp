@@ -7,14 +7,18 @@ void USelectionSubsystem::RegisterSelectionHandler(IISelectionHandler* handler)
 {
 	Handlers.Add(handler);
 }
-
+void USelectionSubsystem::RemoveSelectionHandler(IISelectionHandler* handler)
+{
+	Handlers.RemoveSingle(handler);
+}
 ABuilding* USelectionSubsystem::TrySelect(const FHitResult& selectionInfoRay)
 {
 	for (IISelectionHandler* handler : Handlers)
 	{
 		ABuilding* selection = handler->Selected(selectionInfoRay);
-		if (selection)
+		if (selection == selectionInfoRay.GetActor())
 		{
+			handler->HightLight();
 			return selection;
 		}
 	}

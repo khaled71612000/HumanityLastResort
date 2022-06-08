@@ -20,9 +20,9 @@ protected:
 	void SetupInputComponent()override;
 
 	void OnLeftMouseRelease();
-	void OnLeftMouseClicked(const FHitResult& selectionInfoRay);
+	void OnLeftMouseClicked();
 	class USPSubsystem* SPSubsystem;
 	class USelectionSubsystem* SelectionSubSystem;
-
+	FHitResult HitBuilding;
 	
 };

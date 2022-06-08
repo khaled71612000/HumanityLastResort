@@ -14,7 +14,7 @@ class HUMANITYLASTRESORT_API UBuildingSubsystem : public UWorldSubsystem
 {
 	GENERATED_BODY()
 
-	int32 NumOfBuildings = 6;
+	int32 NumOfBuildings = 7;
 public:
 	TArray<TArray<class ABuilding*>> Buildings;
 	void Initialize(FSubsystemCollectionBase& Collection) override;

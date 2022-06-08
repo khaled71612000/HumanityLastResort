@@ -2,8 +2,10 @@
 
 
 #include "CameraPawn.h"
-#include <BuildingsActors.h>
+#include "Placeable.h"
 #include "Math/UnrealMathUtility.h"
+#include "GameFramework/SpringArmComponent.h"
+#include "Camera/CameraComponent.h"
 #include "GameFramework/PawnMovementComponent.h"
 #include "GameFramework/FloatingPawnMovement.h"
 
@@ -43,10 +45,8 @@ void ACameraPawn::BeginPlay()
 	Player->GetViewportSize(ScreenSizeX, ScreenSizeY);
 
 	Player->bShowMouseCursor = true;
-	//Player->DefaultMouseCursor = EMouseCursor::Crosshairs;
 	FInputModeGameAndUI inputMode;
 	inputMode.SetHideCursorDuringCapture(false);
-	//inputMode.SetLockMouseToViewportBehavior(EMouseLockMode::LockAlways);
 	Player->SetInputMode(inputMode);
 
 }
@@ -61,24 +61,7 @@ FVector ACameraPawn::GetCameraPanDirecton() {
 
 	Player->GetMousePosition(MousePosX, MousePosY);
 
-	/*if (MousePosX < Margin) {
-		CamDirectonY = -1;
-	}
-
-	if (MousePosY < Margin) {
-		CamDirectonX = 1;
-	}
-
-	if (MousePosX > ScreenSizeX - Margin) {
-		CamDirectonY = 1;
-	}
-
-	if (MousePosY > ScreenSizeY - Margin) {
-		CamDirectonX = -1;
-	}*/
-
-	//return FVector(CamDirectonX, CamDirectonY, 0);
-	return FVector(0, 0, 0);
+	return FVector(CamDirectonX, CamDirectonY, 0);
 
 }
 
@@ -93,17 +76,12 @@ void ACameraPawn::MoveRight(float Value)
 }
 void ACameraPawn::RotateToken(float value) {
 	if (SelectedToken) {
-		//UE_LOG(LogTemp, Warning, TEXT("TUUUTs"));
 
 		auto const OriginalRotation = SelectedToken->GetActorRotation().GetDenormalized();
 		float const Remainder = FMath::Fmod(OriginalRotation.Yaw, 90.f);
 
 		/** If we have a Yaw that is greater than or equal to 360 degrees, use 0 instead */
 		int Quotient = (OriginalRotation.Yaw > 337.5f ? 0 : OriginalRotation.Yaw) / 90.f;
-
-		// UE_LOG(LogTemp, Warning, TEXT("Incoming Yaw: %f"), OriginalRotation.Yaw)
-		// UE_LOG(LogTemp, Warning, TEXT("Remainder: %f"), Remainder)
-		// UE_LOG(LogTemp, Warning, TEXT("Quotient: %d"), Quotient)
 
 		/**
 		 * if our Yaw is close to 360 then don't upgrade the Quotient
@@ -126,7 +104,6 @@ void ACameraPawn::RotateToken(float value) {
 			Quotient < 0 ? Quotient += 360 : Quotient;
 		}
 
-		// UE_LOG(LogTemp, Warning, TEXT("New Angle: %d"), Quotient)
 
 		auto NewRotation = FRotator(0.f, Quotient, 0.f);
 		NewRotation.Normalize();
@@ -137,25 +114,14 @@ void ACameraPawn::RotateToken(float value) {
 }
 void ACameraPawn::OrbitRotate(float Value)
 {
-	//this->AddControllerYawInput(orbitSpeed * Value);
 	AddActorWorldRotation(FRotator(0 , orbitSpeed * Value, 0));
 }
 
 void ACameraPawn::CameraPitch(float Value)
 {
-	//this->AddControllerYawInput(orbitSpeed * Value);
 	float minClamp = 310.f;
 	float maxClamp = 350.f;
 
-	//FRotator NewRotation = FRotator(0, 0, CameraPitchSpeed * Value);
-	//NewRotation.Yaw = FMath::ClampAngle(NewRotation.Yaw, minClamp, maxClamp);
-	//AddActorWorldRotation(FRotator(0, 0, FMath::ClampAngle((CameraPitchSpeed * Value), minClamp, maxClamp)));
-	//SpringArm->GetRelativeRotation().Yaw + CameraPitchSpeed * Value
-	//FMath::ClampAngle((SpringArm->GetRelativeRotation().Yaw + CameraPitchSpeed * Value), minClamp, maxClamp)
-
-	//if ((GetActorRotation().Yaw + CameraPitchSpeed * Value) != 0) {
-
-	//}
 	FRotator NewRotation = SpringArm->GetComponentRotation();
 	NewRotation.Pitch = NewRotation.Pitch + CameraPitchSpeed * Value;
 	NewRotation.Pitch = FMath::ClampAngle(NewRotation.Pitch, minClamp, maxClamp);
@@ -180,8 +146,6 @@ void ACameraPawn::SetupPlayerInputComponent(UInputComponent* PlayerInputComponen
 	InputComponent->BindAxis("Orbit", this, &ACameraPawn::OrbitRotate);
 	InputComponent->BindAxis("CameraPitch", this, &ACameraPawn::CameraPitch);
 
-	//InputComponent->BindAction("ZoomIn", IE_Pressed, this, &ACameraPawn::ZoomIn);
-	//InputComponent->BindKey(FKey{ "LeftMouseButton" }, EInputEvent::IE_Pressed, this, &ACameraPawn::ZoomIn);
 	InputComponent->BindAxis("Rotate", this, &ACameraPawn::RotateToken);
 
 }

@@ -7,7 +7,6 @@
 // Sets default values
 ANewGrid::ANewGrid()
 {
- 	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
 }
@@ -20,24 +19,24 @@ void ANewGrid::PopulateGrid()
 	float WorldOffsetX = WorldOffset; 
 	float WorldOffsetY = WorldOffset;
 	FVector spawnPos;
+
 	//Y loop
-	for (float i = 0; i < GridSize -1 ; i++)
+	for (float i = 0; i < GridSize - 1 ; i++)
 	{
 		//X loop
 		for (float j = 0; j < GridSize - 1; j++)
 		{
-
 
 			WorldOffsetX = WorldGridSize * j - WorldOffset;
 			WorldOffsetY = WorldGridSize * i - WorldOffset;
 
 			spawnPos = FVector(WorldOffsetX, WorldOffsetY, 0.f);
 
-
+			//For Debugging 
 			ANewCell* temp = GetWorld()->SpawnActor<ANewCell>(ActorToSpawn, spawnPos,
 				GetActorRotation());
 
-			GridArray.Add(temp);
+			GridPoints.Add(spawnPos);
 		}
 	}
 }
@@ -45,16 +44,15 @@ void ANewGrid::PopulateGrid()
 FVector ANewGrid::GetClosestPosition(FVector InPosition)
 {
 	
-	closestPos = GridArray[0]->GetActorLocation();
+	closestPos = GridPoints[0];
 	
 	closestDistance = FVector::Dist(closestPos, InPosition);
 
-	for (AActor* element : GridArray)
+	for (FVector element : GridPoints)
 	{
-		element->GetActorLocation();
-		if (FVector::Dist(element->GetActorLocation(), InPosition) < closestDistance) {
-			closestPos = element->GetActorLocation();
-			closestDistance = FVector::Dist(element->GetActorLocation(), InPosition);
+		if (FVector::Dist(element, InPosition) < closestDistance) {
+			closestPos = element;
+			closestDistance = FVector::Dist(element, InPosition);
 		}
 
 	}
@@ -64,10 +62,9 @@ FVector ANewGrid::GetClosestPosition(FVector InPosition)
 
 void ANewGrid::PreSave(const class ITargetPlatform* TargetPlatform)
 {
-	//KZ TODO
-	//Call Super
-	//FVectors instead of actors for arraygrid
+	Super::PreSave(TargetPlatform);
 	//GET SIZE OF MESH
+
 }
 
 // Called when the game starts or when spawned

@@ -21,8 +21,8 @@ protected:
 	virtual void BeginPlay() override;
 	virtual void Tick(float DeltaTime) override;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Config")
-		TArray<TSubclassOf<class ABuildingsActors>> building;
+	UPROPERTY(Category = "Config", EditAnywhere, BlueprintReadWrite)
+		TArray<TSubclassOf<class APlaceable>> building;
 	
 
 };

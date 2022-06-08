@@ -22,8 +22,8 @@ class HUMANITYLASTRESORT_API IPlacementInterface
 
 	// Add interface functions to this class. This is the class that will be inherited to implement this interface.
 public:
-		 virtual void MouseMove(FVector position) = 0 ;
-		 virtual void MouseRelease() = 0;
+	virtual void MouseMove(FVector position) = 0;
+	virtual void MouseRelease() = 0;
 
 
 };

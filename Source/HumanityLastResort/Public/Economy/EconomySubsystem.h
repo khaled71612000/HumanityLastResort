@@ -13,16 +13,10 @@ UCLASS()
 class HUMANITYLASTRESORT_API UEconomySubsystem : public UWorldSubsystem
 {
 	GENERATED_BODY()
-	
+
 	int32 Cash;
 	virtual void Initialize(FSubsystemCollectionBase& Collection) override;
 public:
-	UFUNCTION(BlueprintCallable)
 	void AddCash(int32 Amount);
-
-	UFUNCTION(BlueprintCallable)
 	void SubtractCash(int32 Amount);
-
-	UFUNCTION(BlueprintCallable)
-	int32 GetCash();
 };

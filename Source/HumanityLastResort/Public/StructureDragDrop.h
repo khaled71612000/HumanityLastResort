@@ -14,4 +14,7 @@ class HUMANITYLASTRESORT_API UStructureDragDrop : public UDragDropOperation
 {
 	GENERATED_BODY()
 	
+public:
+		UPROPERTY(EditAnywhere, BlueprintType, BlueprintReadWrite, Category="Stats")
+		int x;
 };

@@ -18,6 +18,8 @@ class HUMANITYLASTRESORT_API USelectionSubsystem : public UWorldSubsystem
 		TArray<IISelectionHandler*> Handlers;
 public:
 		void RegisterSelectionHandler( IISelectionHandler* handler);
+		void RemoveSelectionHandler(IISelectionHandler* handler);
+
 		ABuilding* TrySelect(const FHitResult& selectionInfoRay);
 
 };

@@ -34,8 +34,8 @@ void AGameController::Tick(float dt) {
 	{FVector::ZeroVector},
 	{0.f,0.f,1.f}
 	};
-	const auto intersect = FMath::LinePlaneIntersection(start, end, plane);
-
+	 FVector intersect = FMath::LinePlaneIntersection(start, end, plane);
+	 intersect.Z = 100;
 
 	FHitResult Hit;
 	FCollisionQueryParams TraceParams;
@@ -58,7 +58,7 @@ void AGameController::Tick(float dt) {
 					GridPtr = Cast<ANewGrid>(FoundGrid);
 					if (GridPtr) {
 						if (bHit) {
-							OnLeftMouseClicked(Hit);
+							HitBuilding = Hit;
 							GridPtr->GetClosestPosition(intersect);
 							current->MouseMove(GridPtr->GetClosestPosition(intersect));
 						}
@@ -75,15 +75,17 @@ void AGameController::OnLeftMouseRelease()
 	SPSubsystem->OnLeftMouseRelease();
 }
 
-void AGameController::OnLeftMouseClicked(const FHitResult& selectionInfoRay)
+void AGameController::OnLeftMouseClicked()
 {
-	SelectionSubSystem->TrySelect(selectionInfoRay);
+	if(HitBuilding.GetActor())
+	SelectionSubSystem->TrySelect(HitBuilding);
 }
 
 void AGameController::SetupInputComponent()
 {
 	Super::SetupInputComponent();
 	InputComponent->BindKey(FKey{ "LeftMouseButton" }, EInputEvent::IE_Released, this, &AGameController::OnLeftMouseRelease);
+	InputComponent->BindKey(FKey{ "LeftMouseButton" }, EInputEvent::IE_Pressed, this, &AGameController::OnLeftMouseClicked);
 
 }
 

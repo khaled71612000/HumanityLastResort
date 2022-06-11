@@ -22,6 +22,7 @@ void AGameController::BeginPlay()
 {
 	SPSubsystem = GetWorld()->GetSubsystem<USPSubsystem>();
 	SelectionSubSystem = GetWorld()->GetSubsystem<USelectionSubsystem>();
+	FoundGrid = UGameplayStatics::GetActorOfClass(GetWorld(), ANewGrid::StaticClass());
 
 }
 void AGameController::Tick(float dt) {
@@ -46,9 +47,7 @@ void AGameController::Tick(float dt) {
 
 	UGameplayStatics::GetAllActorsWithInterface(GetWorld(), UPlacementInterface::StaticClass(), actorPtrs);
 
-	AActor* FoundGrid;
 	ANewGrid* GridPtr;
-	FoundGrid = UGameplayStatics::GetActorOfClass(GetWorld(), ANewGrid::StaticClass());
 
 	if (actorPtrs.Num() != 0) {
 		for (AActor* actor : actorPtrs) {

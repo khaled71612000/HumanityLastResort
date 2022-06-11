@@ -21,8 +21,10 @@ protected:
 
 	void OnLeftMouseRelease();
 	void OnLeftMouseClicked();
+
 	class USPSubsystem* SPSubsystem;
 	class USelectionSubsystem* SelectionSubSystem;
 	FHitResult HitBuilding;
-	
+	AActor* FoundGrid;
+
 };

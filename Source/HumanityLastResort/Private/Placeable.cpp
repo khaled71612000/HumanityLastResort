@@ -37,8 +37,6 @@ void APlaceable::BeginPlay()
 	oldPos = GetActorLocation();
 
 	FTimerHandle StatManager;
-	GetWorld()->GetTimerManager().SetTimer(StatManager, [&]()
-		{
 			if (!isDragging) {
 				StaticMeshComponent->GetBodyInstance()->bLockXTranslation = true;
 				StaticMeshComponent->GetBodyInstance()->bLockYTranslation = true;
@@ -46,8 +44,6 @@ void APlaceable::BeginPlay()
 				StaticMeshComponent->GetBodyInstance()->SetDOFLock(EDOFMode::SixDOF);
 				StaticMeshComponent->SetMobility(EComponentMobility::Static);
 			}
-		}, 1.3f, false);
-
 	FVector Min, Max;
 	StaticMeshComponent->GetLocalBounds(Min, Max);
 
@@ -127,13 +123,7 @@ void APlaceable::MouseMove(FVector position)
 		);
 
 		if (BoxHit) {
-			//for (FHitResult Building : HitResult)
-			//{
-			//	APlaceable* UnderHit = Cast<APlaceable>(Building.GetActor());
-				//if (UnderHit) {
-					this->SetActorLocation(oldPos);
-				//}
-			//}
+				this->SetActorLocation(oldPos);
 		}
 	}
 }
@@ -176,10 +166,6 @@ void APlaceable::MouseRelease()
 	if (MyPawn)
 		MyPawn->SelectedToken = nullptr;
 	oldPos = GetActorLocation();
-
-	FTimerHandle StatManager;
-	GetWorld()->GetTimerManager().SetTimer(StatManager, [&]()
-		{
 			if (!isDragging) {
 				StaticMeshComponent->GetBodyInstance()->bLockXTranslation = true;
 				StaticMeshComponent->GetBodyInstance()->bLockYTranslation = true;
@@ -187,7 +173,6 @@ void APlaceable::MouseRelease()
 				StaticMeshComponent->GetBodyInstance()->SetDOFLock(EDOFMode::SixDOF);
 				StaticMeshComponent->SetMobility(EComponentMobility::Static);
 			}
-		}, 1.3f, false);
 }
 
 void APlaceable::DestroyBuildingActor()

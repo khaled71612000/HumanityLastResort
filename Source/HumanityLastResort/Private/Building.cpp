@@ -16,7 +16,7 @@ ABuilding::ABuilding()
 	BuildingCollision = CreateDefaultSubobject<USphereComponent>(TEXT("RootCollision"));
 	BuildingCollision->SetupAttachment(RootComponent);
 	BuildingCollision->SetSphereRadius(200.f);
-	BuildingCollision->SetHiddenInGame(false);
+	BuildingCollision->SetHiddenInGame(true);
 	BuildingCollision->OnComponentBeginOverlap.AddDynamic(this, &ABuilding::OnOverlap);
 	BuildingCollision->OnComponentEndOverlap.AddDynamic(this, &ABuilding::OnOverlapEnd);
 }

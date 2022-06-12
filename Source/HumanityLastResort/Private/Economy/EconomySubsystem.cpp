@@ -5,7 +5,7 @@
 void UEconomySubsystem::Initialize(FSubsystemCollectionBase& Collection)
 {
 	Super::Initialize(Collection);
-	Cash = 10000000;
+	Cash = 1000000;
 }
 
 void UEconomySubsystem::AddCash(int32 Amount)

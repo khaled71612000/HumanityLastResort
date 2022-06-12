@@ -33,7 +33,7 @@ void AGirlAlien::CallSetAlienNeedsValues()
 void AGirlAlien::CallSetAlienAttributes()
 {
 	AlienAttributes AlienAttribs{
-		{5, 10}, { 5, 10 }, { 5, 10 }, { 5, 10 }
+		{5, 10}, { 2, 2 }, { 5, 5 }, { 5, 5 }
 	};
 	SetAlienAttributes(AlienAttribs);
 

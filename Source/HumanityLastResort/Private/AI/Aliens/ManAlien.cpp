@@ -32,7 +32,7 @@ void AManAlien::CallSetAlienNeedsValues()
 void AManAlien::CallSetAlienAttributes()
 {
 	AlienAttributes AlienAttribs{
-		{5, 10}, { 5, 10 }, { 1, 1 }, { 1, 1 }
+		{5, 10}, { 2, 2 }, { 3, 3 }, { 3, 3 }
 	};
 	SetAlienAttributes(AlienAttribs);
 

@@ -33,7 +33,7 @@ void ABoyAlien::CallSetAlienNeedsValues()
 void ABoyAlien::CallSetAlienAttributes()
 {
 	AlienAttributes AlienAttribs{
-		{5, 10}, { 5, 10 }, { 5, 10 }, { 5, 10 }
+		{5, 10}, { 5, 10 }, { 5, 5 }, { 5, 5 }
 	};
 	SetAlienAttributes(AlienAttribs);
 

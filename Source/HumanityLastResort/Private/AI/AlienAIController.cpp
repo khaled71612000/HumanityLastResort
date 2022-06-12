@@ -64,7 +64,10 @@ void AAlienAIController::AlienSucceedUpdate(AAlien* Alien)
 void AAlienAIController::AlienFailedUpdate(AAlien* Alien)
 {
 	Alien->NumOfFailedTasks--;
-	Alien->AlienState = Idle;
+	if (Alien->NumOfFailedTasks <= 0)
+		Alien->AlienState = Leaving;
+	else
+		Alien->AlienState = Idle;
 
 	Alien->ChangeMood(-Alien->BadMoodVal);
 

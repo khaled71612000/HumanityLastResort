@@ -26,14 +26,17 @@ void AAlien::BeginPlay()
 void AAlien::GetTask()
 {
 	int MinValue = 101;
-	for (UNeedComponent* Need : Needs)
+	/*for (UNeedComponent* Need : Needs)
 	{
 		if (Need->CurValue < MinValue)
 		{
 			NeedToExcute = Need;
 			MinValue = Need->CurValue;
 		}
-	}
+	}*/
+	int32 index = FMath::RandRange(0, Needs.Num() - 1);
+	NeedToExcute = Needs[index];
+
 }
 
 void AAlien::GoToTask()

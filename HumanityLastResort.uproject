@@ -21,6 +21,10 @@
 			"Name": "DataTableEditorUtilities",
 			"Enabled": true,
 			"MarketplaceURL": "https://unrealengineresources.com/plugins"
+		},
+		{
+			"Name": "HDRIBackdrop",
+			"Enabled": true
 		}
 	]
 }

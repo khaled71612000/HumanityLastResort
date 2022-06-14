@@ -52,6 +52,7 @@ protected:
 	class ACameraPawn* MyPawn;
 	FVector oldPos;
 	class UBuildingSubsystem* BuildingSubsystem;
+	class URoadSubsystem* RoadSubsystem;
 	class USelectionSubsystem* SelectionSubSystem;
 
 };

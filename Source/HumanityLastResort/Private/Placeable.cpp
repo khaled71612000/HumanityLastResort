@@ -10,7 +10,8 @@
 #include "AI/Alien.h"
 #include "Buildings/BuildingSubsystem.h"
 #include "SelectionSubsystem.h"
-
+#include "Road.h"
+#include "RoadSubsystem.h"
 
 APlaceable::APlaceable()
 {
@@ -32,6 +33,7 @@ void APlaceable::BeginPlay()
 {
 	Super::BeginPlay();
 	BuildingSubsystem = GetWorld()->GetSubsystem<UBuildingSubsystem>();
+	RoadSubsystem = GetWorld()->GetSubsystem<URoadSubsystem>();
 
 	StaticMeshComponent->OnClicked.AddDynamic(this, &APlaceable::OnClicked);
 	oldPos = GetActorLocation();
@@ -177,7 +179,11 @@ void APlaceable::MouseRelease()
 
 void APlaceable::DestroyBuildingActor()
 {
-	BuildingSubsystem->RemoveBuilding(this);
+	if (Cast<ABuilding>(this))
+		BuildingSubsystem->RemoveBuilding(this);
+	else if (Cast<ARoad>(this))
+		RoadSubsystem->RemoveRoad(this);
+
 	if(IISelectionHandler* CurrentSelect = Cast<IISelectionHandler>(this))
 	SelectionSubSystem->RemoveSelectionHandler(CurrentSelect);
 	Destroy();

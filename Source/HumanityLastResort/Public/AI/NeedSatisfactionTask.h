@@ -25,6 +25,7 @@ private:
 public:
 	bool TrySatisfy(class UNeedComponent* Need, class AAlien* Alien);
 	void Satisfy();
+	bool CheckAccessibility(FVector Start, FVector End);
 	void Wait();
 	void DoTask();
 	void ResetAlien();

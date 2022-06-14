@@ -13,28 +13,17 @@
 
 bool UNeedSatisfactionTask::TrySatisfy(UNeedComponent* Need, AAlien* Alien)
 {
-	UNavigationSystemV1* NavArea = FNavigationSystem::GetCurrent<UNavigationSystemV1>(this);
-	if (!NavArea)
-		return false;
-	FPathFindingQuery QueryParams;
-	QueryParams.StartLocation = Alien->GetActorLocation();
-	QueryParams.Owner = this;
-	QueryParams.NavData = NavArea->GetDefaultNavDataInstance();
-	QueryParams.SetAllowPartialPaths(false);
-
 	CurBuildingType = Need->BuildingType;
 
 	for (ABuilding* Building : Need->BuildingSubsystem->Buildings[CurBuildingType])
 	{
-		QueryParams.EndLocation = Building->GetActorLocation();
 		
-		if (NavArea->TestPathSync(QueryParams, EPathFindingMode::Hierarchical))
+		if (CheckAccessibility(Alien->GetActorLocation(), Building->GetActorLocation()))
 		{
 			CurAlien = Alien;
 			CurNeed = Need;
 			CurBuilding = Building;
 			//UE_LOG(LogTemp, Warning, TEXT("True"));
-
 			return true;
 		}
 	}
@@ -53,6 +42,21 @@ void UNeedSatisfactionTask::Satisfy()
 		AI->MoveToLocation(CurBuilding->GetActorLocation(), 25.f);
 	}
 	
+}
+
+bool UNeedSatisfactionTask::CheckAccessibility(FVector Start, FVector End)
+{
+	UNavigationSystemV1* NavArea = FNavigationSystem::GetCurrent<UNavigationSystemV1>(this);
+	if (!NavArea)
+		return false;
+	FPathFindingQuery QueryParams;
+	QueryParams.StartLocation = Start;
+	QueryParams.EndLocation = End;
+	QueryParams.Owner = this;
+	QueryParams.NavData = NavArea->GetDefaultNavDataInstance();
+	QueryParams.SetAllowPartialPaths(false);
+
+	return NavArea->TestPathSync(QueryParams, EPathFindingMode::Hierarchical);
 }
 
 void UNeedSatisfactionTask::Wait()

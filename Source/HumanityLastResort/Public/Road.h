@@ -19,15 +19,17 @@ public:
 
 	virtual void BeginPlay() override;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "PathWays")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "PathWays")
 		class UStaticMeshComponent* PathWayNorth;
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "PathWays")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "PathWays")
 		class UStaticMeshComponent* PathWayEast;
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "PathWays")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "PathWays")
 		class UStaticMeshComponent* PathWaySouth;
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "PathWays")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "PathWays")
 		class UStaticMeshComponent* PathWayWest;
 	UFUNCTION(BlueprintCallable)
 		void UpdateSideOfRoadTile();
+
+	FVector RoadStartRayLoc, RoadEndRayNorthLoc, RoadEndRayWestLoc, RoadEndRayEastLoc, RoadEndRaySouthLoc;
 };
 	

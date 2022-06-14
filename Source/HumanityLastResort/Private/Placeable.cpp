@@ -182,7 +182,7 @@ void APlaceable::DestroyBuildingActor()
 	if (Cast<ABuilding>(this))
 		BuildingSubsystem->RemoveBuilding(this);
 	else if (Cast<ARoad>(this))
-		RoadSubsystem->RemoveRoad(this);
+		RoadSubsystem->RemoveRoad(Cast<ARoad>(this));
 
 	if(IISelectionHandler* CurrentSelect = Cast<IISelectionHandler>(this))
 	SelectionSubSystem->RemoveSelectionHandler(CurrentSelect);

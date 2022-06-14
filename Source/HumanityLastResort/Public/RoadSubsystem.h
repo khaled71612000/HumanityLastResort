@@ -14,9 +14,10 @@ class HUMANITYLASTRESORT_API URoadSubsystem : public UWorldSubsystem
 {
 	GENERATED_BODY()
 public:
-	TArray<class ARoad*> Roads;
-	void Initialize(FSubsystemCollectionBase& Collection) override;
+	TArray<class ARoad*>  RoadsTilesArray;
+
 	UFUNCTION(BlueprintCallable)
-	void AddRoad(class APlaceable* Road);
-	void RemoveRoad(class APlaceable* Road);
+	void AddRoad(ARoad* RoadRef);
+
+	void RemoveRoad(ARoad* RoadRef);
 };

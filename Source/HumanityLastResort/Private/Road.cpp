@@ -17,7 +17,7 @@ void ARoad::BeginPlay()
 {
 }
 
-void ARoad::OnNewRoadTileAdded()
-{
-
+void ARoad::UpdateSideOfRoadTile()
+{ 
+	UE_LOG(LogTemp, Warning, TEXT("Hello"));
 }

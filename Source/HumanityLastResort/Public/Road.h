@@ -13,6 +13,11 @@ UCLASS()
 class HUMANITYLASTRESORT_API ARoad : public APlaceable
 {
 	GENERATED_BODY()
+public:
+
+	ARoad();
+
+	virtual void BeginPlay() override;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "PathWays")
 		class UStaticMeshComponent* PathWayNorth;
@@ -22,12 +27,7 @@ class HUMANITYLASTRESORT_API ARoad : public APlaceable
 		class UStaticMeshComponent* PathWaySouth;
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "PathWays")
 		class UStaticMeshComponent* PathWayWest;
-
-	ARoad();
-
-	virtual void BeginPlay() override;
-
 	UFUNCTION(BlueprintCallable)
-		void OnNewRoadTileAdded();
+		void UpdateSideOfRoadTile();
 };
 	

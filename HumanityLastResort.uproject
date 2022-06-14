@@ -21,6 +21,14 @@
 			"Name": "DataTableEditorUtilities",
 			"Enabled": true,
 			"MarketplaceURL": "https://unrealengineresources.com/plugins"
+		},
+		{
+			"Name": "AnimationBudgetAllocator",
+			"Enabled": true
+		},
+		{
+			"Name": "HDRIBackdrop",
+			"Enabled": true
 		}
 	]
 }

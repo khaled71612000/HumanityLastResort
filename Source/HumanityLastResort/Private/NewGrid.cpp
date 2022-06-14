@@ -33,8 +33,8 @@ void ANewGrid::PopulateGrid()
 			spawnPos = FVector(WorldOffsetX, WorldOffsetY, 0.f);
 
 			//For Debugging 
-			/*ANewCell* temp = GetWorld()->SpawnActor<ANewCell>(ActorToSpawn, spawnPos,
-				GetActorRotation());*/
+			ANewCell* temp = GetWorld()->SpawnActor<ANewCell>(ActorToSpawn, spawnPos,
+				GetActorRotation());
 
 			GridPoints.Add(spawnPos);
 		}

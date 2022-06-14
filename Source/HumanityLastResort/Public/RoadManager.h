@@ -13,5 +13,9 @@ UCLASS()
 class HUMANITYLASTRESORT_API URoadManager : public UWorldSubsystem
 {
 	GENERATED_BODY()
-	
+
+		TArray<class ARoad*> RoadsTilesArray;
+
+		UFUNCTION(BlueprintCallable)
+		void AddRoad(ARoad* RoadRef);
 };

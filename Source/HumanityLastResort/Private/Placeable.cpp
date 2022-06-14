@@ -93,7 +93,6 @@ void APlaceable::ResetRotation()
 
 void APlaceable::MouseMove(FVector position)
 {
-
 	if (isDragging)
 	{
 		ClearFloor();

@@ -20,38 +20,33 @@ void AAlien::BeginPlay()
 {
 	Super::BeginPlay();
 	GetComponents(Needs);
+	Task = NewObject<UNeedSatisfactionTask>(this);
 	AlienSubsystem = GetWorld()->GetSubsystem<UAlienSubsystem>();
 }
 
-void AAlien::GetTask()
+bool AAlien::TryGetTask()
 {
-	int MinValue = 101;
-	/*for (UNeedComponent* Need : Needs)
-	{
-		if (Need->CurValue < MinValue)
-		{
-			NeedToExcute = Need;
-			MinValue = Need->CurValue;
-		}
-	}*/
-	int32 index = FMath::RandRange(0, Needs.Num() - 1);
-	NeedToExcute = Needs[index];
+	Needs.Sort([](const UNeedComponent& A, const UNeedComponent& B) {
+		return A.CurValue < B.CurValue;
+		});
 
+	for (UNeedComponent* Need : Needs)
+	{
+		if (Task->TrySatisfy(Need, this))
+			return true;
+
+	}
+	return false;
 }
 
 void AAlien::GoToTask()
 {
-	if (NeedToExcute)
-		NeedToExcute->Task->Satisfy(this, NeedToExcute);
-	else
-		AlienState = Idle;
+	Task->Satisfy();
 }
 
 void AAlien::DoTask()
 {
-	if (NeedToExcute)
-		NeedToExcute->Task->Wait();
-
+	Task->Wait();
 }
 
 void AAlien::Leave()

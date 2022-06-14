@@ -52,11 +52,11 @@ public:
 
 	int32 AlienType;
 	State AlienState;
-	class UNeedComponent* NeedToExcute;
+	class UNeedSatisfactionTask* Task;
 	class UAlienSubsystem* AlienSubsystem;
-	TArray<UNeedComponent*> Needs;
+	TArray<class UNeedComponent*> Needs;
 
-	void GetTask();
+	bool TryGetTask();
 	void GoToTask();
 	void DoTask();
 	void Leave();

@@ -7,25 +7,57 @@
 #include "Building.h"
 #include "Kismet/GameplayStatics.h"
 #include "Buildings/BuildingSubsystem.h"
+#include "NavigationData.h"
+#include "NavigationSystem.h"
 
 
-
-void UNeedSatisfactionTask::Satisfy(AAlien* Alien, class UNeedComponent* Need)
+bool UNeedSatisfactionTask::TrySatisfy(UNeedComponent* Need, AAlien* Alien)
 {
-	CurBuildingType = Need->BuildingType;
-	CurrentAlien = Alien;
-	TaskComponent = Need;
+	UNavigationSystemV1* NavArea = FNavigationSystem::GetCurrent<UNavigationSystemV1>(this);
+	if (!NavArea)
+		return false;
+	FPathFindingQuery QueryParams;
+	QueryParams.StartLocation = Alien->GetActorLocation();
+	QueryParams.Owner = this;
+	QueryParams.NavData = NavArea->GetDefaultNavDataInstance();
+	QueryParams.SetAllowPartialPaths(false);
 
-	ABuilding* Building = GetBuilding();
-	if(Building)
-		MoveToBuilding(Building);
-	else
-		Alien->AlienState = Idle;
+	CurBuildingType = Need->BuildingType;
+
+	for (ABuilding* Building : Need->BuildingSubsystem->Buildings[CurBuildingType])
+	{
+		QueryParams.EndLocation = Building->GetActorLocation();
+		
+		if (NavArea->TestPathSync(QueryParams, EPathFindingMode::Hierarchical))
+		{
+			CurAlien = Alien;
+			CurNeed = Need;
+			CurBuilding = Building;
+			//UE_LOG(LogTemp, Warning, TEXT("True"));
+
+			return true;
+		}
+	}
+	//UE_LOG(LogTemp, Warning, TEXT("False"));
+	return false;
+}
+
+void UNeedSatisfactionTask::Satisfy()
+{
+	AAlienAIController* AI = Cast<AAlienAIController>(CurAlien->GetController());
+	if (AI)
+	{
+		CurBuilding->CurOccupants++;
+		CurAlien->AlienState = Assigned;
+		AI->CurBuilding = CurBuilding;
+		AI->MoveToLocation(CurBuilding->GetActorLocation(), 25.f);
+	}
+	
 }
 
 void UNeedSatisfactionTask::Wait()
 {
-	CurTaskTime = TaskComponent->TaskTime;
+	CurTaskTime = CurNeed->TaskTime;
 	if (GetWorld()->GetTimerManager().IsTimerPaused(TaskTimeManager))
 		GetWorld()->GetTimerManager().UnPauseTimer(TaskTimeManager);
 	else
@@ -42,67 +74,18 @@ void UNeedSatisfactionTask::DoTask()
 	}
 }
 
-void UNeedSatisfactionTask::ShuffleBuildings(TArray<ABuilding*>& Buildings)
-{
-	int32 NumOfBuildings = Buildings.Num();
-	int32 ShuffleTurns = NumOfBuildings / 2;
-	int32 Index1;
-	int32 Index2;
-	ABuilding* Temp;
-
-	if (NumOfBuildings > 1)
-	{
-		while (ShuffleTurns--)
-		{
-			Index1 = FMath::RandRange(0, NumOfBuildings - 1);
-			Index2 = FMath::RandRange(0, NumOfBuildings - 1);
-			Temp = Buildings[Index1];
-			Buildings[Index1] = Buildings[Index2];
-			Buildings[Index2] = Temp;
-		}
-	}
-}
 
 void UNeedSatisfactionTask::ResetAlien()
 {
-	if (CurrentAlien->isDancing == true)
-		CurrentAlien->isDancing = false;
+	if (CurAlien->isDancing == true)
+		CurAlien->isDancing = false;
 
-	TaskComponent->CurValue = TaskComponent->MaxCapacity;
-	if(CurrentAlien->NumOfTasks == 0 || CurrentAlien->NumOfFailedTasks == 0)
-		CurrentAlien->AlienState = Leaving;
+	CurNeed->CurValue = CurNeed->MaxCapacity;
+	if(CurAlien->NumOfTasks == 0 || CurAlien->NumOfFailedTasks == 0)
+		CurAlien->AlienState = Leaving;
 	else
-		CurrentAlien->AlienState = Idle;
+		CurAlien->AlienState = Idle;
 
 	GetWorld()->GetTimerManager().PauseTimer(TaskTimeManager);
-	CurTaskTime = TaskComponent->TaskTime;
-}
-
-ABuilding* UNeedSatisfactionTask::GetBuilding()
-{
-
-	ShuffleBuildings(TaskComponent->BuildingSubsystem->Buildings[CurBuildingType]);
-
-	for (ABuilding* Building : TaskComponent->BuildingSubsystem->Buildings[CurBuildingType])
-	{
-		if (Building->CurOccupants < Building->Capacity)
-			return Building;
-	}
-	return nullptr;
-}
-
-void UNeedSatisfactionTask::MoveToBuilding(ABuilding* Building)
-{
-	if (Building)
-	{
-		AAlienAIController* AI = Cast<AAlienAIController>(CurrentAlien->GetController());
-		if (AI)
-		{
-			Building->CurOccupants++;
-			//UE_LOG(LogTemp, Warning, TEXT("Rest: %d"), Hotel->CurOccupants);
-			CurrentAlien->AlienState = Assigned;
-			AI->CurBuilding = Building;
-			AI->MoveToLocation(Building->GetActorLocation(), 5.f);
-		}
-	}
+	CurTaskTime = CurNeed->TaskTime;
 }

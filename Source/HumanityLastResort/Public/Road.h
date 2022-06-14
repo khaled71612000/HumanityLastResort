@@ -12,8 +12,8 @@
 UCLASS()
 class HUMANITYLASTRESORT_API ARoad : public APlaceable
 {
-	GENERATED_BODY()
 public:
+	GENERATED_BODY()
 
 	ARoad();
 

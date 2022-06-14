@@ -19,5 +19,5 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void AddRoad(ARoad* RoadRef);
 
-	void RemoveRoad(ARoad* RoadRef);
+	//void RemoveRoad(ARoad* RoadRef);
 };

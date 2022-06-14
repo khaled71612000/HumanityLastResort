@@ -13,10 +13,10 @@ void URoadSubsystem::AddRoad(ARoad* RoadRef)
 	}
 }
 
-void URoadSubsystem::RemoveRoad(ARoad* RoadRef)
-{
-	if (ARoad* R = Cast<ARoad>(RoadRef))
-	{
-		RoadsTilesArray.Remove(R);
-	}
-}
+//void URoadSubsystem::RemoveRoad(ARoad* RoadRef)
+//{
+//	if (ARoad* R = Cast<ARoad>(RoadRef))
+//	{
+//		RoadsTilesArray.Remove(R);
+//	}
+//}

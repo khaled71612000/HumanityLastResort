@@ -20,6 +20,7 @@ void AAlien::BeginPlay()
 	Super::BeginPlay();
 	GetComponents(Needs);
 	Task = NewObject<UNeedSatisfactionTask>(this);
+	Task->CustomBeginPlay();
 	AlienSubsystem = GetWorld()->GetSubsystem<UAlienSubsystem>();
 }
 
@@ -31,7 +32,7 @@ bool AAlien::TryGetTask()
 
 	for (UNeedComponent* Need : Needs)
 	{
-		if (Need->CurValue < 50)
+		if (Need->CurValue < Need->Threshold)
 		{
 			if (Task->TrySatisfy(Need, this))
 				return true;

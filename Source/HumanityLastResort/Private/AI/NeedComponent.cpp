@@ -1,3 +1,4 @@
+
 #include "AI/NeedComponent.h"
 #include "AI/NeedSatisfactionTask.h"
 #include "Buildings/BuildingSubsystem.h"
@@ -25,13 +26,10 @@ void UNeedComponent::StartDecreasingValue()
 {
 	FTimerHandle TimerManager;
 	GetWorld()->GetTimerManager().SetTimer(TimerManager, this, &UNeedComponent::DecreaseValue, 1.f, true);
-
 }
 
 void UNeedComponent::DecreaseValue()
 {
 	if (CurValue > 0)
 		CurValue -= DecayRate;
-	//UE_LOG(LogTemp, Warning, TEXT("CurValue: %f"), CurValue);
-	//UE_LOG(LogTemp, Warning, TEXT("DecayRate: %f"), DecayRate);
 }

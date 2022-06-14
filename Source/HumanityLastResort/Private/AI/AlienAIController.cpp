@@ -15,7 +15,10 @@ void AAlienAIController::OnMoveCompleted(FAIRequestID RequestID, const FPathFoll
 		{
 			if (Alien->AlienState == Wandering)
 			{
-				Alien->AlienState = Idle;
+				if (Alien->NumOfFailedTasks <= 0)
+					Alien->AlienState = Leaving;
+				else
+					Alien->AlienState = Idle;
 			}
 			else if (Alien->AlienState == Leaving)
 			{

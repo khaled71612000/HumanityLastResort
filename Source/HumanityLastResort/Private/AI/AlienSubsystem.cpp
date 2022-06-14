@@ -21,7 +21,7 @@ void UAlienSubsystem::Tick(float DeltaTime)
 {
 	for (AAlien* Alien : SpawnedAliens)
 	{
-		//UE_LOG(LogTemp, Warning, TEXT("Value: %d"), Alien->AlienState);
+		UE_LOG(LogTemp, Warning, TEXT("Value: %d"), Alien->AlienState);
 		if (Alien->AlienState == Idle)
 		{
 			Alien->AlienState = Waiting;

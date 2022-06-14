@@ -17,16 +17,19 @@ public:
 	UNeedComponent();
 
 	UPROPERTY(Transient)
-	float MaxCapacity;
+	int32 MaxCapacity;
 
 	UPROPERTY(Transient)
-	float CurValue;
+	int32 CurValue;
 
 	UPROPERTY(EditDefaultsOnly, Category = "Properties")
-	float DecayRate;
+	int32 DecayRate;
 
 	UPROPERTY(EditDefaultsOnly, Category = "Properties")
-	float TaskTime;
+	int32 TaskTime;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Properties")
+	int32 Threshold;
 
 	UPROPERTY(EditDefaultsOnly)
 	int32 BuildingType;

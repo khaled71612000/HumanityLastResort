@@ -22,7 +22,14 @@ private:
 	float CurTaskTime;
 	FTimerHandle TaskTimeManager;
 
+
+	class UBuildingSubsystem* BuildingSubsystem;
+	class URoadSubsystem* RoadSubsystem;
+	class UNavigationSystemV1* NavArea;
+
+
 public:
+	void CustomBeginPlay();
 	bool TrySatisfy(class UNeedComponent* Need, class AAlien* Alien);
 	void Satisfy();
 	bool CheckAccessibility(FVector Start, FVector End);

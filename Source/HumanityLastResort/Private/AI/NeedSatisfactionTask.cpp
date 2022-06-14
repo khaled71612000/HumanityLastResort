@@ -13,10 +13,18 @@
 #include "NavigationSystem.h"
 
 
+
+void UNeedSatisfactionTask::CustomBeginPlay()
+{
+	BuildingSubsystem = GetWorld()->GetSubsystem<UBuildingSubsystem>();
+	RoadSubsystem = GetWorld()->GetSubsystem<URoadSubsystem>();
+	NavArea = FNavigationSystem::GetCurrent<UNavigationSystemV1>(this);
+}
+
+
 bool UNeedSatisfactionTask::TrySatisfy(UNeedComponent* Need, AAlien* Alien)
 {
 	CurBuildingType = Need->BuildingType;
-	UBuildingSubsystem* BuildingSubsystem = GetWorld()->GetSubsystem<UBuildingSubsystem>();
 
 	for (ABuilding* Building : BuildingSubsystem->Buildings[CurBuildingType])
 	{
@@ -49,9 +57,6 @@ void UNeedSatisfactionTask::Satisfy()
 
 bool UNeedSatisfactionTask::CheckAccessibility(FVector Start, FVector End)
 {
-	UNavigationSystemV1* NavArea = FNavigationSystem::GetCurrent<UNavigationSystemV1>(this);
-	if (!NavArea)
-		return false;
 	FPathFindingQuery QueryParams;
 	QueryParams.StartLocation = Start;
 	QueryParams.EndLocation = End;
@@ -99,7 +104,6 @@ void UNeedSatisfactionTask::ResetAlien()
 
 void UNeedSatisfactionTask::Wander(AAlien* Alien)
 {
-	URoadSubsystem* RoadSubsystem = GetWorld()->GetSubsystem<URoadSubsystem>();
 	int32 NumOfRoads = RoadSubsystem->Roads.Num();
 	if (NumOfRoads > 1)
 	{

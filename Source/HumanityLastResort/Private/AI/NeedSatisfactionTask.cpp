@@ -7,6 +7,7 @@
 #include "Building.h"
 #include "Kismet/GameplayStatics.h"
 #include "Buildings/BuildingSubsystem.h"
+#include "RoadSubsystem.h"
 #include "NavigationData.h"
 #include "NavigationSystem.h"
 

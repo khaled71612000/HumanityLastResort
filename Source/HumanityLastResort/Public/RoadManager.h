@@ -14,8 +14,8 @@ class HUMANITYLASTRESORT_API URoadManager : public UWorldSubsystem
 {
 	GENERATED_BODY()
 
-		TSubclassOf<class ARoad*>  RoadsTilesArray;
+		TArray<class ARoad*>  RoadsTilesArray;
 
 		UFUNCTION(BlueprintCallable)
-		void AddRoad(TSubclassOf<ARoad*> RoadRef);
+		void AddRoad(ARoad* RoadRef);
 };

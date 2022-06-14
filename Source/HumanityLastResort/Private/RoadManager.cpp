@@ -4,7 +4,7 @@
 #include "RoadManager.h"
 #include "Road.h"
 
-void URoadManager::AddRoad(TSubclassOf<ARoad*> RoadRef)
+void URoadManager::AddRoad(ARoad* RoadRef)
 {
 	RoadsTilesArray.Add(RoadRef);
 

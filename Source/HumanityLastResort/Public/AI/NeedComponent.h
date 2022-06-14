@@ -31,11 +31,6 @@ public:
 	UPROPERTY(EditDefaultsOnly)
 	int32 BuildingType;
 
-	UPROPERTY(Transient)
-	class UNeedSatisfactionTask* Task;
-
-	class UBuildingSubsystem* BuildingSubsystem;
-
 private:
 	void OnRegister() override;
 

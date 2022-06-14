@@ -13,7 +13,11 @@ void AAlienAIController::OnMoveCompleted(FAIRequestID RequestID, const FPathFoll
 	{
 		if (Alien)
 		{
-			if (Alien->AlienState == Leaving)
+			if (Alien->AlienState == Wandering)
+			{
+				Alien->AlienState = Idle;
+			}
+			else if (Alien->AlienState == Leaving)
 			{
 				Alien->SetActorHiddenInGame(true);
 				Alien->SetActorEnableCollision(false);

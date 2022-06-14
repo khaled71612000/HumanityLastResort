@@ -29,7 +29,7 @@ public:
 	void Wait();
 	void DoTask();
 	void ResetAlien();
-	void Wander();
+	void Wander(class AAlien* Alien);
 
 };
 

@@ -17,8 +17,6 @@ void UNeedComponent::OnRegister()
 void UNeedComponent::BeginPlay()
 {
 	Super::BeginPlay();
-	BuildingSubsystem = GetWorld()->GetSubsystem<UBuildingSubsystem>();
-	Task = NewObject<UNeedSatisfactionTask>(this);
 	CurValue = MaxCapacity;
 	StartDecreasingValue();
 }

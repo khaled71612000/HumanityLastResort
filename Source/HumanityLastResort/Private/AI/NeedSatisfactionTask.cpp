@@ -5,6 +5,7 @@
 #include "AI/AlienAIController.h"
 #include "AI/NeedComponent.h"
 #include "Building.h"
+#include "Road.h"
 #include "Kismet/GameplayStatics.h"
 #include "Buildings/BuildingSubsystem.h"
 #include "RoadSubsystem.h"
@@ -15,8 +16,9 @@
 bool UNeedSatisfactionTask::TrySatisfy(UNeedComponent* Need, AAlien* Alien)
 {
 	CurBuildingType = Need->BuildingType;
+	UBuildingSubsystem* BuildingSubsystem = GetWorld()->GetSubsystem<UBuildingSubsystem>();
 
-	for (ABuilding* Building : Need->BuildingSubsystem->Buildings[CurBuildingType])
+	for (ABuilding* Building : BuildingSubsystem->Buildings[CurBuildingType])
 	{
 		
 		if (CheckAccessibility(Alien->GetActorLocation(), Building->GetActorLocation()))
@@ -95,7 +97,28 @@ void UNeedSatisfactionTask::ResetAlien()
 	CurTaskTime = CurNeed->TaskTime;
 }
 
-void UNeedSatisfactionTask::Wander()
+void UNeedSatisfactionTask::Wander(AAlien* Alien)
 {
+	URoadSubsystem* RoadSubsystem = GetWorld()->GetSubsystem<URoadSubsystem>();
+	int32 NumOfRoads = RoadSubsystem->Roads.Num();
+	if (NumOfRoads > 1)
+	{
+		int32 RandRoad = FMath::RandRange(0, NumOfRoads - 1);
+		if (CheckAccessibility(Alien->GetActorLocation(), RoadSubsystem->Roads[RandRoad]->GetActorLocation()))
+		{
+			AAlienAIController* AI = Cast<AAlienAIController>(Alien->GetController());
+			if (AI)
+			{
+				AI->MoveToLocation(RoadSubsystem->Roads[RandRoad]->GetActorLocation());
+			}
+		}
+
+		else
+		{
+			Alien->AlienState = Idle;
+		}
+	}
+	else
+		Alien->AlienState = Idle;
 
 }

@@ -7,7 +7,6 @@
 #include "Engine/TargetPoint.h"
 #include "Kismet/GameplayStatics.h"
 
-
 AAlien::AAlien()
 {
 	PrimaryActorTick.bCanEverTick = false;
@@ -32,9 +31,13 @@ bool AAlien::TryGetTask()
 
 	for (UNeedComponent* Need : Needs)
 	{
-		if (Task->TrySatisfy(Need, this))
-			return true;
-
+		if (Need->CurValue < 50)
+		{
+			if (Task->TrySatisfy(Need, this))
+				return true;
+			else
+				NumOfFailedTasks--;
+		}
 	}
 	return false;
 }
@@ -44,8 +47,6 @@ void AAlien::GoToTask()
 	Task->Satisfy();
 }
 
-
-
 void AAlien::DoTask()
 {
 	Task->Wait();
@@ -53,7 +54,7 @@ void AAlien::DoTask()
 
 void AAlien::Wander()
 {
-	Task->Wander();
+	Task->Wander(this);
 }
 
 void AAlien::Leave()

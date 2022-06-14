@@ -93,3 +93,8 @@ void UNeedSatisfactionTask::ResetAlien()
 	GetWorld()->GetTimerManager().PauseTimer(TaskTimeManager);
 	CurTaskTime = CurNeed->TaskTime;
 }
+
+void UNeedSatisfactionTask::Wander()
+{
+
+}

@@ -25,10 +25,15 @@ void UAlienSubsystem::Tick(float DeltaTime)
 		if (Alien->AlienState == Idle)
 		{
 			Alien->AlienState = Waiting;
-			if (Alien->TryGetTask())
+			if (Alien->TryGetTask()) 
+			{
 				Alien->GoToTask();
+			}
 			else
-				Alien->AlienState = Idle;
+			{
+				Alien->AlienState = Wandering;
+				Alien->Wander();
+			}
 		}
 		else if (Alien->AlienState == Arrived)
 		{

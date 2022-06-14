@@ -7,7 +7,7 @@
 #include "Alien.generated.h"
 
 enum State {
-	Idle, Assigned, Arrived, Waiting, Leaving
+	Idle, Assigned, Arrived, Waiting, Leaving, Wandering
 };
 
 struct Range {
@@ -59,6 +59,7 @@ public:
 	bool TryGetTask();
 	void GoToTask();
 	void DoTask();
+	void Wander();
 	void Leave();
 	void ChangeMood(int MoodVal);
 	void SetAlienNeedsValues(TArray<AlienNeedsValue*>& NeedsValues);

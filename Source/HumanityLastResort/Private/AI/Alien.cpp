@@ -44,9 +44,16 @@ void AAlien::GoToTask()
 	Task->Satisfy();
 }
 
+
+
 void AAlien::DoTask()
 {
 	Task->Wait();
+}
+
+void AAlien::Wander()
+{
+	Task->Wander();
 }
 
 void AAlien::Leave()

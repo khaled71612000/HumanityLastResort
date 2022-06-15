@@ -21,17 +21,18 @@ APlaceable::APlaceable()
 	SkeletalMeshComponent = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("SkeletalMeshComponent"));
 	RootComponent = SkeletalMeshComponent;
 
-	StaticMeshComponent = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Static Mesh"));
-	StaticMeshComponent->SetupAttachment(SkeletalMeshComponent);
+	//StaticMeshComponent = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Static Mesh"));
+	//StaticMeshComponent->SetupAttachment(SkeletalMeshComponent);
 
 
 	SceneComponent = CreateDefaultSubobject<USceneComponent>(TEXT("SceneComponent"));
-	SceneComponent->SetupAttachment(StaticMeshComponent);
+	//SceneComponent->SetupAttachment(StaticMeshComponent);
+	SceneComponent->SetupAttachment(SkeletalMeshComponent);
 
-	StaticMeshComponent->bIgnoreRadialForce = true;
-	StaticMeshComponent->bIgnoreRadialImpulse = true;
-	StaticMeshComponent->SetLinearDamping(1.f);
-	StaticMeshComponent->SetAngularDamping(1.f);
+	//StaticMeshComponent->bIgnoreRadialForce = true;
+	//StaticMeshComponent->bIgnoreRadialImpulse = true;
+	//StaticMeshComponent->SetLinearDamping(1.f);
+	//StaticMeshComponent->SetAngularDamping(1.f);
 }
 
 void APlaceable::BeginPlay()
@@ -41,54 +42,71 @@ void APlaceable::BeginPlay()
 	RoadSubsystem = GetWorld()->GetSubsystem<URoadSubsystem>();
 
 	//StaticMeshComponent->OnClicked.AddDynamic(this, &APlaceable::OnClicked);
+	if(SkeletalMeshComponent)
 	SkeletalMeshComponent->OnClicked.AddDynamic(this, &APlaceable::OnClicked);
 
 	oldPos = GetActorLocation();
 
 	FTimerHandle StatManager;
-			if (!isDragging) {
-				StaticMeshComponent->GetBodyInstance()->bLockXTranslation = true;
-				StaticMeshComponent->GetBodyInstance()->bLockYTranslation = true;
-				StaticMeshComponent->GetBodyInstance()->bLockZTranslation = true;
-				StaticMeshComponent->GetBodyInstance()->SetDOFLock(EDOFMode::SixDOF);
-				StaticMeshComponent->SetMobility(EComponentMobility::Static);
+			if (!isDragging && SkeletalMeshComponent) {
+				//SkeletalMeshComponent->GetBodyInstance()->bLockXTranslation = true;
+				//SkeletalMeshComponent->GetBodyInstance()->bLockYTranslation = true;
+				//SkeletalMeshComponent->GetBodyInstance()->bLockZTranslation = true;
+				//SkeletalMeshComponent->GetBodyInstance()->SetDOFLock(EDOFMode::SixDOF);
+				SkeletalMeshComponent->SetMobility(EComponentMobility::Static);
+				SceneComponent->SetMobility(EComponentMobility::Static);
 			}
-	FVector Min, Max;
-	StaticMeshComponent->GetLocalBounds(Min, Max);
 
-	NewBoxSize = (Max - Min) / 2;
-	NewBoxSize.Z = 0;
+	/*StaticMeshComponent->GetLocalBounds(Min, Max);*/
+			if(SkeletalMeshComponent)
+	UKismetSystemLibrary::GetComponentBounds(SkeletalMeshComponent, OriginSklet , HalfBoxSklet , sphereRad);
+	//NewBoxSize = (Max - Min) / 2;
+	//NewBoxSize.Z = 0;
 	SelectionSubSystem = GetWorld()->GetSubsystem<USelectionSubsystem>();
-
+	HalfBoxSklet.Z = 1;
 }
 
 
 void APlaceable::OnClicked(UPrimitiveComponent* ClickedComp, FKey ButtonClicked)
 {
 	isDragging = true;
-	UE_LOG(LogTemp, Error, TEXT("HELLO"));
-	StaticMeshComponent->GetBodyInstance()->bLockXTranslation = false;
-	StaticMeshComponent->GetBodyInstance()->bLockYTranslation = false;
-	StaticMeshComponent->GetBodyInstance()->bLockZTranslation = false;
-	StaticMeshComponent->GetBodyInstance()->SetDOFLock(EDOFMode::Default);
-	StaticMeshComponent->SetMobility(EComponentMobility::Movable);
+	//UE_LOG(LogTemp, Error, TEXT("HELLO"));
+	if (SkeletalMeshComponent) {
+	//SkeletalMeshComponent->GetBodyInstance()->bLockXTranslation = false;
+	//SkeletalMeshComponent->GetBodyInstance()->bLockYTranslation = false;
+	//SkeletalMeshComponent->GetBodyInstance()->bLockZTranslation = false;
+	//SkeletalMeshComponent->GetBodyInstance()->SetDOFLock(EDOFMode::Default);
+	SkeletalMeshComponent->SetMobility(EComponentMobility::Movable);
+	SceneComponent->SetMobility(EComponentMobility::Movable);
+
+	}
 }
 
 void APlaceable::LockPosition(bool block)
 {
-	if (StaticMeshComponent->GetBodyInstance()->bLockXTranslation) {
-		StaticMeshComponent->GetBodyInstance()->bLockXTranslation = false;
-		StaticMeshComponent->GetBodyInstance()->bLockYTranslation = false;
-		StaticMeshComponent->GetBodyInstance()->bLockZTranslation = false;
-		StaticMeshComponent->GetBodyInstance()->SetDOFLock(EDOFMode::Default);
-		StaticMeshComponent->SetMobility(EComponentMobility::Movable);
+		if (SkeletalMeshComponent) {
+	if (SkeletalMeshComponent->GetBodyInstance()->bLockXTranslation) {
+
+			//SkeletalMeshComponent->GetBodyInstance()->bLockXTranslation = false;
+			//SkeletalMeshComponent->GetBodyInstance()->bLockYTranslation = false;
+			//SkeletalMeshComponent->GetBodyInstance()->bLockZTranslation = false;
+			//SkeletalMeshComponent->GetBodyInstance()->SetDOFLock(EDOFMode::Default);
+			SkeletalMeshComponent->SetMobility(EComponentMobility::Movable);
+			SceneComponent->SetMobility(EComponentMobility::Movable);
+
+		}
 	}
 	else {
-		StaticMeshComponent->GetBodyInstance()->bLockXTranslation = true;
-		StaticMeshComponent->GetBodyInstance()->bLockYTranslation = true;
-		StaticMeshComponent->GetBodyInstance()->bLockZTranslation = true;
-		StaticMeshComponent->GetBodyInstance()->SetDOFLock(EDOFMode::SixDOF);
-		StaticMeshComponent->SetMobility(EComponentMobility::Static);
+			if (SkeletalMeshComponent) {
+
+				//SkeletalMeshComponent->GetBodyInstance()->bLockXTranslation = true;
+				//SkeletalMeshComponent->GetBodyInstance()->bLockYTranslation = true;
+				//SkeletalMeshComponent->GetBodyInstance()->bLockZTranslation = true;
+				//SkeletalMeshComponent->GetBodyInstance()->SetDOFLock(EDOFMode::SixDOF);
+				SkeletalMeshComponent->SetMobility(EComponentMobility::Static);
+				SceneComponent->SetMobility(EComponentMobility::Static);
+
+			}
 	}
 }
 
@@ -125,10 +143,10 @@ void APlaceable::MouseMove(FVector position)
 		TArray<FHitResult> HitResult;
 
 		bool BoxHit = UKismetSystemLibrary::BoxTraceMulti(GetWorld(), Start, End,
-			NewBoxSize,
+			HalfBoxSklet,
 			GetActorRotation(), UEngineTypes::ConvertToTraceType(ECC_Pawn),
 			false, ActorsToIgnore, EDrawDebugTrace::None, HitResult,
-			true, FLinearColor::Red, FLinearColor::Green, 0.1f
+			true, FLinearColor::Red, FLinearColor::Green, -1
 		);
 
 		if (BoxHit) {
@@ -176,11 +194,16 @@ void APlaceable::MouseRelease()
 		MyPawn->SelectedToken = nullptr;
 	oldPos = GetActorLocation();
 			if (!isDragging) {
-				StaticMeshComponent->GetBodyInstance()->bLockXTranslation = true;
-				StaticMeshComponent->GetBodyInstance()->bLockYTranslation = true;
-				StaticMeshComponent->GetBodyInstance()->bLockZTranslation = true;
-				StaticMeshComponent->GetBodyInstance()->SetDOFLock(EDOFMode::SixDOF);
-				StaticMeshComponent->SetMobility(EComponentMobility::Static);
+				if (SkeletalMeshComponent) {
+
+					//SkeletalMeshComponent->GetBodyInstance()->bLockXTranslation = true;
+					//SkeletalMeshComponent->GetBodyInstance()->bLockYTranslation = true;
+					//SkeletalMeshComponent->GetBodyInstance()->bLockZTranslation = true;
+					//SkeletalMeshComponent->GetBodyInstance()->SetDOFLock(EDOFMode::SixDOF);
+					SkeletalMeshComponent->SetMobility(EComponentMobility::Static);
+					SceneComponent->SetMobility(EComponentMobility::Static);
+
+				}
 			}
 }
 

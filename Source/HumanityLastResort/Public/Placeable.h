@@ -25,12 +25,14 @@ public:
 		FVector RespawnLoc = FVector(200, 7800, 190);
 
 	void ClearFloor();
-	FVector NewBoxSize;
+	//FVector NewBoxSize;
+	FVector OriginSklet, HalfBoxSklet;
+	float sphereRad;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Cells")
 		FText NameView;
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
-		class UStaticMeshComponent* StaticMeshComponent;
+	//UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
+	//	class UStaticMeshComponent* StaticMeshComponent;
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
 		class USkeletalMeshComponent* SkeletalMeshComponent;
 protected:

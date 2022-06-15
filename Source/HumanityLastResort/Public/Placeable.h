@@ -31,7 +31,8 @@ public:
 		FText NameView;
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
 		class UStaticMeshComponent* StaticMeshComponent;
-
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
+		class USkeletalMeshComponent* SkeletalMeshComponent;
 protected:
 	APlaceable();
 

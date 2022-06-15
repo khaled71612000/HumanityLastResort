@@ -12,13 +12,18 @@
 #include "SelectionSubsystem.h"
 #include "Road.h"
 #include "RoadSubsystem.h"
+#include "Components/SkeletalMeshComponent.h"
 
 APlaceable::APlaceable()
 {
 	PrimaryActorTick.bCanEverTick = false;
 
+	SkeletalMeshComponent = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("SkeletalMeshComponent"));
+	RootComponent = SkeletalMeshComponent;
+
 	StaticMeshComponent = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Static Mesh"));
-	RootComponent = StaticMeshComponent;
+	StaticMeshComponent->SetupAttachment(SkeletalMeshComponent);
+
 
 	SceneComponent = CreateDefaultSubobject<USceneComponent>(TEXT("SceneComponent"));
 	SceneComponent->SetupAttachment(StaticMeshComponent);
@@ -35,7 +40,9 @@ void APlaceable::BeginPlay()
 	BuildingSubsystem = GetWorld()->GetSubsystem<UBuildingSubsystem>();
 	RoadSubsystem = GetWorld()->GetSubsystem<URoadSubsystem>();
 
-	StaticMeshComponent->OnClicked.AddDynamic(this, &APlaceable::OnClicked);
+	//StaticMeshComponent->OnClicked.AddDynamic(this, &APlaceable::OnClicked);
+	SkeletalMeshComponent->OnClicked.AddDynamic(this, &APlaceable::OnClicked);
+
 	oldPos = GetActorLocation();
 
 	FTimerHandle StatManager;
@@ -59,7 +66,7 @@ void APlaceable::BeginPlay()
 void APlaceable::OnClicked(UPrimitiveComponent* ClickedComp, FKey ButtonClicked)
 {
 	isDragging = true;
-	//UE_LOG(LogTemp, Error, TEXT("HELLO"));
+	UE_LOG(LogTemp, Error, TEXT("HELLO"));
 	StaticMeshComponent->GetBodyInstance()->bLockXTranslation = false;
 	StaticMeshComponent->GetBodyInstance()->bLockYTranslation = false;
 	StaticMeshComponent->GetBodyInstance()->bLockZTranslation = false;

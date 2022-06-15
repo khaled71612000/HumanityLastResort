@@ -35,7 +35,7 @@ public:
 	bool CheckAccessibility(FVector Start, FVector End);
 	void Wait();
 	void DoTask();
-	void ResetAlien();
+	void SatisfiedAlien();
 	void Wander(class AAlien* Alien);
 
 };

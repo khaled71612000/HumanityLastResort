@@ -3,7 +3,7 @@
 
 #include "Building.h"
 #include "Components/SphereComponent.h"
-#include "AI/Alien.h"
+//#include "AI/Alien.h"
 #include "Economy/EconomySubsystem.h"
 #include "SelectionSubsystem.h"
 
@@ -13,12 +13,12 @@ ABuilding::ABuilding()
 {
 	CurOccupants = 0;
 
-	BuildingCollision = CreateDefaultSubobject<USphereComponent>(TEXT("RootCollision"));
-	BuildingCollision->SetupAttachment(RootComponent);
-	BuildingCollision->SetSphereRadius(200.f);
-	BuildingCollision->SetHiddenInGame(true);
-	BuildingCollision->OnComponentBeginOverlap.AddDynamic(this, &ABuilding::OnOverlap);
-	BuildingCollision->OnComponentEndOverlap.AddDynamic(this, &ABuilding::OnOverlapEnd);
+	//BuildingCollision = CreateDefaultSubobject<USphereComponent>(TEXT("RootCollision"));
+	//BuildingCollision->SetupAttachment(RootComponent);
+	//BuildingCollision->SetSphereRadius(200.f);
+	//BuildingCollision->SetHiddenInGame(true);
+	//BuildingCollision->OnComponentBeginOverlap.AddDynamic(this, &ABuilding::OnOverlap);
+	//BuildingCollision->OnComponentEndOverlap.AddDynamic(this, &ABuilding::OnOverlapEnd);
 }
 
 void ABuilding::BeginPlay()
@@ -54,28 +54,28 @@ void ABuilding::HightLight()
 	//	Material->SetScalarParameterValueEditorOnly(TEXT("Selected"), 1);
 }
 
-void ABuilding::OnOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
-{
-	if (OtherActor && OtherActor != this)
-	{
-		AAlien* Alien = Cast<AAlien>(OtherActor);
+//void ABuilding::OnOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
+//{
+//	if (OtherActor && OtherActor != this)
+//	{
+//		AAlien* Alien = Cast<AAlien>(OtherActor);
+//
+//		if (Alien)
+//		{
+//			//Alien->AlienState = Arrived;
+//		}
+//	}
+//}
 
-		if (Alien)
-		{
-			//Alien->AlienState = Arrived;
-		}
-	}
-}
-
-void ABuilding::OnOverlapEnd(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
-{
-	if (OtherActor && OtherActor != this)
-	{
-		AAlien* Alien = Cast<AAlien>(OtherActor);
-
-		if (Alien)
-		{
-			CurOccupants--;
-		}
-	}
-}
+//void ABuilding::OnOverlapEnd(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
+//{
+//	if (OtherActor && OtherActor != this)
+//	{
+//		AAlien* Alien = Cast<AAlien>(OtherActor);
+//
+//		if (Alien)
+//		{
+//			CurOccupants--;
+//		}
+//	}
+//}

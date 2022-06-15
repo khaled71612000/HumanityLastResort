@@ -84,12 +84,12 @@ void UNeedSatisfactionTask::DoTask()
 
 	if (CurTaskTime <= 0)
 	{
-		ResetAlien();
+		SatisfiedAlien();
 	}
 }
 
 
-void UNeedSatisfactionTask::ResetAlien()
+void UNeedSatisfactionTask::SatisfiedAlien()
 {
 	if (CurAlien->isDancing == true)
 		CurAlien->isDancing = false;
@@ -102,6 +102,7 @@ void UNeedSatisfactionTask::ResetAlien()
 
 	GetWorld()->GetTimerManager().PauseTimer(TaskTimeManager);
 	CurTaskTime = CurNeed->TaskTime;
+	CurBuilding->CurOccupants--;
 }
 
 void UNeedSatisfactionTask::Wander(AAlien* Alien)

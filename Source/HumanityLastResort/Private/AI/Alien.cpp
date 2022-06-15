@@ -40,7 +40,15 @@ void AAlien::TryGetTask()
 				return;
 			}
 			else
+			{
 				NumOfFailedTasks--;
+				ChangeMood(-BadMoodVal);
+				if (NumOfFailedTasks <= 0)
+				{
+					AlienState = Leaving;
+					return;
+				}
+			}
 		}
 	}
 	AlienState = Wandering;

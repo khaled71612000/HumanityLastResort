@@ -21,19 +21,14 @@ void UAlienSubsystem::Tick(float DeltaTime)
 {
 	for (AAlien* Alien : SpawnedAliens)
 	{
-		UE_LOG(LogTemp, Warning, TEXT("Value: %d"), Alien->AlienState);
-		if (Alien->AlienState == Idle)
+		//UE_LOG(LogTemp, Warning, TEXT("Value: %d"), Alien->AlienState);
+		if (Alien->AlienState == Wandering)
+			Alien->Wander();
+
+		else if (Alien->AlienState == Idle)
 		{
 			Alien->AlienState = Waiting;
-			if (Alien->TryGetTask()) 
-			{
-				Alien->GoToTask();
-			}
-			else
-			{
-				Alien->AlienState = Wandering;
-				Alien->Wander();
-			}
+			Alien->TryGetTask();
 		}
 		else if (Alien->AlienState == Arrived)
 		{

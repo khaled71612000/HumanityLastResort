@@ -9,32 +9,11 @@ ABoyAlien::ABoyAlien()
 }
 void ABoyAlien::CallSetAlienNeedsValues()
 {
-	TArray<AlienNeedsValue*> NeedsValues;
-	AlienNeedsValue Sleep{ {2, 7}, {50, 100} };
-	AlienNeedsValue Eat{ {5, 10}, {50, 100} };
-	AlienNeedsValue Dance{ {5, 10}, {50, 100} };
-	AlienNeedsValue Workout{ {2, 7}, {50, 100} };
-	AlienNeedsValue Drink{ {2, 8}, {60, 100} };
-	AlienNeedsValue SweetTooth{ {4, 9}, {70, 100} };
-	AlienNeedsValue Play{ {2, 7}, {50, 100} };
-
-	NeedsValues.Add(&Sleep);
-	NeedsValues.Add(&Eat);
-	NeedsValues.Add(&Dance);
-	NeedsValues.Add(&Workout);
-	NeedsValues.Add(&Drink);
-	NeedsValues.Add(&SweetTooth);
-	NeedsValues.Add(&Play);
-
-	SetAlienNeedsValues(NeedsValues);
-
+	SetAlienNeedsValues();
 }
 
 void ABoyAlien::CallSetAlienAttributes()
 {
-	AlienAttributes AlienAttribs{
-		{5, 10}, { 5, 10 }, { 5, 5 }, { 5, 5 }
-	};
-	SetAlienAttributes(AlienAttribs);
 
+	SetAlienAttributes();
 }

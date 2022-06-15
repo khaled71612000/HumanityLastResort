@@ -15,17 +15,6 @@ struct Range {
 	int32 to;
 };
 
-struct AlienNeedsValue {
-	Range DecayRate;
-	Range TimeSpent;
-};
-
-struct AlienAttributes {
-	Range GoodMoodVal;
-	Range BadMoodVal;
-	Range NumOfTasks;
-	Range NumOfFailedTasks;
-};
 
 UCLASS()
 class HUMANITYLASTRESORT_API AAlien : public ACharacter
@@ -41,13 +30,35 @@ protected:
 public:
 	bool isDancing;
 	int32 Mood;
+
+
 	UPROPERTY(EditDefaultsOnly, Category = "Properties")
+		int32 GoodMoodValFROM;
+	UPROPERTY(EditDefaultsOnly, Category = "Properties")
+		int32 GoodMoodValTO;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Properties")
+		int32 BadMoodValFROM;
+	UPROPERTY(EditDefaultsOnly, Category = "Properties")
+		int32 BadMoodValTO;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Properties")
+		int32 NumOfTasksFROM;
+	UPROPERTY(EditDefaultsOnly, Category = "Properties")
+		int32 NumOfTasksTO;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Properties")
+		int32 NumOfFailedTasksFROM;
+	UPROPERTY(EditDefaultsOnly, Category = "Properties")
+		int32 NumOfFailedTasksTO;
+
+	UPROPERTY(Transient)
 		int32 GoodMoodVal;
-	UPROPERTY(EditDefaultsOnly, Category = "Properties")
+	UPROPERTY(Transient)
 		int32 BadMoodVal;
-	UPROPERTY(EditDefaultsOnly, Category = "Properties")
+	UPROPERTY(Transient)
 		int32 NumOfTasks;
-	UPROPERTY(EditDefaultsOnly, Category = "Properties")
+	UPROPERTY(Transient)
 		int32 NumOfFailedTasks;
 
 	int32 AlienType;
@@ -56,14 +67,14 @@ public:
 	class UAlienSubsystem* AlienSubsystem;
 	TArray<class UNeedComponent*> Needs;
 
-	bool TryGetTask();
+	void TryGetTask();
 	void GoToTask();
 	void DoTask();
 	void Wander();
 	void Leave();
 	void ChangeMood(int MoodVal);
-	void SetAlienNeedsValues(TArray<AlienNeedsValue*>& NeedsValues);
-	void SetAlienAttributes(AlienAttributes AlienAttributes);
+	void SetAlienNeedsValues();
+	void SetAlienAttributes();
 	void AddAlienToPool();
 	virtual void CallSetAlienNeedsValues();
 	virtual void CallSetAlienAttributes();

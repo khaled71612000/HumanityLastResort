@@ -11,16 +11,16 @@ void URoadSubsystem::Initialize(FSubsystemCollectionBase& Collection)
 
 void URoadSubsystem::AddRoad(APlaceable* Road)
 {
-	if (ARoad* R = Cast<ARoad>(Road))
+	if (Cast<ARoad>(Road))
 	{
-		Roads.Add(R);
+		Roads.Add(Cast<ARoad>(Road));
 	}
 }
 
 void URoadSubsystem::RemoveRoad(APlaceable* Road)
 {
-	if (ARoad* R = Cast<ARoad>(Road))
+	if (Cast<ARoad>(Road))
 	{
-		Roads.Remove(R);
+		Roads.Remove(Cast<ARoad>(Road));
 	}
 }

@@ -10,7 +10,7 @@
 AAlien::AAlien()
 {
 	PrimaryActorTick.bCanEverTick = false;
-	AlienState = Idle;
+	AlienState = Wandering;
 	isDancing = false;
 	Mood = 100;
 }
@@ -24,7 +24,7 @@ void AAlien::BeginPlay()
 	AlienSubsystem = GetWorld()->GetSubsystem<UAlienSubsystem>();
 }
 
-bool AAlien::TryGetTask()
+void AAlien::TryGetTask()
 {
 	Needs.Sort([](const UNeedComponent& A, const UNeedComponent& B) {
 		return A.CurValue < B.CurValue;
@@ -34,13 +34,16 @@ bool AAlien::TryGetTask()
 	{
 		if (Need->CurValue < Need->Threshold)
 		{
-			if (Task->TrySatisfy(Need, this))
-				return true;
+			if (Task->TrySatisfy(Need, this)) 
+			{
+				GoToTask();
+				return;
+			}
 			else
 				NumOfFailedTasks--;
 		}
 	}
-	return false;
+	Wander();
 }
 
 void AAlien::GoToTask()
@@ -79,23 +82,21 @@ void AAlien::ChangeMood(int MoodVal)
 }
 
 
-void AAlien::SetAlienNeedsValues(TArray<AlienNeedsValue*>& NeedsValues)
+void AAlien::SetAlienNeedsValues()
 {
-	for (int i = 0; i < NeedsValues.Num(); i++)
+	for (int i = 0; i < Needs.Num(); i++)
 	{
-		int32 temp = FMath::RandRange(NeedsValues[i]->DecayRate.from, NeedsValues[i]->DecayRate.to);
-		Needs[i]->DecayRate = temp;
-		Needs[i]->DecayRate = FMath::RandRange(NeedsValues[i]->DecayRate.from, NeedsValues[i]->DecayRate.to);
-		Needs[i]->TaskTime = FMath::RandRange(NeedsValues[i]->TimeSpent.from, NeedsValues[i]->TimeSpent.to);
+		Needs[i]->DecayRate = FMath::RandRange(Needs[i]->DecayRateFROM, Needs[i]->DecayRateTO);
+		Needs[i]->TaskTime = FMath::RandRange(Needs[i]->TaskTimeFROM, Needs[i]->TaskTimeTO);
 	}
 }
 
-void AAlien::SetAlienAttributes(AlienAttributes AlienAttributes)
+void AAlien::SetAlienAttributes()
 {
-	GoodMoodVal = FMath::RandRange(AlienAttributes.GoodMoodVal.from, AlienAttributes.GoodMoodVal.to);
-	BadMoodVal = FMath::RandRange(AlienAttributes.BadMoodVal.from, AlienAttributes.BadMoodVal.to);
-	NumOfTasks = FMath::RandRange(AlienAttributes.NumOfTasks.from, AlienAttributes.NumOfTasks.to);
-	NumOfTasks = FMath::RandRange(AlienAttributes.NumOfTasks.from, AlienAttributes.NumOfTasks.to);
+	GoodMoodVal = FMath::RandRange(GoodMoodValFROM, GoodMoodValTO);
+	BadMoodVal = FMath::RandRange(BadMoodValFROM, BadMoodValTO);
+	NumOfTasks = FMath::RandRange(NumOfTasksFROM, NumOfTasksTO);
+	NumOfFailedTasks = FMath::RandRange(NumOfFailedTasksFROM, NumOfFailedTasksTO);
 }
 
 void AAlien::AddAlienToPool()

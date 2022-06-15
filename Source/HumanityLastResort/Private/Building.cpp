@@ -41,14 +41,14 @@ void ABuilding::SubtractLoss()
 }
 
 
-ABuilding* ABuilding::Selected(const FHitResult& selectionInfoRay)
+APlaceable* ABuilding::Selected(const FHitResult& selectionInfoRay)
 {
 	return this;
 }
 
 void ABuilding::HightLight()
 {
-	//UE_LOG(LogTemp, Error, TEXT("HIGHTLIGHTED"));
+	//UE_LOG(LogTemp, Error, TEXT("HIGHTLIGHTED Building"));
 	//UMaterial* Material = (UMaterial*)StaticMeshComponent->GetMaterial(0);
 	//if (Material)
 	//	Material->SetScalarParameterValueEditorOnly(TEXT("Selected"), 1);

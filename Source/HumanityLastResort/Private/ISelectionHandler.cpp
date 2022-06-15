@@ -2,6 +2,6 @@
 
 
 #include "ISelectionHandler.h"
-#include "Building.h"
+#include "Placeable.h"
 
 // Add default functionality here for any IISelectionHandler functions that are not pure virtual.

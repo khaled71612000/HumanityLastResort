@@ -20,6 +20,6 @@ public:
 		void RegisterSelectionHandler( IISelectionHandler* handler);
 		void RemoveSelectionHandler(IISelectionHandler* handler);
 
-		ABuilding* TrySelect(const FHitResult& selectionInfoRay);
+		APlaceable* TrySelect(const FHitResult& selectionInfoRay);
 
 };

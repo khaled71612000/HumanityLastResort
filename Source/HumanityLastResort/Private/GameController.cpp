@@ -9,6 +9,7 @@
 #include "SelectionSubsystem.h"
 #include "NewGrid.h"
 #include "CellActor.h"
+#include "Road.h"
 #include "RunTime\Engine\Classes\Kismet\GameplayStatics.h"
 
 
@@ -76,8 +77,9 @@ void AGameController::OnLeftMouseClicked()
 	FCollisionQueryParams TraceParams;
 	bool bHit = GetWorld()->LineTraceSingleByChannel(Hit, start, end, ECC_Visibility, TraceParams);
 
-	if (Hit.GetActor())
+	if (Hit.GetActor()) {
 		SelectionSubSystem->TrySelect(Hit);
+	}
 }
 
 void AGameController::SetupInputComponent()

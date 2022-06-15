@@ -59,6 +59,7 @@ void APlaceable::BeginPlay()
 void APlaceable::OnClicked(UPrimitiveComponent* ClickedComp, FKey ButtonClicked)
 {
 	isDragging = true;
+	//UE_LOG(LogTemp, Error, TEXT("HELLO"));
 	StaticMeshComponent->GetBodyInstance()->bLockXTranslation = false;
 	StaticMeshComponent->GetBodyInstance()->bLockYTranslation = false;
 	StaticMeshComponent->GetBodyInstance()->bLockZTranslation = false;
@@ -185,7 +186,7 @@ void APlaceable::DestroyBuildingActor()
 	//	RoadSubsystem->RemoveRoad(Cast<ARoad>(this));
 
 	if(IISelectionHandler* CurrentSelect = Cast<IISelectionHandler>(this))
-	SelectionSubSystem->RemoveSelectionHandler(CurrentSelect);
+		SelectionSubSystem->RemoveSelectionHandler(CurrentSelect);
 
 	Destroy();
 }

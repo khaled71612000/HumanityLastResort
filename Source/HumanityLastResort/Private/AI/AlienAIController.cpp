@@ -9,55 +9,40 @@ void AAlienAIController::OnMoveCompleted(FAIRequestID RequestID, const FPathFoll
 {		
 	AAlien* Alien = Cast<AAlien>(GetPawn());
 
-	if (Result.IsSuccess())
+	if (Alien->AlienState == Leaving)
+	{
+		Alien->SetActorHiddenInGame(true);
+		Alien->SetActorEnableCollision(false);
+		Alien->AddAlienToPool();
+	}
+	else if(Alien->AlienState == Wandering)
+	{
+		if (Alien->NumOfFailedTasks <= 0)
+			Alien->AlienState = Leaving;
+		else
+			Alien->AlienState = Idle;
+	}
+
+	else if (Result.IsSuccess())
 	{
 		//UE_LOG(LogTemp, Warning, TEXT("Success: %d"), Alien->AlienState);
-
-		if (Alien)
+		if (Alien->AlienState == Assigned)
 		{
-			if (Alien->AlienState == Wandering)
-			{
-				if (Alien->NumOfFailedTasks <= 0)
-					Alien->AlienState = Leaving;
-				else
-					Alien->AlienState = Idle;
-			}
-			else if (Alien->AlienState == Leaving)
-			{
-				Alien->SetActorHiddenInGame(true);
-				Alien->SetActorEnableCollision(false);
-				Alien->AddAlienToPool();
-			}
-			else if (Alien->AlienState == Assigned)
-			{
-				Alien->AlienState = Arrived;
-				AlienSucceedUpdate(Alien);
-			}
+			Alien->AlienState = Arrived;
+			AlienSucceedUpdate(Alien);
 		}
 	}
 
 	else if (Result.IsFailure())
 	{
-		//UE_LOG(LogTemp, Warning, TEXT("Failed: %d"), Alien->AlienState);
 
-		if (Alien) {
-
-			if (Alien->AlienState == Assigned)
-			{
-				Alien->AlienState = Idle;
-				AlienFailedUpdate(Alien);
-				CurBuilding->CurOccupants--;
-			}
-			else if (Alien->AlienState == Wandering) 
-			{
-				if (Alien->NumOfFailedTasks <= 0)
-					Alien->AlienState = Leaving;
-				else
-					Alien->AlienState = Idle;
-			}
-		}		
+		if (Alien->AlienState == Assigned)
+		{
+			Alien->AlienState = Idle;
+			AlienFailedUpdate(Alien);
+			CurBuilding->CurOccupants--;
+		}	
 	}
-
 	StopMovement();
 }
 

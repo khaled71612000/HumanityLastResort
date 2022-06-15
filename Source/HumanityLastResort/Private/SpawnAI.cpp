@@ -29,7 +29,6 @@ void ASpawnAI::SpawnAnAlien()
 		AlienToSpawn->SetActorEnableCollision(true);
 		AlienToSpawn->SetActorHiddenInGame(false);
 		AlienToSpawn->SetActorLocation(SpawnLocation);
-		AlienToSpawn->AlienState = Idle;
 		AlienSubsystem->AliensPool[AlienInd].Pop();
 	}
 	else

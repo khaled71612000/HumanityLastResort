@@ -21,8 +21,6 @@ private:
 	int32 CurBuildingType;
 	float CurTaskTime;
 	FTimerHandle TaskTimeManager;
-
-
 	class UBuildingSubsystem* BuildingSubsystem;
 	class URoadSubsystem* RoadSubsystem;
 	class UNavigationSystemV1* NavArea;

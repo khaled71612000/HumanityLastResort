@@ -88,6 +88,7 @@ void AAlien::AddAlienToPool()
 	{
 		Needs[i]->CurValue = Needs[i]->MaxCapacity;
 	}
+	AlienState = Idle;
 	AlienSubsystem->AliensPool[AlienType].Add(this);
 }
 

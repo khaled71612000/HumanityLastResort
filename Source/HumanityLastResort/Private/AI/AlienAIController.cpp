@@ -17,7 +17,7 @@ void AAlienAIController::OnMoveCompleted(FAIRequestID RequestID, const FPathFoll
 	}
 	else if(Alien->AlienState == Wandering)
 	{
-		if (Alien->NumOfFailedTasks <= 0)
+		if (Alien->NumOfFailedTasks <= 0 || Alien->NumOfTasks <=0)
 			Alien->AlienState = Leaving;
 		else
 			Alien->AlienState = Idle;
@@ -25,7 +25,7 @@ void AAlienAIController::OnMoveCompleted(FAIRequestID RequestID, const FPathFoll
 
 	else if (Result.IsSuccess())
 	{
-		//UE_LOG(LogTemp, Warning, TEXT("Success: %d"), Alien->AlienState);
+		UE_LOG(LogTemp, Warning, TEXT("Success: %d"), Alien->AlienState);
 		if (Alien->AlienState == Assigned)
 		{
 			Alien->AlienState = Arrived;
@@ -35,6 +35,7 @@ void AAlienAIController::OnMoveCompleted(FAIRequestID RequestID, const FPathFoll
 
 	else if (Result.IsFailure())
 	{
+		UE_LOG(LogTemp, Warning, TEXT("Failed: %d"), Alien->AlienState);
 
 		if (Alien->AlienState == Assigned)
 		{
@@ -63,8 +64,6 @@ void AAlienAIController::AlienFailedUpdate(AAlien* Alien)
 	Alien->NumOfFailedTasks--;
 	if (Alien->NumOfFailedTasks <= 0)
 		Alien->AlienState = Leaving;
-	else
-		Alien->AlienState = Wandering;
 
 	Alien->ChangeMood(-Alien->BadMoodVal);
 

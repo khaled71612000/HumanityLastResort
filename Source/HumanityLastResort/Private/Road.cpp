@@ -40,6 +40,7 @@ ARoad::ARoad()
 
 void ARoad::BeginPlay()
 {
+	Super::BeginPlay();
 	RoadStartRayLoc = GetActorLocation();
 	RoadEndRayNorthLoc = RoadStartRayLoc + FVector(230,0,0);
 	RoadEndRaySouthLoc = RoadStartRayLoc + FVector(-230, 0, 0);

@@ -8,12 +8,3 @@ AWomanAlien::AWomanAlien()
 	AlienType = 1;
 }
 
-void AWomanAlien::CallSetAlienNeedsValues()
-{
-	SetAlienNeedsValues();
-}
-
-void AWomanAlien::CallSetAlienAttributes()
-{
-	SetAlienAttributes();
-}

@@ -22,23 +22,11 @@ public:
 	UPROPERTY(Transient)
 	int32 CurValue;
 
-	UPROPERTY(Transient)
+	UPROPERTY(EditDefaultsOnly, Category = "Properties")
 	int32 DecayRate;
 
-	UPROPERTY(Transient)
+	UPROPERTY(EditDefaultsOnly, Category = "Properties")
 	int32 TaskTime;
-
-	UPROPERTY(EditDefaultsOnly, Category = "Properties")
-		int32 DecayRateFROM;
-
-	UPROPERTY(EditDefaultsOnly, Category = "Properties")
-		int32 DecayRateTO;
-
-	UPROPERTY(EditDefaultsOnly, Category = "Properties")
-		int32 TaskTimeFROM;
-
-	UPROPERTY(EditDefaultsOnly, Category = "Properties")
-		int32 TaskTimeTO;
 
 	UPROPERTY(EditDefaultsOnly, Category = "Properties")
 	int32 Threshold;

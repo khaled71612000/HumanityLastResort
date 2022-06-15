@@ -72,9 +72,9 @@ bool UNeedSatisfactionTask::CheckAccessibility(FVector Start, FVector End)
 void UNeedSatisfactionTask::Wait()
 {
 	CurTaskTime = CurNeed->TaskTime;
-	if (GetWorld()->GetTimerManager().IsTimerPaused(TaskTimeManager))
+	/*if (GetWorld()->GetTimerManager().IsTimerPaused(TaskTimeManager))
 		GetWorld()->GetTimerManager().UnPauseTimer(TaskTimeManager);
-	else
+	else*/
 		GetWorld()->GetTimerManager().SetTimer(TaskTimeManager, this, &UNeedSatisfactionTask::DoTask, 1.f, true);
 }
 
@@ -113,9 +113,17 @@ void UNeedSatisfactionTask::Wander(AAlien* Alien)
 		return;
 	}
 	int32 NumOfRoads = RoadSubsystem->Roads.Num();
+
 	if (NumOfRoads > 1)
 	{
 		int32 RandRoad = FMath::RandRange(0, NumOfRoads - 1);
+
+		if(!RoadSubsystem->Roads.IsValidIndex(RandRoad))
+		{
+			Alien->AlienState = Idle;
+			return;
+		}
+
 		if (CheckAccessibility(Alien->GetActorLocation(), RoadSubsystem->Roads[RandRoad]->GetActorLocation()))
 		{
 			AAlienAIController* AI = Cast<AAlienAIController>(Alien->GetController());

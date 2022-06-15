@@ -7,12 +7,3 @@ ABoyAlien::ABoyAlien()
 {
 	AlienType = 2;
 }
-void ABoyAlien::CallSetAlienNeedsValues()
-{
-	SetAlienNeedsValues();
-}
-
-void ABoyAlien::CallSetAlienAttributes()
-{
-	SetAlienAttributes();
-}

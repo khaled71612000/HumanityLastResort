@@ -7,12 +7,3 @@ AGirlAlien::AGirlAlien()
 {
 	AlienType = 3;
 }
-void AGirlAlien::CallSetAlienNeedsValues()
-{
-	SetAlienNeedsValues();
-}
-
-void AGirlAlien::CallSetAlienAttributes()
-{
-	SetAlienAttributes();
-}

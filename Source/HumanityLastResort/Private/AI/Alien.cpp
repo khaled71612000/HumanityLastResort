@@ -82,34 +82,13 @@ void AAlien::ChangeMood(int MoodVal)
 }
 
 
-void AAlien::SetAlienNeedsValues()
-{
-	for (int i = 0; i < Needs.Num(); i++)
-	{
-		Needs[i]->DecayRate = FMath::RandRange(Needs[i]->DecayRateFROM, Needs[i]->DecayRateTO);
-		Needs[i]->TaskTime = FMath::RandRange(Needs[i]->TaskTimeFROM, Needs[i]->TaskTimeTO);
-	}
-}
-
-void AAlien::SetAlienAttributes()
-{
-	GoodMoodVal = FMath::RandRange(GoodMoodValFROM, GoodMoodValTO);
-	BadMoodVal = FMath::RandRange(BadMoodValFROM, BadMoodValTO);
-	NumOfTasks = FMath::RandRange(NumOfTasksFROM, NumOfTasksTO);
-	NumOfFailedTasks = FMath::RandRange(NumOfFailedTasksFROM, NumOfFailedTasksTO);
-}
-
 void AAlien::AddAlienToPool()
 {
+	for (int32 i = 0; i < Needs.Num(); i++)
+	{
+		Needs[i]->CurValue = Needs[i]->MaxCapacity;
+	}
 	AlienSubsystem->AliensPool[AlienType].Add(this);
-}
-
-void AAlien::CallSetAlienNeedsValues()
-{
-}
-void AAlien::CallSetAlienAttributes()
-{
-
 }
 
 bool AAlien::GetisDancing()

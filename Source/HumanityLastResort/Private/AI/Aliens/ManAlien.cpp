@@ -8,12 +8,3 @@ AManAlien::AManAlien()
 	AlienType = 0;
 }
 
-void AManAlien::CallSetAlienNeedsValues()
-{
-	SetAlienNeedsValues();
-}
-
-void AManAlien::CallSetAlienAttributes()
-{
-	SetAlienAttributes();
-}

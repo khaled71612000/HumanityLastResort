@@ -38,7 +38,7 @@ void AAlienAIController::OnMoveCompleted(FAIRequestID RequestID, const FPathFoll
 
 	else if (Result.IsFailure())
 	{
-		UE_LOG(LogTemp, Warning, TEXT("Failed: %d"), Alien->AlienState);
+		//UE_LOG(LogTemp, Warning, TEXT("Failed: %d"), Alien->AlienState);
 
 		if (Alien) {
 

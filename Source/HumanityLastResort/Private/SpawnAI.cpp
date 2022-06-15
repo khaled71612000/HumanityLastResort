@@ -36,8 +36,6 @@ void ASpawnAI::SpawnAnAlien()
 	{
 		AlienToSpawn = GetWorld()->SpawnActor<AAlien>(Aliens[AlienInd], SpawnLocation, SpawnRotation, SpawnParams);
 	}
-	AlienToSpawn->CallSetAlienAttributes();
-	AlienToSpawn->CallSetAlienNeedsValues();
 	AlienSubsystem->SpawnedAliens.Add(AlienToSpawn);
 	AlienSubsystem->NumOfAliens++;
 	AlienSubsystem->GlobalMood += 100;

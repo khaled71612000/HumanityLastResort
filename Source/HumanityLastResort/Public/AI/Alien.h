@@ -32,32 +32,12 @@ public:
 	int32 Mood;
 
 	UPROPERTY(EditDefaultsOnly, Category = "Properties")
-		int32 GoodMoodValFROM;
-	UPROPERTY(EditDefaultsOnly, Category = "Properties")
-		int32 GoodMoodValTO;
-
-	UPROPERTY(EditDefaultsOnly, Category = "Properties")
-		int32 BadMoodValFROM;
-	UPROPERTY(EditDefaultsOnly, Category = "Properties")
-		int32 BadMoodValTO;
-
-	UPROPERTY(EditDefaultsOnly, Category = "Properties")
-		int32 NumOfTasksFROM;
-	UPROPERTY(EditDefaultsOnly, Category = "Properties")
-		int32 NumOfTasksTO;
-
-	UPROPERTY(EditDefaultsOnly, Category = "Properties")
-		int32 NumOfFailedTasksFROM;
-	UPROPERTY(EditDefaultsOnly, Category = "Properties")
-		int32 NumOfFailedTasksTO;
-
-	UPROPERTY(Transient)
 		int32 GoodMoodVal;
-	UPROPERTY(Transient)
+	UPROPERTY(EditDefaultsOnly, Category = "Properties")
 		int32 BadMoodVal;
-	UPROPERTY(Transient)
+	UPROPERTY(EditDefaultsOnly, Category = "Properties")
 		int32 NumOfTasks;
-	UPROPERTY(Transient)
+	UPROPERTY(EditDefaultsOnly, Category = "Properties")
 		int32 NumOfFailedTasks;
 
 	int32 AlienType;
@@ -75,8 +55,6 @@ public:
 	void SetAlienNeedsValues();
 	void SetAlienAttributes();
 	void AddAlienToPool();
-	virtual void CallSetAlienNeedsValues();
-	virtual void CallSetAlienAttributes();
 
 	UFUNCTION(BlueprintCallable)
 		bool GetisDancing();

@@ -31,7 +31,6 @@ public:
 	bool isDancing;
 	int32 Mood;
 
-
 	UPROPERTY(EditDefaultsOnly, Category = "Properties")
 		int32 GoodMoodValFROM;
 	UPROPERTY(EditDefaultsOnly, Category = "Properties")

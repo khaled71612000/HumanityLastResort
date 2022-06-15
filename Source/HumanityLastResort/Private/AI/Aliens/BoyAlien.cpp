@@ -14,6 +14,5 @@ void ABoyAlien::CallSetAlienNeedsValues()
 
 void ABoyAlien::CallSetAlienAttributes()
 {
-
 	SetAlienAttributes();
 }

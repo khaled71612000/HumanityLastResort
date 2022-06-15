@@ -62,7 +62,7 @@ void ABuilding::OnOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActo
 
 		if (Alien)
 		{
-			Alien->AlienState = Arrived;
+			//Alien->AlienState = Arrived;
 		}
 	}
 }

@@ -2,7 +2,6 @@
 #include "AI/NeedComponent.h"
 #include "AI/NeedSatisfactionTask.h"
 #include "Buildings/BuildingSubsystem.h"
-#include "AI/Alien.h"
 
 UNeedComponent::UNeedComponent()
 {
@@ -33,12 +32,4 @@ void UNeedComponent::DecreaseValue()
 {
 	if (CurValue > 0)
 		CurValue -= DecayRate;
-
-	if (CurValue < Threshold)
-	{
-		AAlien* Owner = (AAlien*)GetOwner();
-		if(Owner->AlienState == Wandering)
-			Owner->AlienState = Idle;
-	}
-
 }

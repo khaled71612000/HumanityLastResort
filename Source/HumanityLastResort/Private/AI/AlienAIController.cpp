@@ -11,12 +11,16 @@ void AAlienAIController::OnMoveCompleted(FAIRequestID RequestID, const FPathFoll
 
 	if (Result.IsSuccess())
 	{
+		//UE_LOG(LogTemp, Warning, TEXT("Success: %d"), Alien->AlienState);
+
 		if (Alien)
 		{
 			if (Alien->AlienState == Wandering)
 			{
 				if (Alien->NumOfFailedTasks <= 0)
 					Alien->AlienState = Leaving;
+				else
+					Alien->AlienState = Idle;
 			}
 			else if (Alien->AlienState == Leaving)
 			{
@@ -26,10 +30,7 @@ void AAlienAIController::OnMoveCompleted(FAIRequestID RequestID, const FPathFoll
 			}
 			else if (Alien->AlienState == Assigned)
 			{
-				AlienFailedUpdate(Alien);
-			}
-			else
-			{
+				Alien->AlienState = Arrived;
 				AlienSucceedUpdate(Alien);
 			}
 		}
@@ -37,16 +38,22 @@ void AAlienAIController::OnMoveCompleted(FAIRequestID RequestID, const FPathFoll
 
 	else if (Result.IsFailure())
 	{
+		UE_LOG(LogTemp, Warning, TEXT("Failed: %d"), Alien->AlienState);
+
 		if (Alien) {
 
-			if(Alien->AlienState == Assigned)
+			if (Alien->AlienState == Assigned)
 			{
 				Alien->AlienState = Idle;
+				AlienFailedUpdate(Alien);
 				CurBuilding->CurOccupants--;
 			}
-			else if(Alien->AlienState == Waiting) 
+			else if (Alien->AlienState == Wandering) 
 			{
-				AlienSucceedUpdate(Alien);
+				if (Alien->NumOfFailedTasks <= 0)
+					Alien->AlienState = Leaving;
+				else
+					Alien->AlienState = Idle;
 			}
 		}		
 	}

@@ -10,7 +10,7 @@
 AAlien::AAlien()
 {
 	PrimaryActorTick.bCanEverTick = false;
-	AlienState = Wandering;
+	AlienState = Idle;
 	isDancing = false;
 	Mood = 100;
 }
@@ -43,6 +43,7 @@ void AAlien::TryGetTask()
 				NumOfFailedTasks--;
 		}
 	}
+	AlienState = Wandering;
 	Wander();
 }
 
@@ -70,7 +71,6 @@ void AAlien::Leave()
 void AAlien::ChangeMood(int MoodVal)
 {
 	//UE_LOG(LogTemp, Warning, TEXT("Mood: %d"), MoodVal);
-
 	AlienSubsystem->GlobalMood -= Mood;
 	Mood += MoodVal;
 	if (Mood < 0)

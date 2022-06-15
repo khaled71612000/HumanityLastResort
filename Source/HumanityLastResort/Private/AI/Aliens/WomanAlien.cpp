@@ -15,6 +15,5 @@ void AWomanAlien::CallSetAlienNeedsValues()
 
 void AWomanAlien::CallSetAlienAttributes()
 {
-
 	SetAlienAttributes();
 }

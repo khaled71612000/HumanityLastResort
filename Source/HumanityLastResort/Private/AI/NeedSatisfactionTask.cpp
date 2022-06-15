@@ -25,6 +25,8 @@ void UNeedSatisfactionTask::CustomBeginPlay()
 bool UNeedSatisfactionTask::TrySatisfy(UNeedComponent* Need, AAlien* Alien)
 {
 	CurBuildingType = Need->BuildingType;
+	if (!BuildingSubsystem)
+		return false;
 
 	for (ABuilding* Building : BuildingSubsystem->Buildings[CurBuildingType])
 	{
@@ -50,7 +52,7 @@ void UNeedSatisfactionTask::Satisfy()
 		CurBuilding->CurOccupants++;
 		CurAlien->AlienState = Assigned;
 		AI->CurBuilding = CurBuilding;
-		AI->MoveToLocation(CurBuilding->GetActorLocation(), 25.f);
+		AI->MoveToLocation(CurBuilding->GetActorLocation(), 150.f);
 	}
 	
 }
@@ -104,6 +106,11 @@ void UNeedSatisfactionTask::ResetAlien()
 
 void UNeedSatisfactionTask::Wander(AAlien* Alien)
 {
+	if (!RoadSubsystem)
+	{
+		Alien->AlienState = Idle;
+		return;
+	}
 	int32 NumOfRoads = RoadSubsystem->Roads.Num();
 	if (NumOfRoads > 1)
 	{

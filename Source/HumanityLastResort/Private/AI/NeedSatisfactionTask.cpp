@@ -27,8 +27,6 @@ void UNeedSatisfactionTask::CustomBeginPlay()
 bool UNeedSatisfactionTask::TrySatisfy(UNeedComponent* Need, AAlien* Alien)
 {
 	CurBuildingType = Need->BuildingType;
-	if (!BuildingSubsystem)
-		return false;
 
 	for (ABuilding* Building : BuildingSubsystem->Buildings[CurBuildingType])
 	{

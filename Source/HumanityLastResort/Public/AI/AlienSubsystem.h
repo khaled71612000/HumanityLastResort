@@ -19,7 +19,7 @@ public:
 	UPROPERTY()
 	TArray<class AAlien*> SpawnedAliens;
 
-	UPROPERTY()
+	//UPROPERTY()
 	TArray <TArray<class AAlien*>> AliensPool;
 
 	int32 GlobalMood;

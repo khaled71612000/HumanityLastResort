@@ -24,13 +24,13 @@ void ASpawnAI::SpawnAnAlien()
 {
 	int32 AlienInd = FMath::RandRange(0,  Aliens.Num()-1);
 	AAlien* AlienToSpawn;
-	if (AlienSubsystem->AliensPool[AlienInd].Num() > 0)
+	if (AlienSubsystem->AliensPool[AlienInd].Aliens.Num() > 0)
 	{
-		AlienToSpawn = AlienSubsystem->AliensPool[AlienInd].Last();
+		AlienToSpawn = AlienSubsystem->AliensPool[AlienInd].Aliens.Last();
 		AlienToSpawn->SetActorEnableCollision(true);
 		AlienToSpawn->SetActorHiddenInGame(false);
 		AlienToSpawn->SetActorLocation(SpawnLocation);
-		AlienSubsystem->AliensPool[AlienInd].Pop();
+		AlienSubsystem->AliensPool[AlienInd].Aliens.Pop();
 	}
 	else
 	{

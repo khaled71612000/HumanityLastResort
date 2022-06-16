@@ -93,7 +93,7 @@ void AAlien::AddAlienToPool()
 		Needs[i]->CurValue = Needs[i]->MaxCapacity;
 	}
 	AlienState = Idle;
-	AlienSubsystem->AliensPool[AlienType].Add(this);
+	AlienSubsystem->AliensPool[AlienType].Aliens.Add(this);
 }
 
 bool AAlien::GetisDancing()

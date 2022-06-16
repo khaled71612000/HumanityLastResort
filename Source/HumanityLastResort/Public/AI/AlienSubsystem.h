@@ -9,6 +9,14 @@
 /**
  *
  */
+
+USTRUCT()
+struct FAliensArray
+{
+	GENERATED_BODY()
+	TArray<class AAlien*> Aliens;
+};
+
 UCLASS()
 class HUMANITYLASTRESORT_API UAlienSubsystem : public UTickableWorldSubsystem
 {
@@ -19,8 +27,8 @@ public:
 	UPROPERTY()
 	TArray<class AAlien*> SpawnedAliens;
 
-	//UPROPERTY()
-	TArray <TArray<class AAlien*>> AliensPool;
+	UPROPERTY()
+	TArray <FAliensArray> AliensPool;
 
 	int32 GlobalMood;
 	int32 NumOfAliens;

@@ -82,6 +82,7 @@ void AAlien::ChangeMood(int MoodVal)
 	else if (Mood > 100)
 		Mood = 100;
 	AlienSubsystem->UpdateGlobalMood(Mood);
+	AlienSubsystem->UpdateGlobalMoodPercentage();
 }
 
 

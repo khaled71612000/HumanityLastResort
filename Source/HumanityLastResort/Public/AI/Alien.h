@@ -42,8 +42,14 @@ public:
 
 	int32 AlienType;
 	State AlienState;
+
+	UPROPERTY()
 	class UNeedSatisfactionTask* Task;
+
+	UPROPERTY()
 	class UAlienSubsystem* AlienSubsystem;
+
+	UPROPERTY()
 	TArray<class UNeedComponent*> Needs;
 
 	void TryGetTask();

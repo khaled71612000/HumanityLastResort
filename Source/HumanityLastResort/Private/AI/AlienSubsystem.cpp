@@ -2,6 +2,7 @@
 
 #include "AI/AlienSubsystem.h"
 #include "AI/Alien.h"
+#include "SpawnAI.h"
 
 void UAlienSubsystem::Initialize(FSubsystemCollectionBase& Collection)
 {
@@ -22,7 +23,6 @@ void UAlienSubsystem::Tick(float DeltaTime)
 	for (AAlien* Alien : SpawnedAliens)
 	{
 		//UE_LOG(LogTemp, Warning, TEXT("Alien: %d"), Alien->AlienState);
-
 		if (Alien->AlienState == Idle)
 		{
 			Alien->AlienState = Waiting;
@@ -49,13 +49,14 @@ void UAlienSubsystem::SubtractAlienInfo(class AAlien* Alien)
 	SpawnedAliens.Remove(Alien);
 }
 
+
 void UAlienSubsystem::UpdateGlobalMood(int32 Amount)
 {
 	GlobalMood += Amount;
 	if (GlobalMood < 0)
 		GlobalMood = 0;
 
-	UpdateGlobalMoodPercentage();
+	
 }
 
 void UAlienSubsystem::UpdateGlobalMoodPercentage()
@@ -63,6 +64,12 @@ void UAlienSubsystem::UpdateGlobalMoodPercentage()
 	if (NumOfAliens)
 		GlobalMoodPercentage = (GlobalMood / (float)(NumOfAliens * 100)) * 100;
 
+	if (GlobalMoodPercentage > 80)
+		SpawnRate = 1;
+	else if (GlobalMoodPercentage > 60)
+		SpawnRate = 2;
+	else
+		SpawnRate = 3;
 }
 
 int32 UAlienSubsystem::GetGlobalMoodPercentage()

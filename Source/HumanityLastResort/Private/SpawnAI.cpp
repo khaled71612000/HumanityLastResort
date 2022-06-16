@@ -4,7 +4,7 @@
 #include "AI/Alien.h"
 #include "AI/AlienSubsystem.h"
 #include "TimerManager.h"
-#include "Buildings/Resturant.h"
+
 
 void ASpawnAI::BeginPlay() 
 {
@@ -16,7 +16,8 @@ void ASpawnAI::BeginPlay()
 
 	FTimerHandle SpawningManager;
 	GetWorld()->GetTimerManager().SetTimer(SpawningManager, this,
-		&ASpawnAI::SpawnAnAlien, SpawnRate, true);
+		&ASpawnAI::SpawnAnAlien, 10, true);
+
 }
 
 void ASpawnAI::SpawnAnAlien()

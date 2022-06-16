@@ -14,7 +14,7 @@ void UBuildingSubsystem::AddBuilding(APlaceable* Building)
 {
 	if (ABuilding* Build = Cast<ABuilding>(Building))
 	{
-		Buildings[Build->BuildingType].Add(Build);
+		Buildings[Build->BuildingType].buildings.Add(Build);
 	}
 	
 }
@@ -23,7 +23,7 @@ void UBuildingSubsystem::RemoveBuilding(APlaceable* Building)
 {
 	if (ABuilding* Build = Cast<ABuilding>(Building))
 	{
-		Buildings[Build->BuildingType].Remove(Build);
+		Buildings[Build->BuildingType].buildings.Remove(Build);
 
 	}
 }

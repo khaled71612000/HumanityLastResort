@@ -16,19 +16,24 @@ class HUMANITYLASTRESORT_API UAlienSubsystem : public UTickableWorldSubsystem
 
 public:
 	int32 NumOfAlienTypes = 4;
+	UPROPERTY()
 	TArray<class AAlien*> SpawnedAliens;
+
+	UPROPERTY()
 	TArray <TArray<class AAlien*>> AliensPool;
 
 	int32 GlobalMood;
 	int32 NumOfAliens;
 	int32 GlobalMoodPercentage;
 
+	int32 SpawnRate = 5;
+
 private:
 	void Initialize(FSubsystemCollectionBase& Collection) override;
 	TStatId GetStatId() const override;
 	void Tick(float DeltaTime) override;
 	void SubtractAlienInfo(class AAlien* Alien);
-
+	void UpdateSpawningRate();
 
 public:
 	void UpdateGlobalMood(int32 Amount);

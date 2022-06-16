@@ -28,7 +28,7 @@ bool UNeedSatisfactionTask::TrySatisfy(UNeedComponent* Need, AAlien* Alien)
 {
 	CurBuildingType = Need->BuildingType;
 
-	for (ABuilding* Building : BuildingSubsystem->Buildings[CurBuildingType])
+	for (ABuilding* Building : BuildingSubsystem->Buildings[CurBuildingType].buildings)
 	{
 		
 		if (Building->CurOccupants < Building->Capacity && CheckAccessibility(Alien->GetActorLocation(), Building->GetActorLocation()))
@@ -73,7 +73,13 @@ bool UNeedSatisfactionTask::CheckAccessibility(FVector Start, FVector End)
 void UNeedSatisfactionTask::Wait()
 {
 	CurTaskTime = CurNeed->TaskTime;
-	GetWorld()->GetTimerManager().SetTimer(TaskTimeManager, this, &UNeedSatisfactionTask::DoTask, 1.f, true);
+	
+	const UWorld* const world = GetWorld();
+
+	if (ensure(world != nullptr))
+	{
+		world->GetTimerManager().SetTimer(TaskTimeManager, this, &UNeedSatisfactionTask::DoTask, 1.f, true);
+	}
 }
 
 

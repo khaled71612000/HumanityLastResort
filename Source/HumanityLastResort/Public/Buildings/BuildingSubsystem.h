@@ -9,14 +9,25 @@
 /**
  * 
  */
+
+USTRUCT()
+struct FBuildingArray
+{
+	GENERATED_BODY()
+
+	UPROPERTY()
+	TArray<class ABuilding*> buildings;
+};
+
 UCLASS()
 class HUMANITYLASTRESORT_API UBuildingSubsystem : public UWorldSubsystem
 {
 	GENERATED_BODY()
 
 	int32 NumOfBuildings = 7;
+
 public:
-	TArray<TArray<class ABuilding*>> Buildings;
+	TArray<FBuildingArray> Buildings;
 	void Initialize(FSubsystemCollectionBase& Collection) override;
 	UFUNCTION(BlueprintCallable)
 	void AddBuilding(class APlaceable* Building);

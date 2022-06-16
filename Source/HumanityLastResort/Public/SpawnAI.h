@@ -17,8 +17,9 @@ class HUMANITYLASTRESORT_API ASpawnAI : public AVolume
 	GENERATED_BODY()
 public:
 	UPROPERTY(EditAnywhere, Category = "SpawnAlien")
-		float SpawnRate = 8.f;
+	int32 InitialSpawnRate = 8;
 
+	UPROPERTY()
 	class UAlienSubsystem* AlienSubsystem;
 private:
 	FActorSpawnParameters SpawnParams;
@@ -26,10 +27,12 @@ private:
 	FRotator SpawnRotation;
 	virtual void BeginPlay() override;
 
+	FTimerHandle SpawnManager;
+	UFUNCTION()
+	void UpdateSpawnTimer(int32 SpawnRate);
 	void SpawnAnAlien();
 
 	UPROPERTY(EditAnywhere, meta = (AllowPrivateAccess = "true"))
-		TArray<TSubclassOf<class AAlien>> Aliens;
-
+	TArray<TSubclassOf<class AAlien>> Aliens;
 
 };

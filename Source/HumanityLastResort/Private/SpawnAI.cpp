@@ -9,16 +9,23 @@
 void ASpawnAI::BeginPlay() 
 {
 	AlienSubsystem = GetWorld()->GetSubsystem<UAlienSubsystem>();
+	AlienSubsystem->SpawnRateUpdate.AddDynamic(this, &ASpawnAI::UpdateSpawnTimer);
 
 	SpawnParams.Owner = this;
 	SpawnLocation = this->GetActorLocation();
 	SpawnRotation = this->GetActorRotation();
-
-	FTimerHandle SpawningManager;
-	GetWorld()->GetTimerManager().SetTimer(SpawningManager, this,
-		&ASpawnAI::SpawnAnAlien, 10, true);
-
+	
+	UpdateSpawnTimer(InitialSpawnRate);
 }
+
+
+void ASpawnAI::UpdateSpawnTimer(int32 SpawnRate)
+{
+	GetWorld()->GetTimerManager().ClearTimer(SpawnManager);
+	GetWorld()->GetTimerManager().SetTimer(SpawnManager, this,
+		&ASpawnAI::SpawnAnAlien, SpawnRate, true);
+}
+
 
 void ASpawnAI::SpawnAnAlien()
 {
@@ -41,8 +48,3 @@ void ASpawnAI::SpawnAnAlien()
 	AlienSubsystem->GlobalMood += 100;
 	
 }
-
-
-
-
-

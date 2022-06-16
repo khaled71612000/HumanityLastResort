@@ -10,6 +10,8 @@
  *
  */
 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FSpawnRateUpdate, int32, SpawnRate);
+
 USTRUCT()
 struct FAliensArray
 {
@@ -34,14 +36,13 @@ public:
 	int32 NumOfAliens;
 	int32 GlobalMoodPercentage;
 
-	int32 SpawnRate = 5;
-
+	UPROPERTY(BlueprintAssignable)
+	FSpawnRateUpdate SpawnRateUpdate;
 private:
 	void Initialize(FSubsystemCollectionBase& Collection) override;
 	TStatId GetStatId() const override;
 	void Tick(float DeltaTime) override;
 	void SubtractAlienInfo(class AAlien* Alien);
-	void UpdateSpawningRate();
 
 public:
 	void UpdateGlobalMood(int32 Amount);

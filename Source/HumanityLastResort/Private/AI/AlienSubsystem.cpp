@@ -65,11 +65,11 @@ void UAlienSubsystem::UpdateGlobalMoodPercentage()
 		GlobalMoodPercentage = (GlobalMood / (float)(NumOfAliens * 100)) * 100;
 
 	if (GlobalMoodPercentage > 80)
-		SpawnRate = 1;
+		SpawnRateUpdate.Broadcast(1);
 	else if (GlobalMoodPercentage > 60)
-		SpawnRate = 2;
+		SpawnRateUpdate.Broadcast(1);
 	else
-		SpawnRate = 3;
+		SpawnRateUpdate.Broadcast(1);
 }
 
 int32 UAlienSubsystem::GetGlobalMoodPercentage()

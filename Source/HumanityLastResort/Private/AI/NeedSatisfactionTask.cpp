@@ -36,11 +36,9 @@ bool UNeedSatisfactionTask::TrySatisfy(UNeedComponent* Need, AAlien* Alien)
 			CurAlien = Alien;
 			CurNeed = Need;
 			CurBuilding = Building;
-			//UE_LOG(LogTemp, Warning, TEXT("True"));
 			return true;
 		}
 	}
-	//UE_LOG(LogTemp, Warning, TEXT("False"));
 	return false;
 }
 
@@ -75,7 +73,6 @@ bool UNeedSatisfactionTask::CheckAccessibility(FVector Start, FVector End)
 void UNeedSatisfactionTask::Wait()
 {
 	CurTaskTime = CurNeed->TaskTime;
-
 	GetWorld()->GetTimerManager().SetTimer(TaskTimeManager, this, &UNeedSatisfactionTask::DoTask, 1.f, true);
 }
 
@@ -123,16 +120,11 @@ void UNeedSatisfactionTask::Wander(AAlien* Alien)
 			if (AI)
 			{
 				AI->MoveToLocation(RoadSubsystem->Roads[RandRoad]->GetActorLocation());
+				return;
 			}
 		}
-
-		else
-		{
-			Alien->AlienState = Idle;
-		}
 	}
-	else
-		Alien->AlienState = Idle;
+	Alien->AlienState = Idle;
 
 }
 

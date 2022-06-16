@@ -4,10 +4,9 @@
 #include "RoadSubsystem.h"
 #include "Road.h"
 
-void URoadSubsystem::Initialize(FSubsystemCollectionBase& Collection)
+void URoadSubsystem::AddRoad(ARoad* RoadRef)
 {
-	Super::Initialize(Collection);
-}
+	RoadsTilesArray.Add(RoadRef);
 
 void URoadSubsystem::AddRoad(APlaceable* Road)
 {
@@ -24,3 +23,15 @@ void URoadSubsystem::RemoveRoad(APlaceable* Road)
 		Roads.Remove(Cast<ARoad>(Road));
 	}
 }
+	for (ARoad* curRoad : RoadsTilesArray) {
+		curRoad->UpdateSideOfRoadTile();
+	}
+}
+
+//void URoadSubsystem::RemoveRoad(ARoad* RoadRef)
+//{
+//	if (ARoad* R = Cast<ARoad>(RoadRef))
+//	{
+//		RoadsTilesArray.Remove(R);
+//	}
+//}

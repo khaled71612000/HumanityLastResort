@@ -18,6 +18,7 @@ public:
 	TArray<class ARoad*> Roads;
 	void Initialize(FSubsystemCollectionBase& Collection) override;
 	UFUNCTION(BlueprintCallable)
-	void AddRoad(class APlaceable* Road);
-	void RemoveRoad(class APlaceable* Road);
+	void AddRoad(ARoad* RoadRef);
+
+	//void RemoveRoad(ARoad* RoadRef);
 };

@@ -52,8 +52,6 @@ public:
 	void Wander();
 	void Leave();
 	void ChangeMood(int MoodVal);
-	void SetAlienNeedsValues();
-	void SetAlienAttributes();
 	void AddAlienToPool();
 
 	UFUNCTION(BlueprintCallable)

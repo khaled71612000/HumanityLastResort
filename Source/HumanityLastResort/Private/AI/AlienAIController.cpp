@@ -22,7 +22,6 @@ void AAlienAIController::OnMoveCompleted(FAIRequestID RequestID, const FPathFoll
 		else
 			Alien->AlienState = Idle;
 	}
-
 	else if (Result.IsSuccess())
 	{
 		UE_LOG(LogTemp, Warning, TEXT("Success: %d"), Alien->AlienState);
@@ -32,7 +31,6 @@ void AAlienAIController::OnMoveCompleted(FAIRequestID RequestID, const FPathFoll
 			AlienSucceedUpdate(Alien);
 		}
 	}
-
 	else if (Result.IsFailure())
 	{
 		UE_LOG(LogTemp, Warning, TEXT("Failed: %d"), Alien->AlienState);

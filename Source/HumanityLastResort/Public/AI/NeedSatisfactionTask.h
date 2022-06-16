@@ -24,7 +24,7 @@ private:
 	class UBuildingSubsystem* BuildingSubsystem;
 	class URoadSubsystem* RoadSubsystem;
 	class UNavigationSystemV1* NavArea;
-
+	class ATargetPoint* LeavingPoint;
 
 public:
 	void CustomBeginPlay();
@@ -35,6 +35,7 @@ public:
 	void DoTask();
 	void SatisfiedAlien();
 	void Wander(class AAlien* Alien);
+	void Leave(class AAlien* Alien);
 
 };
 

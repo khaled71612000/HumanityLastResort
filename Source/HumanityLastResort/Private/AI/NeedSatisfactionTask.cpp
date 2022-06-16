@@ -11,6 +11,7 @@
 #include "RoadSubsystem.h"
 #include "NavigationData.h"
 #include "NavigationSystem.h"
+#include "Engine/TargetPoint.h"
 
 
 
@@ -19,6 +20,7 @@ void UNeedSatisfactionTask::CustomBeginPlay()
 	BuildingSubsystem = GetWorld()->GetSubsystem<UBuildingSubsystem>();
 	RoadSubsystem = GetWorld()->GetSubsystem<URoadSubsystem>();
 	NavArea = FNavigationSystem::GetCurrent<UNavigationSystemV1>(this);
+	LeavingPoint = (ATargetPoint*)UGameplayStatics::GetActorOfClass(GetWorld(), ATargetPoint::StaticClass());
 }
 
 
@@ -31,7 +33,7 @@ bool UNeedSatisfactionTask::TrySatisfy(UNeedComponent* Need, AAlien* Alien)
 	for (ABuilding* Building : BuildingSubsystem->Buildings[CurBuildingType])
 	{
 		
-		if (CheckAccessibility(Alien->GetActorLocation(), Building->GetActorLocation()))
+		if (Building->CurOccupants < Building->Capacity && CheckAccessibility(Alien->GetActorLocation(), Building->GetActorLocation()))
 		{
 			CurAlien = Alien;
 			CurNeed = Need;
@@ -43,6 +45,7 @@ bool UNeedSatisfactionTask::TrySatisfy(UNeedComponent* Need, AAlien* Alien)
 	//UE_LOG(LogTemp, Warning, TEXT("False"));
 	return false;
 }
+
 
 void UNeedSatisfactionTask::Satisfy()
 {
@@ -57,6 +60,7 @@ void UNeedSatisfactionTask::Satisfy()
 	
 }
 
+
 bool UNeedSatisfactionTask::CheckAccessibility(FVector Start, FVector End)
 {
 	FPathFindingQuery QueryParams;
@@ -69,12 +73,14 @@ bool UNeedSatisfactionTask::CheckAccessibility(FVector Start, FVector End)
 	return NavArea->TestPathSync(QueryParams, EPathFindingMode::Hierarchical);
 }
 
+
 void UNeedSatisfactionTask::Wait()
 {
 	CurTaskTime = CurNeed->TaskTime;
 
 	GetWorld()->GetTimerManager().SetTimer(TaskTimeManager, this, &UNeedSatisfactionTask::DoTask, 1.f, true);
 }
+
 
 void UNeedSatisfactionTask::DoTask()
 {
@@ -104,13 +110,9 @@ void UNeedSatisfactionTask::SatisfiedAlien()
 	CurBuilding->CurOccupants--;
 }
 
+
 void UNeedSatisfactionTask::Wander(AAlien* Alien)
 {
-	if (!RoadSubsystem)
-	{
-		Alien->AlienState = Idle;
-		return;
-	}
 	int32 NumOfRoads = RoadSubsystem->Roads.Num();
 
 	if (NumOfRoads > 1 && NumOfRoads < 900)
@@ -133,5 +135,16 @@ void UNeedSatisfactionTask::Wander(AAlien* Alien)
 	}
 	else
 		Alien->AlienState = Idle;
+
+}
+
+
+void UNeedSatisfactionTask::Leave(AAlien* Alien)
+{
+	AAlienAIController* AI = Cast<AAlienAIController>(Alien->GetController());
+	if (AI)
+	{
+		AI->MoveToLocation(LeavingPoint->GetActorLocation(), 5.f);
+	}
 
 }

@@ -3,9 +3,6 @@
 #include "AI/NeedComponent.h"
 #include "AI/NeedSatisfactionTask.h"
 #include "AI/AlienSubsystem.h"
-#include "AI/AlienAIController.h"
-#include "Engine/TargetPoint.h"
-#include "Kismet/GameplayStatics.h"
 
 AAlien::AAlien()
 {
@@ -72,8 +69,7 @@ void AAlien::Wander()
 
 void AAlien::Leave()
 {
-	AAlienAIController* AI = Cast<AAlienAIController>(GetController());
-	AI->MoveToLocation(UGameplayStatics::GetActorOfClass(GetWorld(), ATargetPoint::StaticClass())->GetActorLocation(), 5.f);
+	Task->Leave(this);
 }
 
 void AAlien::ChangeMood(int MoodVal)
@@ -86,7 +82,6 @@ void AAlien::ChangeMood(int MoodVal)
 	else if (Mood > 100)
 		Mood = 100;
 	AlienSubsystem->UpdateGlobalMood(Mood);
-
 }
 
 

@@ -2,7 +2,6 @@
 
 
 #include "Buildings/Club.h"
-#include "BuildingType.h"
 
 AClub::AClub()
 {

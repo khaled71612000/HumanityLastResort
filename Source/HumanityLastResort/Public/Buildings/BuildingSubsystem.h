@@ -27,7 +27,9 @@ class HUMANITYLASTRESORT_API UBuildingSubsystem : public UWorldSubsystem
 	int32 NumOfBuildings = 7;
 
 public:
+	UPROPERTY()
 	TArray<FBuildingArray> Buildings;
+
 	void Initialize(FSubsystemCollectionBase& Collection) override;
 	UFUNCTION(BlueprintCallable)
 	void AddBuilding(class ABuilding* Building);

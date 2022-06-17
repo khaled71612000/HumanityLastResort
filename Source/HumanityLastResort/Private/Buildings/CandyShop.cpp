@@ -2,7 +2,6 @@
 
 
 #include "Buildings/CandyShop.h"
-#include "BuildingType.h"
 
 ACandyShop::ACandyShop()
 {

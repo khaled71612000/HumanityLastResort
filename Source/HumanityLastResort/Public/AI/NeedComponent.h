@@ -34,6 +34,9 @@ public:
 	UPROPERTY(EditDefaultsOnly, Category = "Building")
 	int32 BuildingType;
 
+	UPROPERTY()
+	class UNeedSubsystem* NeedSubsystem;
+
 private:
 	void OnRegister() override;
 

@@ -2,7 +2,6 @@
 
 
 #include "Buildings/KidsArea.h"
-#include "BuildingType.h"
 
 AKidsArea::AKidsArea()
 {

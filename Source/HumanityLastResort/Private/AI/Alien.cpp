@@ -87,6 +87,7 @@ void AAlien::ChangeMood(int MoodVal)
 
 void AAlien::RemoveAlien()
 {
+	this->SetActorLocation({ 0, -100, 0 });
 	AlienSubsystem->NumOfAliensRemoved++;
 	AlienSubsystem->UpdateGlobalMood(Mood);
 	AlienSubsystem->UpdateGlobalMoodPercentage();

@@ -2,7 +2,6 @@
 
 
 #include "Buildings/JuiceShop.h"
-#include "BuildingType.h"
 
 AJuiceShop::AJuiceShop()
 {

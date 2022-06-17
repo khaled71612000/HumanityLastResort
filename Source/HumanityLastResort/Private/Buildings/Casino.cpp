@@ -2,7 +2,6 @@
 
 
 #include "Buildings/Casino.h"
-#include "BuildingType.h"
 
 ACasino::ACasino()
 {

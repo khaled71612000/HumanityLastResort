@@ -4,6 +4,7 @@
 #include "AI/Alien.h"
 #include "AI/AlienAIController.h"
 #include "AI/NeedComponent.h"
+#include "AI/NeedSubsystem.h"
 #include "Building.h"
 #include "Road.h"
 #include "Kismet/GameplayStatics.h"
@@ -12,8 +13,6 @@
 #include "NavigationData.h"
 #include "NavigationSystem.h"
 #include "Engine/TargetPoint.h"
-
-
 
 void UNeedSatisfactionTask::CustomBeginPlay()
 {
@@ -37,6 +36,10 @@ bool UNeedSatisfactionTask::TrySatisfy(UNeedComponent* Need, AAlien* Alien)
 			CurNeed = Need;
 			CurBuilding = Building;
 			return true;
+		}
+		else
+		{
+			Building->SubtractLoss();
 		}
 	}
 	return false;
@@ -108,6 +111,7 @@ void UNeedSatisfactionTask::SatisfiedAlien()
 
 	CurTaskTime = CurNeed->TaskTime;
 	CurBuilding->CurOccupants--;
+	CurNeed->NeedSubsystem->DecrementNeed(CurBuildingType);
 }
 
 
@@ -139,7 +143,7 @@ void UNeedSatisfactionTask::Leave(AAlien* Alien)
 	AAlienAIController* AI = Cast<AAlienAIController>(Alien->GetController());
 	if (AI)
 	{
-		AI->MoveToLocation(LeavingPoint->GetActorLocation(), 20.f);
+		AI->MoveToLocation(LeavingPoint->GetActorLocation(), 50.f);
 	}
 
 }

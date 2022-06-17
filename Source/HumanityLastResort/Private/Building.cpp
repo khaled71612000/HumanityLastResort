@@ -13,12 +13,6 @@ ABuilding::ABuilding()
 {
 	CurOccupants = 0;
 
-	//BuildingCollision = CreateDefaultSubobject<USphereComponent>(TEXT("RootCollision"));
-	//BuildingCollision->SetupAttachment(RootComponent);
-	//BuildingCollision->SetSphereRadius(200.f);
-	//BuildingCollision->SetHiddenInGame(true);
-	//BuildingCollision->OnComponentBeginOverlap.AddDynamic(this, &ABuilding::OnOverlap);
-	//BuildingCollision->OnComponentEndOverlap.AddDynamic(this, &ABuilding::OnOverlapEnd);
 }
 
 void ABuilding::BeginPlay()
@@ -48,34 +42,4 @@ APlaceable* ABuilding::Selected(const FHitResult& selectionInfoRay)
 
 void ABuilding::HightLight()
 {
-	//UE_LOG(LogTemp, Error, TEXT("HIGHTLIGHTED Building"));
-	//UMaterial* Material = (UMaterial*)StaticMeshComponent->GetMaterial(0);
-	//if (Material)
-	//	Material->SetScalarParameterValueEditorOnly(TEXT("Selected"), 1);
 }
-
-//void ABuilding::OnOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
-//{
-//	if (OtherActor && OtherActor != this)
-//	{
-//		AAlien* Alien = Cast<AAlien>(OtherActor);
-//
-//		if (Alien)
-//		{
-//			//Alien->AlienState = Arrived;
-//		}
-//	}
-//}
-
-//void ABuilding::OnOverlapEnd(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
-//{
-//	if (OtherActor && OtherActor != this)
-//	{
-//		AAlien* Alien = Cast<AAlien>(OtherActor);
-//
-//		if (Alien)
-//		{
-//			CurOccupants--;
-//		}
-//	}
-//}

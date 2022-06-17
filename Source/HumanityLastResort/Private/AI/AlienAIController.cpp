@@ -54,7 +54,7 @@ void AAlienAIController::AlienSucceedUpdate(AAlien* Alien)
 	Alien->ChangeMood(Alien->GoodMoodVal);
 
 	CurBuilding->AddProfit();
-	if (CurBuilding->BuildingType == 2)
+	if (CurBuilding->BuildingType == Casino)
 	{
 		Alien->isDancing = true;
 	}

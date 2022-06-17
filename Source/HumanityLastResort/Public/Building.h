@@ -10,12 +10,26 @@
 /**
  * 
  */
+
+UENUM(BlueprintType)
+enum BuildingType
+{
+	Hotel UMETA(DisplayName = "Hotel"),
+	Resturant UMETA(DisplayName = "Resturant"),
+	Casino UMETA(DisplayName = "Casino"),
+	Club UMETA(DisplayName = "Club"),
+	JuiceShop UMETA(DisplayName = "JuiceShop"),
+	CandyShop UMETA(DisplayName = "CandyShop"),
+	KidsArea UMETA(DisplayName = "KidsArea"),
+};
+
 UCLASS()
 class HUMANITYLASTRESORT_API ABuilding : public APlaceable, public IISelectionHandler
 {
 	GENERATED_BODY()
 public:
-	int32 BuildingType;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Properties")
+	TEnumAsByte<BuildingType> BuildingType;
 	UPROPERTY(EditDefaultsOnly, Category = "Properties")
 	int32 Capacity;
 	UPROPERTY(Transient)
@@ -24,7 +38,9 @@ public:
 	int32 Profit;
 	UPROPERTY(EditDefaultsOnly, Category = "Properties")
 	int32 Loss;
+	UPROPERTY()
 	class UEconomySubsystem* EconomySubsystem;
+	UPROPERTY()
 	class USelectionSubsystem* SelectionSubSystem;
 
 	void AddProfit();
@@ -36,11 +52,4 @@ protected:
 	ABuilding();
 	virtual void BeginPlay() override;
 
-private:
-	UPROPERTY(EditDefaultsOnly, Category = "Collider")
-	class USphereComponent* BuildingCollision;
-	/*UFUNCTION()
-	void OnOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
-	UFUNCTION()
-	void OnOverlapEnd(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);*/
 };

@@ -2,7 +2,6 @@
 
 
 #include "Buildings/Hotel.h"
-#include "BuildingType.h"
 
 AHotel::AHotel()
 {

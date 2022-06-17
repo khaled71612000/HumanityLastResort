@@ -1,7 +1,6 @@
 
 #include "AI/NeedComponent.h"
-#include "AI/NeedSatisfactionTask.h"
-#include "Buildings/BuildingSubsystem.h"
+#include "AI/NeedSubsystem.h"
 
 UNeedComponent::UNeedComponent()
 {
@@ -18,6 +17,7 @@ void UNeedComponent::OnRegister()
 void UNeedComponent::BeginPlay()
 {
 	Super::BeginPlay();
+	NeedSubsystem = GetWorld()->GetSubsystem<UNeedSubsystem>();
 	CurValue = MaxCapacity;
 	StartDecreasingValue();
 }
@@ -32,4 +32,6 @@ void UNeedComponent::DecreaseValue()
 {
 	if (CurValue > 0)
 		CurValue -= DecayRate;
+	if (CurValue == Threshold)
+		NeedSubsystem->IncrementNeed(BuildingType);
 }

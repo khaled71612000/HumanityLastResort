@@ -88,13 +88,13 @@ void AAlien::ChangeMood(int MoodVal)
 
 void AAlien::RemoveAlien()
 {
+	AlienSubsystem->MoveAlienToPool(this);
 	for (int32 i = 0; i < Needs.Num(); i++)
 	{
 		Needs[i]->CurValue = Needs[i]->MaxCapacity;
 	}
 	AlienState = Idle;
 	Mood = 100;
-	AlienSubsystem->MoveAlienToPool(this);
 }
 
 bool AAlien::GetisDancing()

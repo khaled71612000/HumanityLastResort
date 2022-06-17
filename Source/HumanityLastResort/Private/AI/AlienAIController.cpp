@@ -7,6 +7,7 @@
 
 void AAlienAIController::OnMoveCompleted(FAIRequestID RequestID, const FPathFollowingResult& Result)
 {		
+	StopMovement();
 	AAlien* Alien = Cast<AAlien>(GetPawn());
 
 	if (Alien->AlienState == Moving)
@@ -45,7 +46,6 @@ void AAlienAIController::OnMoveCompleted(FAIRequestID RequestID, const FPathFoll
 			CurBuilding->CurOccupants--;
 		}	
 	}
-	StopMovement();
 }
 
 void AAlienAIController::AlienSucceedUpdate(AAlien* Alien)

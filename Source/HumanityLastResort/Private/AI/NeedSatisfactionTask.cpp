@@ -139,7 +139,7 @@ void UNeedSatisfactionTask::Leave(AAlien* Alien)
 	AAlienAIController* AI = Cast<AAlienAIController>(Alien->GetController());
 	if (AI)
 	{
-		AI->MoveToLocation(LeavingPoint->GetActorLocation(), 5.f);
+		AI->MoveToLocation(LeavingPoint->GetActorLocation(), 20.f);
 	}
 
 }

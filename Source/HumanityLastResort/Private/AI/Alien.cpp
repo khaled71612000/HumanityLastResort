@@ -81,13 +81,15 @@ void AAlien::ChangeMood(int MoodVal)
 		Mood = 0;
 	else if (Mood > 100)
 		Mood = 100;
-	AlienSubsystem->UpdateGlobalMood(Mood);
-	AlienSubsystem->UpdateGlobalMoodPercentage();
+
 }
 
 
 void AAlien::RemoveAlien()
 {
+	AlienSubsystem->NumOfAliensRemoved++;
+	AlienSubsystem->UpdateGlobalMood(Mood);
+	AlienSubsystem->UpdateGlobalMoodPercentage();
 	AlienSubsystem->MoveAlienToPool(this);
 	for (int32 i = 0; i < Needs.Num(); i++)
 	{

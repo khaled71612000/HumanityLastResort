@@ -58,20 +58,19 @@ void UAlienSubsystem::UpdateGlobalMood(int32 Amount)
 	GlobalMood += Amount;
 	if (GlobalMood < 0)
 		GlobalMood = 0;
-
 }
 
 void UAlienSubsystem::UpdateGlobalMoodPercentage()
 {
-	if (NumOfAliens)
-		GlobalMoodPercentage = (GlobalMood / (float)(NumOfAliens * 100)) * 100;
+	if (NumOfAliensRemoved)
+		GlobalMoodPercentage = (GlobalMood / (float)(NumOfAliensRemoved * 100)) * 100;
 
 	if (GlobalMoodPercentage > 80)
-		SpawnRateUpdate.Broadcast(1);
+		SpawnRateUpdate.Broadcast(2);
 	else if (GlobalMoodPercentage > 60)
-		SpawnRateUpdate.Broadcast(1);
+		SpawnRateUpdate.Broadcast(4);
 	else
-		SpawnRateUpdate.Broadcast(1);
+		SpawnRateUpdate.Broadcast(6);
 }
 
 int32 UAlienSubsystem::GetGlobalMoodPercentage()

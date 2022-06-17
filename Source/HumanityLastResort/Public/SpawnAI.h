@@ -21,7 +21,7 @@ protected:
 
 private:
 	UPROPERTY(EditAnywhere, Category = "SpawnAlien")
-	int32 InitialSpawnRate = 8;
+	int32 InitialSpawnRate = 2;
 
 	UPROPERTY()
 	class UAlienSubsystem* AlienSubsystem;

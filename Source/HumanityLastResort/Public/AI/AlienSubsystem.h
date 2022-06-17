@@ -27,6 +27,7 @@ class HUMANITYLASTRESORT_API UAlienSubsystem : public UTickableWorldSubsystem
 public:
 	int32 NumOfAlienTypes = 4;
 
+
 	UPROPERTY()
 	TArray<class AAlien*> SpawnedAliens;
 
@@ -35,6 +36,7 @@ public:
 
 	int32 GlobalMood;
 	int32 NumOfAliens;
+	int32 NumOfAliensRemoved = 0; 
 	int32 GlobalMoodPercentage;
 
 	UPROPERTY(BlueprintAssignable)

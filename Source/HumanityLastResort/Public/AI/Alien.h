@@ -7,7 +7,7 @@
 #include "Alien.generated.h"
 
 enum State {
-	Idle, Assigned, Arrived, Waiting, Leaving, Wandering
+	Idle, Assigned, Arrived, Waiting, Leaving, Moving, Wandering
 };
 
 struct Range {
@@ -58,7 +58,7 @@ public:
 	void Wander();
 	void Leave();
 	void ChangeMood(int MoodVal);
-	void AddAlienToPool();
+	void RemoveAlien();
 
 	UFUNCTION(BlueprintCallable)
 		bool GetisDancing();

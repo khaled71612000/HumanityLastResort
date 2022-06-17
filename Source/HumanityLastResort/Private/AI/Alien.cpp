@@ -86,14 +86,15 @@ void AAlien::ChangeMood(int MoodVal)
 }
 
 
-void AAlien::AddAlienToPool()
+void AAlien::RemoveAlien()
 {
 	for (int32 i = 0; i < Needs.Num(); i++)
 	{
 		Needs[i]->CurValue = Needs[i]->MaxCapacity;
 	}
 	AlienState = Idle;
-	AlienSubsystem->AliensPool[AlienType].Aliens.Add(this);
+	Mood = 100;
+	AlienSubsystem->MoveAlienToPool(this);
 }
 
 bool AAlien::GetisDancing()

@@ -43,9 +43,9 @@ private:
 	void Initialize(FSubsystemCollectionBase& Collection) override;
 	TStatId GetStatId() const override;
 	void Tick(float DeltaTime) override;
-	void SubtractAlienInfo(class AAlien* Alien);
 
 public:
+	void MoveAlienToPool(class AAlien* Alien);
 	void UpdateGlobalMood(int32 Amount);
 	void UpdateGlobalMoodPercentage();
 	UFUNCTION(BlueprintCallable)

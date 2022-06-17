@@ -30,7 +30,6 @@ void ASpawnAI::UpdateSpawnTimer(int32 SpawnRate)
 void ASpawnAI::SpawnAnAlien()
 {
 	int32 AlienInd = FMath::RandRange(0,  Aliens.Num()-1);
-	AAlien* AlienToSpawn;
 	if (AlienSubsystem->AliensPool[AlienInd].Aliens.Num() > 0)
 	{
 		AlienToSpawn = AlienSubsystem->AliensPool[AlienInd].Aliens.Last();

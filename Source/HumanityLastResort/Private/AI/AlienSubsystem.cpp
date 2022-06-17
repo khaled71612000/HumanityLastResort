@@ -35,18 +35,19 @@ void UAlienSubsystem::Tick(float DeltaTime)
 		}
 		else if (Alien->AlienState == Leaving)
 		{
-			SubtractAlienInfo(Alien);
+			Alien->AlienState = Moving;
 			Alien->Leave();
 			break;
 		}
 	}
 }
 
-void UAlienSubsystem::SubtractAlienInfo(class AAlien* Alien)
+void UAlienSubsystem::MoveAlienToPool(class AAlien* Alien)
 {
 	NumOfAliens--;
 	UpdateGlobalMood(-Alien->Mood);
 	SpawnedAliens.Remove(Alien);
+	AliensPool[Alien->AlienType].Aliens.Add(Alien);
 }
 
 

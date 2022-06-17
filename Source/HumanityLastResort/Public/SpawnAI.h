@@ -15,17 +15,22 @@ UCLASS()
 class HUMANITYLASTRESORT_API ASpawnAI : public AVolume
 {
 	GENERATED_BODY()
-public:
+
+protected:
+	virtual void BeginPlay() override;
+
+private:
 	UPROPERTY(EditAnywhere, Category = "SpawnAlien")
 	int32 InitialSpawnRate = 8;
 
 	UPROPERTY()
 	class UAlienSubsystem* AlienSubsystem;
-private:
+	UPROPERTY()
+	class AAlien* AlienToSpawn;
+
 	FActorSpawnParameters SpawnParams;
 	FVector SpawnLocation;
 	FRotator SpawnRotation;
-	virtual void BeginPlay() override;
 
 	FTimerHandle SpawnManager;
 	UFUNCTION()

@@ -56,7 +56,6 @@ void UAlienSubsystem::UpdateGlobalMood(int32 Amount)
 	if (GlobalMood < 0)
 		GlobalMood = 0;
 
-	
 }
 
 void UAlienSubsystem::UpdateGlobalMoodPercentage()

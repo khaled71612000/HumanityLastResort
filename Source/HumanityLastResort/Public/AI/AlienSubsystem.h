@@ -26,6 +26,7 @@ class HUMANITYLASTRESORT_API UAlienSubsystem : public UTickableWorldSubsystem
 
 public:
 	int32 NumOfAlienTypes = 4;
+
 	UPROPERTY()
 	TArray<class AAlien*> SpawnedAliens;
 

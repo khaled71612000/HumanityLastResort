@@ -134,6 +134,7 @@ void ACameraPawn::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 	//AddActorWorldOffset(GetCameraPanDirecton() * CamSpeed);
+
 }
 
 // Called to bind functionality to input

@@ -210,10 +210,10 @@ void APlaceable::MouseRelease()
 void APlaceable::DestroyBuildingActor()
 {
 	if (Cast<ABuilding>(this))
-		BuildingSubsystem->RemoveBuilding(this);
+		BuildingSubsystem->RemoveBuilding(Cast<ABuilding>(this));
 
-	//else if (Cast<ARoad>(this))
-	//	RoadSubsystem->RemoveRoad(Cast<ARoad>(this));
+	else if (Cast<ARoad>(this))
+		RoadSubsystem->RemoveRoad(Cast<ARoad>(this));
 
 	if(IISelectionHandler* CurrentSelect = Cast<IISelectionHandler>(this))
 		SelectionSubSystem->RemoveSelectionHandler(CurrentSelect);

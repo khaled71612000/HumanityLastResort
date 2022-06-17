@@ -3,8 +3,6 @@
 
 #include "RoadSubsystem.h"
 #include "Road.h"
-#include "Placeable.h"
-
 
 
 void URoadSubsystem::Initialize(FSubsystemCollectionBase& Collection)
@@ -12,9 +10,9 @@ void URoadSubsystem::Initialize(FSubsystemCollectionBase& Collection)
 	Super::Initialize(Collection);
 }
 
-void URoadSubsystem::AddRoad(ARoad* RoadRef)
+void URoadSubsystem::AddRoad(ARoad* Road)
 {
-	Roads.Add(RoadRef);
+	Roads.Add(Road);
 
 	for (ARoad* curRoad : Roads) 
 	{
@@ -23,10 +21,7 @@ void URoadSubsystem::AddRoad(ARoad* RoadRef)
 
 }
 
-void URoadSubsystem::RemoveRoad(APlaceable* Road)
+void URoadSubsystem::RemoveRoad(ARoad* Road)
 {
-	if (Cast<ARoad>(Road))
-	{
-		Roads.Remove(Cast<ARoad>(Road));
-	}
+	Roads.Remove(Cast<ARoad>(Road));
 }

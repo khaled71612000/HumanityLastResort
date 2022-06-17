@@ -106,7 +106,6 @@ void UNeedSatisfactionTask::SatisfiedAlien()
 	else
 		CurAlien->AlienState = Idle;
 
-	GetWorld()->GetTimerManager().PauseTimer(TaskTimeManager);
 	CurTaskTime = CurNeed->TaskTime;
 	CurBuilding->CurOccupants--;
 }

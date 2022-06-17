@@ -10,20 +10,12 @@ void UBuildingSubsystem::Initialize(FSubsystemCollectionBase& Collection)
 	Buildings.SetNum(NumOfBuildings);
 }
 
-void UBuildingSubsystem::AddBuilding(APlaceable* Building)
+void UBuildingSubsystem::AddBuilding(ABuilding* Building)
 {
-	if (ABuilding* Build = Cast<ABuilding>(Building))
-	{
-		Buildings[Build->BuildingType].buildings.Add(Build);
-	}
-	
+	Buildings[Building->BuildingType].buildings.Add(Building);
 }
 
-void UBuildingSubsystem::RemoveBuilding(APlaceable* Building)
+void UBuildingSubsystem::RemoveBuilding(ABuilding* Building)
 {
-	if (ABuilding* Build = Cast<ABuilding>(Building))
-	{
-		Buildings[Build->BuildingType].buildings.Remove(Build);
-
-	}
+	Buildings[Building->BuildingType].buildings.Remove(Building);
 }

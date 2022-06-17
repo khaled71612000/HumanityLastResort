@@ -20,8 +20,6 @@ public:
 	TArray<class ARoad*> Roads;
 	
 	UFUNCTION(BlueprintCallable)
-	void AddRoad(class ARoad* RoadRef);
-	void RemoveRoad(class APlaceable* Road);
-
-	//void RemoveRoad(ARoad* RoadRef);
+	void AddRoad(class ARoad* Road);
+	void RemoveRoad(class ARoad* Road);
 };

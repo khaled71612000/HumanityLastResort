@@ -30,6 +30,6 @@ public:
 	TArray<FBuildingArray> Buildings;
 	void Initialize(FSubsystemCollectionBase& Collection) override;
 	UFUNCTION(BlueprintCallable)
-	void AddBuilding(class APlaceable* Building);
-	void RemoveBuilding(class APlaceable* Building);
+	void AddBuilding(class ABuilding* Building);
+	void RemoveBuilding(class ABuilding* Building);
 };

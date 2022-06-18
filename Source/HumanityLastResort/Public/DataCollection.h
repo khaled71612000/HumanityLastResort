@@ -31,7 +31,7 @@ struct FBGBuildBank : public FTableRowBase
 		FString PlaceableType;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-		UStaticMesh* Mesh;
+		USkeletalMesh* Mesh;
 };
 UCLASS()
 class HUMANITYLASTRESORT_API UDataCollection : public UObject

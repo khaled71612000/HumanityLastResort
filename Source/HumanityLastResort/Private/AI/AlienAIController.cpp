@@ -19,7 +19,7 @@ void AAlienAIController::OnMoveCompleted(FAIRequestID RequestID, const FPathFoll
 	}
 	else if(Alien->AlienState == Wandering)
 	{
-		if (Alien->NumOfFailedTasks <= 0 || Alien->NumOfTasks <=0)
+		if (Alien->CurFailedTasks <= 0 || Alien->CurTasks <=0)
 			Alien->AlienState = Leaving;
 		else
 			Alien->AlienState = Idle;
@@ -50,7 +50,7 @@ void AAlienAIController::OnMoveCompleted(FAIRequestID RequestID, const FPathFoll
 
 void AAlienAIController::AlienSucceedUpdate(AAlien* Alien)
 {
-	Alien->NumOfTasks--;
+	Alien->CurTasks--;
 	Alien->ChangeMood(Alien->GoodMoodVal);
 
 	CurBuilding->AddProfit();
@@ -62,8 +62,8 @@ void AAlienAIController::AlienSucceedUpdate(AAlien* Alien)
 
 void AAlienAIController::AlienFailedUpdate(AAlien* Alien)
 {
-	Alien->NumOfFailedTasks--;
-	if (Alien->NumOfFailedTasks <= 0)
+	Alien->CurFailedTasks--;
+	if (Alien->CurFailedTasks <= 0)
 		Alien->AlienState = Leaving;
 
 	Alien->ChangeMood(-Alien->BadMoodVal);

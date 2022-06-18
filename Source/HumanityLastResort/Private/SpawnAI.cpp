@@ -34,6 +34,8 @@ void ASpawnAI::SpawnAllAliens()
 		for (int32 j = 0; j < NumOfAllAliensToSpawn; j++)
 		{
 			AliensToSpawn[i].AlienType.Add(GetWorld()->SpawnActorDeferred<AAlien>(Aliens[i], { SpawnRotation, SpawnLocation, SpawnScale }));
+			AliensToSpawn[i].AlienType[j]->SetActorEnableCollision(false);
+			AliensToSpawn[i].AlienType[j]->SetActorHiddenInGame(true);
 		}
 	}
 }
@@ -52,20 +54,22 @@ void ASpawnAI::SpawnAnAlien()
 	int32 AlienInd = FMath::RandRange(0, Aliens.Num() - 1);
 	if (AlienSubsystem->AliensPool[AlienInd].Aliens.Num() > 0)
 	{
+		//UE_LOG(LogTemp, Warning, TEXT("From Pool: %d"), AlienInd);
 		AlienToSpawn = AlienSubsystem->AliensPool[AlienInd].Aliens.Last();
-		AlienToSpawn->SetActorEnableCollision(true);
-		AlienToSpawn->SetActorHiddenInGame(false);
-		AlienToSpawn->SetActorLocation(SpawnLocation);
 		AlienSubsystem->AliensPool[AlienInd].Aliens.Pop();
 	}
 	else
 	{
+		//UE_LOG(LogTemp, Warning, TEXT("From Array: %d"), AlienInd);
+
 		AlienToSpawn = AliensToSpawn[AlienInd].AlienType[SpawnAlienTypeInd[AlienInd]];
-		InitAlien(AlienToSpawn);
 		AlienToSpawn->FinishSpawning({ SpawnRotation, SpawnLocation, SpawnScale });
-		AlienToSpawn->GetComponents(AlienToSpawn->Needs);
 		SpawnAlienTypeInd[AlienInd]++;
+		InitAlienComponents(AlienToSpawn);
+		//UE_LOG(LogTemp, Warning, TEXT("Ind: %d"), SpawnAlienTypeInd[AlienInd]);
+
 	}
+	InitAlien(AlienToSpawn);
 	AlienSubsystem->SpawnedAliens.Add(AlienToSpawn);
 	AlienSubsystem->NumOfAliens++;
 
@@ -73,9 +77,19 @@ void ASpawnAI::SpawnAnAlien()
 
 void ASpawnAI::InitAlien(AAlien* Alien)
 {
+	Alien->SetActorLocation(SpawnLocation);
+	Alien->SetActorEnableCollision(true);
+	Alien->SetActorHiddenInGame(false);
+	Alien->CurTasks = Alien->NumOfTasks;
+	Alien->CurFailedTasks = Alien->NumOfFailedTasks;
 	Alien->AlienState = Idle;
 	Alien->isDancing = false;
 	Alien->Mood = 0;
+}
+
+void ASpawnAI::InitAlienComponents(AAlien* Alien)
+{
+	AlienToSpawn->GetComponents(AlienToSpawn->Needs);
 	Alien->Task = NewObject<UNeedSatisfactionTask>(this);
 	Alien->Task->CustomBeginPlay();
 	AlienSubsystem = GetWorld()->GetSubsystem<UAlienSubsystem>();

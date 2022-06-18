@@ -38,6 +38,7 @@ private:
 
 	void SpawnAllAliens();
 	void InitAlien(class AAlien* Alien);
+	void InitAlienComponents(class AAlien* Alien);
 
 	UPROPERTY(EditAnywhere, Category = "SpawnAlien")
 		int32 InitialSpawnRate = 2;
@@ -54,7 +55,7 @@ private:
 
 	FTimerHandle SpawnManager;
 	UFUNCTION()
-		void UpdateSpawnTimer(int32 SpawnRate);
+	void UpdateSpawnTimer(int32 SpawnRate);
 	void SpawnAnAlien();
 
 	UPROPERTY(EditAnywhere, meta = (AllowPrivateAccess = "true"))

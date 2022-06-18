@@ -42,6 +42,8 @@ public:
 
 	int32 AlienType;
 	State AlienState;
+	int32 CurTasks;
+	int32 CurFailedTasks;
 
 	UPROPERTY()
 	class UNeedSatisfactionTask* Task;

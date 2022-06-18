@@ -76,7 +76,10 @@ bool UNeedSatisfactionTask::CheckAccessibility(FVector Start, FVector End)
 void UNeedSatisfactionTask::Wait()
 {
 	CurTaskTime = CurNeed->TaskTime;
-	
+	if (CurBuilding->BuildingType != Casino) {
+		CurAlien->SetActorHiddenInGame(false);
+		CurAlien->SetActorEnableCollision(true);
+	}
 	const UWorld* const world = GetWorld();
 
 	if (ensure(world != nullptr))
@@ -100,11 +103,15 @@ void UNeedSatisfactionTask::DoTask()
 
 void UNeedSatisfactionTask::SatisfiedAlien()
 {
+	if (CurBuilding->BuildingType != Casino) {
+		CurAlien->SetActorHiddenInGame(true);
+		CurAlien->SetActorEnableCollision(false);
+	}
 	if (CurAlien->isDancing == true)
 		CurAlien->isDancing = false;
 
 	CurNeed->CurValue = CurNeed->MaxCapacity;
-	if(CurAlien->NumOfTasks == 0 || CurAlien->NumOfFailedTasks == 0)
+	if(CurAlien->CurTasks == 0 || CurAlien->CurFailedTasks == 0)
 		CurAlien->AlienState = Leaving;
 	else
 		CurAlien->AlienState = Idle;
@@ -119,7 +126,7 @@ void UNeedSatisfactionTask::Wander(AAlien* Alien)
 {
 	int32 NumOfRoads = RoadSubsystem->Roads.Num();
 
-	if (NumOfRoads > 1 && NumOfRoads < 900)
+	if (NumOfRoads > 0)
 	{
 		int32 RandRoad = FMath::RandRange(0, NumOfRoads - 1);
 

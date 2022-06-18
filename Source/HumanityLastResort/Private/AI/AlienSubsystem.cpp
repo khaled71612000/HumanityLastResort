@@ -8,7 +8,7 @@ void UAlienSubsystem::Initialize(FSubsystemCollectionBase& Collection)
 {
 	Super::Initialize(Collection);
 	AliensPool.SetNum(NumOfAlienTypes);
-	GlobalMood = 0;
+	GlobalMood = 75;
 	NumOfAliens = 0;
 }
 

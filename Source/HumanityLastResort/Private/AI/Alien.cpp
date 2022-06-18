@@ -79,7 +79,7 @@ void AAlien::ChangeMood(int MoodVal)
 void AAlien::RemoveAlien()
 {
 	this->SetActorLocation({ 0, -100, 0 });
-	//AlienSubsystem->UpdateGlobalMood(Mood);
+	AlienSubsystem->UpdateGlobalMood(Mood);
 	for (int32 i = 0; i < Needs.Num(); i++)
 	{
 		GetWorld()->GetTimerManager().ClearTimer(Needs[i]->TimerManager);

@@ -14,10 +14,6 @@ class HUMANITYLASTRESORT_API ACameraPawn : public APawn
 public:	
 	ACameraPawn();
 
-	virtual void Tick(float DeltaTime) override;
-
-	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
-
 	UPROPERTY()
 		USceneComponent* RootScene;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
@@ -29,21 +25,13 @@ public:
 		float CamSpeed = 8;
 	UPROPERTY(Category = "Panning", EditAnywhere)
 		float Margin = 50;
-
+	UPROPERTY()
 	APlayerController* Player;
-	FVector GetCameraPanDirecton();
+
+	UPROPERTY()
 	int32 ScreenSizeX;
+	UPROPERTY()
 	int32 ScreenSizeY;
-
-	UFUNCTION(BlueprintCallable, Category = "Movement")
-		void OrbitRotate(float Value);
-	UFUNCTION(BlueprintCallable, Category = "Movement")
-		void CameraPitch(float Value);
-	UFUNCTION(BlueprintCallable, Category = "Movement")
-		void MoveForward(float Value);
-	UFUNCTION(BlueprintCallable, Category = "Movement")
-		void MoveRight(float Value);
-
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Movement")
 		float orbitSpeed = 1;
@@ -57,6 +45,22 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "BuildTransform")
 		class APlaceable* SelectedToken;
+
+	UFUNCTION(BlueprintCallable, Category = "Movement")
+		void OrbitRotate(float Value);
+	UFUNCTION(BlueprintCallable, Category = "Movement")
+		void CameraPitch(float Value);
+	UFUNCTION(BlueprintCallable, Category = "Movement")
+		void MoveForward(float Value);
+	UFUNCTION(BlueprintCallable, Category = "Movement")
+		void MoveRight(float Value);
+	UFUNCTION(BlueprintCallable, Category = "Movement")
+		FVector GetCameraPanDirecton();
+
+	virtual void Tick(float DeltaTime) override;
+
+	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+
 
 protected:
 	virtual void BeginPlay() override;

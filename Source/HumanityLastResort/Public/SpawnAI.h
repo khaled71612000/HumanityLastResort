@@ -35,28 +35,24 @@ private:
 	int32 NumOfAllAliensToSpawn = 20;
 	int32 IndOfAlienToSpawn = 0;
 	int32 NumOfAliensType = 4;
-
-	void SpawnAllAliens();
+	FActorSpawnParameters SpawnParams;
+	FVector SpawnLocation;
+	FRotator SpawnRotation;
+	FVector SpawnScale;
+	FTimerHandle SpawnManager;
 
 	UPROPERTY(EditAnywhere, Category = "SpawnAlien")
 	int32 InitialSpawnRate = 2;
 
+	UPROPERTY(EditAnywhere, meta = (AllowPrivateAccess = "true"))
+		TArray<TSubclassOf<class AAlien>> Aliens;
 	UPROPERTY()
 	class UAlienSubsystem* AlienSubsystem;
 	UPROPERTY()
 	class AAlien* AlienToSpawn;
 
-	FActorSpawnParameters SpawnParams;
-	FVector SpawnLocation;
-	FRotator SpawnRotation;
-	FVector SpawnScale;
-
-	FTimerHandle SpawnManager;
-	UFUNCTION()
-	void UpdateSpawnTimer(int32 SpawnRate);
 	void SpawnAnAlien();
-
-	UPROPERTY(EditAnywhere, meta = (AllowPrivateAccess = "true"))
-	TArray<TSubclassOf<class AAlien>> Aliens;
-
+	void SpawnAllAliens();
+	UFUNCTION()
+		void UpdateSpawnTimer(int32 SpawnRate);
 };

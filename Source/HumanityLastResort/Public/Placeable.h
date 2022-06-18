@@ -13,35 +13,38 @@ class HUMANITYLASTRESORT_API APlaceable : public AActor, public IPlacementInterf
 	GENERATED_BODY()
 
 public:
+	FVector OriginSklet, HalfBoxSklet;
+	float sphereRad;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Respawn")
+		FVector RespawnLoc = FVector(200, 5780, 20);
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Cells")
+		FText NameView;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
+		class USkeletalMeshComponent* SkeletalMeshComponent;
+
+	void ClearFloor();
+	
 	UFUNCTION(BlueprintCallable, Category = "Functions")
 		void LockPosition(bool block);
 	UFUNCTION(BlueprintCallable, Category = "Functions")
 		void DestroyBuildingActor();
 
-	virtual void MouseMove(FVector position) override;
-	virtual void MouseRelease() override;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Respawn")
-		FVector RespawnLoc = FVector(200, 7800, 190);
-
-	void ClearFloor();
-	//FVector NewBoxSize;
-	FVector OriginSklet, HalfBoxSklet;
-	float sphereRad;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Cells")
-		FText NameView;
-	//UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
-	//	class UStaticMeshComponent* StaticMeshComponent;
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
-		class USkeletalMeshComponent* SkeletalMeshComponent;
 protected:
 	APlaceable();
 
-	virtual void BeginPlay() override;
+	bool isDragging = false;
+	FVector oldPos;
 
-	UFUNCTION(BlueprintCallable, Category = "BuildTransform")
-		void ResetRotation();
+
+	UPROPERTY()
+	class ACameraPawn* MyPawn;
+	UPROPERTY()
+		class URoadSubsystem* RoadSubsystem;
+	UPROPERTY()
+		class USelectionSubsystem* SelectionSubSystem;
+	UPROPERTY()
+	class UBuildingSubsystem* BuildingSubsystem;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
 		class USceneComponent* SceneComponent;
@@ -50,12 +53,12 @@ protected:
 
 	UFUNCTION()
 		void OnClicked(UPrimitiveComponent* ClickedComp, FKey ButtonClicked);
+	UFUNCTION(BlueprintCallable, Category = "BuildTransform")
+		void ResetRotation();
 
-	bool isDragging = false;
-	class ACameraPawn* MyPawn;
-	FVector oldPos;
-	class UBuildingSubsystem* BuildingSubsystem;
-	class URoadSubsystem* RoadSubsystem;
-	class USelectionSubsystem* SelectionSubSystem;
+	virtual void MouseMove(FVector position) override;
+	virtual void MouseRelease() override;
+	virtual void BeginPlay() override;
+
 
 };

@@ -15,6 +15,11 @@ class HUMANITYLASTRESORT_API ANewGrid : public AActor
 public:
 	ANewGrid();
 
+	TArray<FVector> GridPoints;
+
+	FVector closestPos;
+	float closestDistance;
+
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Mesh")
 		UStaticMeshComponent* SphereMesh;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Cells")
@@ -24,16 +29,11 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Cells")
 		TSubclassOf<class AActor> ActorToSpawn;
 
-	TArray<FVector> GridPoints;
-
-
 	UFUNCTION(BlueprintCallable, Category = "Cells")
 		void PopulateGrid();
 	UFUNCTION(BlueprintCallable, Category = "Cells")
 		FVector GetClosestPosition(FVector InPosition);
 
-	FVector closestPos;
-	float closestDistance;
 
 	virtual void PreSave(const class ITargetPlatform* TargetPlatform);
 

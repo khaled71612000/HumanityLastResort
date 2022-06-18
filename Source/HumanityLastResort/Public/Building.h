@@ -28,6 +28,10 @@ class HUMANITYLASTRESORT_API ABuilding : public APlaceable, public IISelectionHa
 {
 	GENERATED_BODY()
 public:
+
+	void AddProfit();
+	void SubtractLoss();
+
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Properties")
 	TEnumAsByte<BuildingType> BuildingType;
 	UPROPERTY(EditDefaultsOnly, Category = "Properties")
@@ -40,11 +44,8 @@ public:
 	int32 Loss;
 	UPROPERTY()
 	class UEconomySubsystem* EconomySubsystem;
-	UPROPERTY()
 	class USelectionSubsystem* SelectionSubSystem;
 
-	void AddProfit();
-	void SubtractLoss();
 	virtual APlaceable* Selected(const FHitResult& selectionInfoRay) override;
 	virtual void HightLight() override;
 

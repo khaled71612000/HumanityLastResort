@@ -21,18 +21,9 @@ APlaceable::APlaceable()
 	SkeletalMeshComponent = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("SkeletalMeshComponent"));
 	RootComponent = SkeletalMeshComponent;
 
-	//StaticMeshComponent = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Static Mesh"));
-	//StaticMeshComponent->SetupAttachment(SkeletalMeshComponent);
-
-
 	SceneComponent = CreateDefaultSubobject<USceneComponent>(TEXT("SceneComponent"));
-	//SceneComponent->SetupAttachment(StaticMeshComponent);
 	SceneComponent->SetupAttachment(SkeletalMeshComponent);
 
-	//StaticMeshComponent->bIgnoreRadialForce = true;
-	//StaticMeshComponent->bIgnoreRadialImpulse = true;
-	//StaticMeshComponent->SetLinearDamping(1.f);
-	//StaticMeshComponent->SetAngularDamping(1.f);
 }
 
 void APlaceable::BeginPlay()
@@ -41,7 +32,6 @@ void APlaceable::BeginPlay()
 	BuildingSubsystem = GetWorld()->GetSubsystem<UBuildingSubsystem>();
 	RoadSubsystem = GetWorld()->GetSubsystem<URoadSubsystem>();
 
-	//StaticMeshComponent->OnClicked.AddDynamic(this, &APlaceable::OnClicked);
 	if(SkeletalMeshComponent)
 	SkeletalMeshComponent->OnClicked.AddDynamic(this, &APlaceable::OnClicked);
 
@@ -49,19 +39,13 @@ void APlaceable::BeginPlay()
 
 	FTimerHandle StatManager;
 			if (!isDragging && SkeletalMeshComponent) {
-				//SkeletalMeshComponent->GetBodyInstance()->bLockXTranslation = true;
-				//SkeletalMeshComponent->GetBodyInstance()->bLockYTranslation = true;
-				//SkeletalMeshComponent->GetBodyInstance()->bLockZTranslation = true;
-				//SkeletalMeshComponent->GetBodyInstance()->SetDOFLock(EDOFMode::SixDOF);
 				SkeletalMeshComponent->SetMobility(EComponentMobility::Static);
 				SceneComponent->SetMobility(EComponentMobility::Static);
 			}
 
-	/*StaticMeshComponent->GetLocalBounds(Min, Max);*/
 			if(SkeletalMeshComponent)
 	UKismetSystemLibrary::GetComponentBounds(SkeletalMeshComponent, OriginSklet , HalfBoxSklet , sphereRad);
-	//NewBoxSize = (Max - Min) / 2;
-	//NewBoxSize.Z = 0;
+
 	SelectionSubSystem = GetWorld()->GetSubsystem<USelectionSubsystem>();
 	HalfBoxSklet.Z = 1;
 }
@@ -70,12 +54,8 @@ void APlaceable::BeginPlay()
 void APlaceable::OnClicked(UPrimitiveComponent* ClickedComp, FKey ButtonClicked)
 {
 	isDragging = true;
-	//UE_LOG(LogTemp, Error, TEXT("HELLO"));
 	if (SkeletalMeshComponent) {
-	//SkeletalMeshComponent->GetBodyInstance()->bLockXTranslation = false;
-	//SkeletalMeshComponent->GetBodyInstance()->bLockYTranslation = false;
-	//SkeletalMeshComponent->GetBodyInstance()->bLockZTranslation = false;
-	//SkeletalMeshComponent->GetBodyInstance()->SetDOFLock(EDOFMode::Default);
+
 	SkeletalMeshComponent->SetMobility(EComponentMobility::Movable);
 	SceneComponent->SetMobility(EComponentMobility::Movable);
 
@@ -87,10 +67,7 @@ void APlaceable::LockPosition(bool block)
 		if (SkeletalMeshComponent) {
 	if (SkeletalMeshComponent->GetBodyInstance()->bLockXTranslation) {
 
-			//SkeletalMeshComponent->GetBodyInstance()->bLockXTranslation = false;
-			//SkeletalMeshComponent->GetBodyInstance()->bLockYTranslation = false;
-			//SkeletalMeshComponent->GetBodyInstance()->bLockZTranslation = false;
-			//SkeletalMeshComponent->GetBodyInstance()->SetDOFLock(EDOFMode::Default);
+
 			SkeletalMeshComponent->SetMobility(EComponentMobility::Movable);
 			SceneComponent->SetMobility(EComponentMobility::Movable);
 
@@ -99,10 +76,6 @@ void APlaceable::LockPosition(bool block)
 	else {
 			if (SkeletalMeshComponent) {
 
-				//SkeletalMeshComponent->GetBodyInstance()->bLockXTranslation = true;
-				//SkeletalMeshComponent->GetBodyInstance()->bLockYTranslation = true;
-				//SkeletalMeshComponent->GetBodyInstance()->bLockZTranslation = true;
-				//SkeletalMeshComponent->GetBodyInstance()->SetDOFLock(EDOFMode::SixDOF);
 				SkeletalMeshComponent->SetMobility(EComponentMobility::Static);
 				SceneComponent->SetMobility(EComponentMobility::Static);
 
@@ -162,14 +135,15 @@ void APlaceable::ClearFloor()
 
 	FVector origin, boxExtent;
 	GetActorBounds(false, origin, boxExtent);
-	boxExtent.Z = 1.f;
+	boxExtent.Z = 2;
+	boxExtent *= 1.6;
 
 	TArray<AActor*> ActorsToIgnore;
 	ActorsToIgnore.Add(this);
 	TArray<FHitResult> HitArray;
 
 	bool Hiting = UKismetSystemLibrary::BoxTraceMulti(GetWorld(), Start, End, boxExtent,
-		GetActorRotation(), UEngineTypes::ConvertToTraceType(ECC_Visibility),
+		GetActorRotation(), UEngineTypes::ConvertToTraceType(ECC_Pawn),
 		false, ActorsToIgnore, EDrawDebugTrace::None, HitArray,
 		true, FLinearColor::Green, FLinearColor::Yellow, 0.1f
 	);
@@ -195,11 +169,6 @@ void APlaceable::MouseRelease()
 	oldPos = GetActorLocation();
 			if (!isDragging) {
 				if (SkeletalMeshComponent) {
-
-					//SkeletalMeshComponent->GetBodyInstance()->bLockXTranslation = true;
-					//SkeletalMeshComponent->GetBodyInstance()->bLockYTranslation = true;
-					//SkeletalMeshComponent->GetBodyInstance()->bLockZTranslation = true;
-					//SkeletalMeshComponent->GetBodyInstance()->SetDOFLock(EDOFMode::SixDOF);
 					SkeletalMeshComponent->SetMobility(EComponentMobility::Static);
 					SceneComponent->SetMobility(EComponentMobility::Static);
 

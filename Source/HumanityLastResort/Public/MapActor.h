@@ -19,7 +19,6 @@ public:
 		void BuildMap(const FVector CenterLocation, const int X, const int Y);
 
 protected:
-	virtual void BeginPlay() override;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
 	FVector2D MapSize;
@@ -31,5 +30,8 @@ protected:
 	TSoftClassPtr<ACellActor> CellClass;
 	UPROPERTY(EditAnywhere, Category = "Cell Size")
 		float SectorSize = 100.f;
+
+	virtual void BeginPlay() override;
+
 
 };

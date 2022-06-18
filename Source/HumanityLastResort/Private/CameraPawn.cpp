@@ -48,20 +48,37 @@ void ACameraPawn::BeginPlay()
 	FInputModeGameAndUI inputMode;
 	inputMode.SetHideCursorDuringCapture(false);
 	Player->SetInputMode(inputMode);
-
 }
 
 FVector ACameraPawn::GetCameraPanDirecton() {
-	float MousePosX = 0;
-	float MousePosY = 0;
-	
+	/*float MousePosX;
+	float MousePosY;
+
 	float CamDirectonX = 0;
 	float CamDirectonY = 0;
 
 
 	Player->GetMousePosition(MousePosX, MousePosY);
 
-	return FVector(CamDirectonX, CamDirectonY, 0);
+	if (MousePosX < Margin) {
+		CamDirectonY = -1;
+	}
+
+	if (MousePosY < Margin) {
+		CamDirectonX = 1;
+	}
+
+	if (MousePosX > ScreenSizeX - Margin) {
+		CamDirectonY = 1;
+	}
+
+	if (MousePosY > ScreenSizeY - Margin) {
+		CamDirectonX = -1;
+	}*/
+
+	//return FVector(CamDirectonX, CamDirectonY, 0);
+	return FVector(0, 0, 0);
+
 
 }
 

@@ -17,7 +17,7 @@ public:
 
 	ARoad();
 
-	virtual void BeginPlay() override;
+	FVector RoadStartRayLoc, RoadEndRayNorthLoc, RoadEndRayWestLoc, RoadEndRayEastLoc, RoadEndRaySouthLoc;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "PathWays")
 		class UStaticMeshComponent* PathWayNorth;
@@ -27,9 +27,11 @@ public:
 		class UStaticMeshComponent* PathWaySouth;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "PathWays")
 		class UStaticMeshComponent* PathWayWest;
+
+
 	UFUNCTION(BlueprintCallable)
 		void UpdateSideOfRoadTile();
+	virtual void BeginPlay() override;
 
-	FVector RoadStartRayLoc, RoadEndRayNorthLoc, RoadEndRayWestLoc, RoadEndRayEastLoc, RoadEndRaySouthLoc;
 };
 	

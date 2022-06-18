@@ -18,11 +18,11 @@ public:
 	AAEGameModeBase();
 
 protected:
+	UPROPERTY(Category = "Config", EditAnywhere, BlueprintReadWrite)
+		TArray<TSubclassOf<class APlaceable>> building;
 	virtual void BeginPlay() override;
 	virtual void Tick(float DeltaTime) override;
 
-	UPROPERTY(Category = "Config", EditAnywhere, BlueprintReadWrite)
-		TArray<TSubclassOf<class APlaceable>> building;
 	
 
 };

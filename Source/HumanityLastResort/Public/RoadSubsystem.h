@@ -13,13 +13,14 @@ UCLASS()
 class HUMANITYLASTRESORT_API URoadSubsystem : public UWorldSubsystem
 {
 	GENERATED_BODY()
-protected:
-	void Initialize(FSubsystemCollectionBase& Collection) override;
 public:
 	UPROPERTY()
-	TArray<class ARoad*> Roads;
-	
+		TArray<class ARoad*> Roads;
+
 	UFUNCTION(BlueprintCallable)
-	void AddRoad(class ARoad* Road);
+		void AddRoad(class ARoad* Road);
+	UFUNCTION(BlueprintCallable)
 	void RemoveRoad(class ARoad* Road);
+protected:
+	void Initialize(FSubsystemCollectionBase& Collection) override;
 };

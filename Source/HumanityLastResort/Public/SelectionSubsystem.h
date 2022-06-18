@@ -19,7 +19,6 @@ class HUMANITYLASTRESORT_API USelectionSubsystem : public UWorldSubsystem
 public:
 		void RegisterSelectionHandler( IISelectionHandler* handler);
 		void RemoveSelectionHandler(IISelectionHandler* handler);
-
 		APlaceable* TrySelect(const FHitResult& selectionInfoRay);
 
 };

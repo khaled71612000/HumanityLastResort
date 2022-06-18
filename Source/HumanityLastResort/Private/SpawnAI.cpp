@@ -4,9 +4,11 @@
 #include "AI/Alien.h"
 #include "AI/AlienSubsystem.h"
 #include "TimerManager.h"
+#include "AI/NeedSatisfactionTask.h"
+#include "AI/NeedComponent.h"
 
 
-void ASpawnAI::BeginPlay() 
+void ASpawnAI::BeginPlay()
 {
 	AliensToSpawn.SetNum(NumOfAliensType);
 	SpawnAlienTypeInd.Init(0, NumOfAliensType);
@@ -36,6 +38,7 @@ void ASpawnAI::SpawnAllAliens()
 	}
 }
 
+
 void ASpawnAI::UpdateSpawnTimer(int32 SpawnRate)
 {
 	GetWorld()->GetTimerManager().ClearTimer(SpawnManager);
@@ -46,7 +49,7 @@ void ASpawnAI::UpdateSpawnTimer(int32 SpawnRate)
 
 void ASpawnAI::SpawnAnAlien()
 {
-	int32 AlienInd = FMath::RandRange(0,  Aliens.Num()-1);
+	int32 AlienInd = FMath::RandRange(0, Aliens.Num() - 1);
 	if (AlienSubsystem->AliensPool[AlienInd].Aliens.Num() > 0)
 	{
 		AlienToSpawn = AlienSubsystem->AliensPool[AlienInd].Aliens.Last();
@@ -57,12 +60,23 @@ void ASpawnAI::SpawnAnAlien()
 	}
 	else
 	{
-		AliensToSpawn[AlienInd].AlienType[SpawnAlienTypeInd[AlienInd]]->FinishSpawning({ SpawnRotation, SpawnLocation, SpawnScale });
 		AlienToSpawn = AliensToSpawn[AlienInd].AlienType[SpawnAlienTypeInd[AlienInd]];
+		InitAlien(AlienToSpawn);
+		AlienToSpawn->FinishSpawning({ SpawnRotation, SpawnLocation, SpawnScale });
+		AlienToSpawn->GetComponents(AlienToSpawn->Needs);
 		SpawnAlienTypeInd[AlienInd]++;
 	}
 	AlienSubsystem->SpawnedAliens.Add(AlienToSpawn);
 	AlienSubsystem->NumOfAliens++;
-	AlienSubsystem->GlobalMood += 100;
-	
+
+}
+
+void ASpawnAI::InitAlien(AAlien* Alien)
+{
+	Alien->AlienState = Idle;
+	Alien->isDancing = false;
+	Alien->Mood = 0;
+	Alien->Task = NewObject<UNeedSatisfactionTask>(this);
+	Alien->Task->CustomBeginPlay();
+	AlienSubsystem = GetWorld()->GetSubsystem<UAlienSubsystem>();
 }

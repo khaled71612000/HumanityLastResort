@@ -84,9 +84,18 @@ void AAlien::RemoveAlien()
 	{
 		GetWorld()->GetTimerManager().ClearTimer(Needs[i]->TimerManager);
 		Needs[i]->CurValue = Needs[i]->MaxCapacity;
+		if (Needs[i]->Needed)
+		{
+			Needs[i]->Needed = false;
+			Needs[i]->DecrementNeededVal();
+		}
 	}
 	AlienState = Idle;
 	AlienSubsystem->MoveAlienToPool(this);
+}
+
+void AAlien::RemoveNeededNeeds()
+{
 }
 
 bool AAlien::GetisDancing()

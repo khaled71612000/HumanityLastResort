@@ -61,6 +61,7 @@ public:
 	void Leave();
 	void ChangeMood(int MoodVal);
 	void RemoveAlien();
+	void RemoveNeededNeeds();
 
 	UFUNCTION(BlueprintCallable)
 		bool GetisDancing();

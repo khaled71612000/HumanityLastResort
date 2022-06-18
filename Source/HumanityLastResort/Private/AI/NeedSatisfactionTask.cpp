@@ -111,6 +111,7 @@ void UNeedSatisfactionTask::SatisfiedAlien()
 		CurAlien->isDancing = false;
 
 	CurNeed->CurValue = CurNeed->MaxCapacity;
+	CurNeed->Needed = false;
 	if(CurAlien->CurTasks == 0 || CurAlien->CurFailedTasks == 0)
 		CurAlien->AlienState = Leaving;
 	else

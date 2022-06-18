@@ -40,6 +40,8 @@ public:
 	UPROPERTY()
 	FTimerHandle TimerManager;
 
+	bool Needed;
+
 private:
 	void OnRegister() override;
 
@@ -49,5 +51,5 @@ protected:
 public:
 	void StartDecreasingValue();
 	void DecreaseValue();
-		
+	void DecrementNeededVal();
 };

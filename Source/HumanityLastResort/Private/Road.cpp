@@ -41,6 +41,7 @@ ARoad::ARoad()
 void ARoad::BeginPlay()
 {
 	Super::BeginPlay();
+	world = GetWorld();
 	RoadStartRayLoc = GetActorLocation();
 	RoadEndRayNorthLoc = RoadStartRayLoc + FVector(230,0,0);
 	RoadEndRaySouthLoc = RoadStartRayLoc + FVector(-230, 0, 0);
@@ -55,7 +56,7 @@ void ARoad::UpdateSideOfRoadTile()
 	TraceParams.AddIgnoredActor(this);
 	bool bHit;
 
-	 bHit = GetWorld()->LineTraceSingleByChannel(Hit, RoadStartRayLoc, RoadEndRayNorthLoc, ECC_Visibility, TraceParams);
+	 bHit = world->LineTraceSingleByChannel(Hit, RoadStartRayLoc, RoadEndRayNorthLoc, ECC_Visibility, TraceParams);
 
 	if (Hit.GetActor()) {
 		PathWayWest->SetVisibility(false);
@@ -64,7 +65,7 @@ void ARoad::UpdateSideOfRoadTile()
 		PathWayWest->SetVisibility(true);
 	}
 
-	 bHit = GetWorld()->LineTraceSingleByChannel(Hit, RoadStartRayLoc, RoadEndRaySouthLoc, ECC_Visibility, TraceParams);
+	 bHit = world->LineTraceSingleByChannel(Hit, RoadStartRayLoc, RoadEndRaySouthLoc, ECC_Visibility, TraceParams);
 
 	if (Hit.GetActor()) {
 		PathWayEast->SetVisibility(false);
@@ -73,7 +74,7 @@ void ARoad::UpdateSideOfRoadTile()
 		PathWayEast->SetVisibility(true);
 	}
 
-	bHit = GetWorld()->LineTraceSingleByChannel(Hit, RoadStartRayLoc, RoadEndRayEastLoc, ECC_Visibility, TraceParams);
+	bHit = world->LineTraceSingleByChannel(Hit, RoadStartRayLoc, RoadEndRayEastLoc, ECC_Visibility, TraceParams);
 
 	if (Hit.GetActor()) {
 		PathWayNorth->SetVisibility(false);
@@ -82,7 +83,7 @@ void ARoad::UpdateSideOfRoadTile()
 		PathWayNorth->SetVisibility(true);
 	}
 
-	bHit = GetWorld()->LineTraceSingleByChannel(Hit, RoadStartRayLoc, RoadEndRayWestLoc, ECC_Visibility, TraceParams);
+	bHit = world->LineTraceSingleByChannel(Hit, RoadStartRayLoc, RoadEndRayWestLoc, ECC_Visibility, TraceParams);
 
 	if (Hit.GetActor()) {
 		PathWaySouth->SetVisibility(false);

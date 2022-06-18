@@ -21,9 +21,10 @@ AGameController::AGameController() {
 
 void AGameController::BeginPlay()
 {
-	SPSubsystem = GetWorld()->GetSubsystem<USPSubsystem>();
-	SelectionSubSystem = GetWorld()->GetSubsystem<USelectionSubsystem>();
-	FoundGrid = UGameplayStatics::GetActorOfClass(GetWorld(), ANewGrid::StaticClass());
+	world = GetWorld();
+	SPSubsystem = world->GetSubsystem<USPSubsystem>();
+	SelectionSubSystem = world->GetSubsystem<USelectionSubsystem>();
+	FoundGrid = UGameplayStatics::GetActorOfClass(world, ANewGrid::StaticClass());
 
 	if (FoundGrid) {
 		GridPtr = Cast<ANewGrid>(FoundGrid);
@@ -49,7 +50,7 @@ void AGameController::GetCurrentBuilding(const FVector& intersectPoint)
 {
 	TArray<AActor*> actorPtrs;
 
-	UGameplayStatics::GetAllActorsWithInterface(GetWorld(),
+	UGameplayStatics::GetAllActorsWithInterface(world,
 		UPlacementInterface::StaticClass(), actorPtrs);
 
 	if (actorPtrs.Num() != 0) {
@@ -75,7 +76,7 @@ void AGameController::OnLeftMouseClicked()
 {
 	FHitResult Hit;
 	FCollisionQueryParams TraceParams;
-	bool bHit = GetWorld()->LineTraceSingleByChannel(Hit, start, end, ECC_Visibility, TraceParams);
+	bool bHit = world->LineTraceSingleByChannel(Hit, start, end, ECC_Visibility, TraceParams);
 
 	if (Hit.GetActor()) {
 		SelectionSubSystem->TrySelect(Hit);

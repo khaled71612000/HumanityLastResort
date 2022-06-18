@@ -28,6 +28,7 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "PathWays")
 		class UStaticMeshComponent* PathWayWest;
 
+	 UWorld*  world;
 
 	UFUNCTION(BlueprintCallable)
 		void UpdateSideOfRoadTile();

@@ -18,9 +18,9 @@ ABuilding::ABuilding()
 void ABuilding::BeginPlay()
 {
 	Super::BeginPlay();
-	EconomySubsystem = GetWorld()->GetSubsystem<UEconomySubsystem>();
-	
-	SelectionSubSystem = GetWorld()->GetSubsystem<USelectionSubsystem>();
+	world = GetWorld();
+	EconomySubsystem = world->GetSubsystem<UEconomySubsystem>();
+	SelectionSubSystem = world->GetSubsystem<USelectionSubsystem>();
 	SelectionSubSystem->RegisterSelectionHandler(Cast<IISelectionHandler>(this));
 }
 
@@ -42,4 +42,7 @@ APlaceable* ABuilding::Selected(const FHitResult& selectionInfoRay)
 
 void ABuilding::HightLight()
 {
+//UMaterial* Material = (UMaterial*)StaticMeshComponent->GetMaterial(0);
+//if (Material)
+//	Material->SetScalarParameterValueEditorOnly(TEXT("Selected"), 1);
 }

@@ -30,7 +30,7 @@ protected:
 		class USelectionSubsystem* SelectionSubSystem;
 	UPROPERTY()
 		class ANewGrid* GridPtr;
-
+	 UWorld*  world;
 	void Tick(float dt) override;
 	void GetCurrentMousePosition();
 	void GetCurrentBuilding(const FVector& intersect);

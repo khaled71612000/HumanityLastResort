@@ -29,9 +29,9 @@ APlaceable::APlaceable()
 void APlaceable::BeginPlay()
 {
 	Super::BeginPlay();
-	BuildingSubsystem = GetWorld()->GetSubsystem<UBuildingSubsystem>();
-	RoadSubsystem = GetWorld()->GetSubsystem<URoadSubsystem>();
-
+	world = GetWorld();
+	BuildingSubsystem = world->GetSubsystem<UBuildingSubsystem>();
+	RoadSubsystem = world->GetSubsystem<URoadSubsystem>();
 	if(SkeletalMeshComponent)
 	SkeletalMeshComponent->OnClicked.AddDynamic(this, &APlaceable::OnClicked);
 
@@ -46,7 +46,7 @@ void APlaceable::BeginPlay()
 			if(SkeletalMeshComponent)
 	UKismetSystemLibrary::GetComponentBounds(SkeletalMeshComponent, OriginSklet , HalfBoxSklet , sphereRad);
 
-	SelectionSubSystem = GetWorld()->GetSubsystem<USelectionSubsystem>();
+	SelectionSubSystem = world->GetSubsystem<USelectionSubsystem>();
 	HalfBoxSklet.Z = 1;
 }
 
@@ -115,7 +115,7 @@ void APlaceable::MouseMove(FVector position)
 		ActorsToIgnore.Add(this);
 		TArray<FHitResult> HitResult;
 
-		bool BoxHit = UKismetSystemLibrary::BoxTraceMulti(GetWorld(), Start, End,
+		bool BoxHit = UKismetSystemLibrary::BoxTraceMulti(world, Start, End,
 			HalfBoxSklet,
 			GetActorRotation(), UEngineTypes::ConvertToTraceType(ECC_Pawn),
 			false, ActorsToIgnore, EDrawDebugTrace::None, HitResult,
@@ -142,7 +142,7 @@ void APlaceable::ClearFloor()
 	ActorsToIgnore.Add(this);
 	TArray<FHitResult> HitArray;
 
-	bool Hiting = UKismetSystemLibrary::BoxTraceMulti(GetWorld(), Start, End, boxExtent,
+	bool Hiting = UKismetSystemLibrary::BoxTraceMulti(world, Start, End, boxExtent,
 		GetActorRotation(), UEngineTypes::ConvertToTraceType(ECC_Pawn),
 		false, ActorsToIgnore, EDrawDebugTrace::None, HitArray,
 		true, FLinearColor::Green, FLinearColor::Yellow, 0.1f

@@ -45,6 +45,7 @@ public:
 	UPROPERTY()
 	class UEconomySubsystem* EconomySubsystem;
 	class USelectionSubsystem* SelectionSubSystem;
+	 UWorld*  world;
 
 	virtual APlaceable* Selected(const FHitResult& selectionInfoRay) override;
 	virtual void HightLight() override;

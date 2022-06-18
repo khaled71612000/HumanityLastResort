@@ -29,7 +29,7 @@ public:
 		void LockPosition(bool block);
 	UFUNCTION(BlueprintCallable, Category = "Functions")
 		void DestroyBuildingActor();
-
+	 UWorld*  world;
 protected:
 	APlaceable();
 

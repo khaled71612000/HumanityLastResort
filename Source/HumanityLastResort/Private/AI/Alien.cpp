@@ -82,8 +82,10 @@ void AAlien::RemoveAlien()
 	//AlienSubsystem->UpdateGlobalMood(Mood);
 	for (int32 i = 0; i < Needs.Num(); i++)
 	{
+		GetWorld()->GetTimerManager().ClearTimer(Needs[i]->TimerManager);
 		Needs[i]->CurValue = Needs[i]->MaxCapacity;
 	}
+	AlienState = Idle;
 	AlienSubsystem->MoveAlienToPool(this);
 }
 

@@ -24,7 +24,6 @@ void UNeedComponent::BeginPlay()
 
 void UNeedComponent::StartDecreasingValue()
 {
-	FTimerHandle TimerManager;
 	GetWorld()->GetTimerManager().SetTimer(TimerManager, this, &UNeedComponent::DecreaseValue, 1.f, true);
 }
 

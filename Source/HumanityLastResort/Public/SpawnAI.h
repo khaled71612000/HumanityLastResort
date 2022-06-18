@@ -32,7 +32,7 @@ private:
 	TArray<FAliens> AliensToSpawn;
 	TArray<int32> SpawnAlienTypeInd;
 
-	int32 NumOfAllAliensToSpawn = 20;
+	int32 NumOfAllAliensToSpawn = 100;
 	int32 IndOfAlienToSpawn = 0;
 	int32 NumOfAliensType = 4;
 

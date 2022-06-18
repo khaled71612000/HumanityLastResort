@@ -54,13 +54,13 @@ void ASpawnAI::SpawnAnAlien()
 	int32 AlienInd = FMath::RandRange(0, Aliens.Num() - 1);
 	if (AlienSubsystem->AliensPool[AlienInd].Aliens.Num() > 0)
 	{
-		//UE_LOG(LogTemp, Warning, TEXT("From Pool: %d"), AlienInd);
+		UE_LOG(LogTemp, Warning, TEXT("From Pool: %d"), AlienInd);
 		AlienToSpawn = AlienSubsystem->AliensPool[AlienInd].Aliens.Last();
 		AlienSubsystem->AliensPool[AlienInd].Aliens.Pop();
 	}
 	else
 	{
-		//UE_LOG(LogTemp, Warning, TEXT("From Array: %d"), AlienInd);
+		UE_LOG(LogTemp, Warning, TEXT("From Array: %d"), AlienInd);
 
 		AlienToSpawn = AliensToSpawn[AlienInd].AlienType[SpawnAlienTypeInd[AlienInd]];
 		AlienToSpawn->FinishSpawning({ SpawnRotation, SpawnLocation, SpawnScale });
@@ -85,6 +85,11 @@ void ASpawnAI::InitAlien(AAlien* Alien)
 	Alien->AlienState = Idle;
 	Alien->isDancing = false;
 	Alien->Mood = 0;
+
+	for (int32 i = 0; i < Alien->Needs.Num(); i++)
+	{
+		Alien->Needs[i]->StartDecreasingValue();
+	}
 }
 
 void ASpawnAI::InitAlienComponents(AAlien* Alien)

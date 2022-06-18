@@ -77,8 +77,8 @@ void UNeedSatisfactionTask::Wait()
 {
 	CurTaskTime = CurNeed->TaskTime;
 	if (CurBuilding->BuildingType != Casino) {
-		CurAlien->SetActorHiddenInGame(false);
-		CurAlien->SetActorEnableCollision(true);
+		CurAlien->SetActorHiddenInGame(true);
+		CurAlien->SetActorEnableCollision(false);
 	}
 	const UWorld* const world = GetWorld();
 
@@ -104,8 +104,8 @@ void UNeedSatisfactionTask::DoTask()
 void UNeedSatisfactionTask::SatisfiedAlien()
 {
 	if (CurBuilding->BuildingType != Casino) {
-		CurAlien->SetActorHiddenInGame(true);
-		CurAlien->SetActorEnableCollision(false);
+		CurAlien->SetActorHiddenInGame(false);
+		CurAlien->SetActorEnableCollision(true);
 	}
 	if (CurAlien->isDancing == true)
 		CurAlien->isDancing = false;

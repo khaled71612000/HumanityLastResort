@@ -34,7 +34,7 @@ public:
 	UPROPERTY()
 		TArray <FAliensArray> AliensPool;
 
-	int32 GlobalMood;
+	int32 GlobalMood = 70;
 	int32 NumOfAliens;
 
 	UPROPERTY(BlueprintAssignable)

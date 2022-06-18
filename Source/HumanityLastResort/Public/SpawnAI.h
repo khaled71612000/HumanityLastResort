@@ -10,6 +10,14 @@
  * 
  */
 
+USTRUCT()
+struct FAliens
+{
+	GENERATED_BODY()
+
+		UPROPERTY()
+		TArray<class AAlien*> AlienType;
+};
 
 UCLASS()
 class HUMANITYLASTRESORT_API ASpawnAI : public AVolume
@@ -20,6 +28,16 @@ protected:
 	virtual void BeginPlay() override;
 
 private:
+
+	TArray<FAliens> AliensToSpawn;
+	TArray<int32> SpawnAlienTypeInd;
+
+	int32 NumOfAllAliensToSpawn = 20;
+	int32 IndOfAlienToSpawn = 0;
+	int32 NumOfAliensType = 4;
+
+	void SpawnAllAliens();
+
 	UPROPERTY(EditAnywhere, Category = "SpawnAlien")
 	int32 InitialSpawnRate = 2;
 
@@ -31,6 +49,7 @@ private:
 	FActorSpawnParameters SpawnParams;
 	FVector SpawnLocation;
 	FRotator SpawnRotation;
+	FVector SpawnScale;
 
 	FTimerHandle SpawnManager;
 	UFUNCTION()

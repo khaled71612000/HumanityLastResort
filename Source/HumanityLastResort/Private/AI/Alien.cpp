@@ -80,6 +80,12 @@ void AAlien::RemoveAlien()
 {
 	this->SetActorLocation({ 0, -100, 0 });
 	AlienSubsystem->UpdateGlobalMood(Mood);
+	ResetAlienNeeds();
+	AlienSubsystem->MoveAlienToPool(this);
+}
+
+void AAlien::ResetAlienNeeds()
+{
 	for (int32 i = 0; i < Needs.Num(); i++)
 	{
 		GetWorld()->GetTimerManager().ClearTimer(Needs[i]->TimerManager);
@@ -90,12 +96,6 @@ void AAlien::RemoveAlien()
 			Needs[i]->DecrementNeededVal();
 		}
 	}
-	AlienState = Idle;
-	AlienSubsystem->MoveAlienToPool(this);
-}
-
-void AAlien::RemoveNeededNeeds()
-{
 }
 
 bool AAlien::GetisDancing()

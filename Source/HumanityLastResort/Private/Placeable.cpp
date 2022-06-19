@@ -81,7 +81,11 @@ void APlaceable::LockPosition(bool block)
 
 void APlaceable::ResetRotation()
 {
+	SkeletalMeshComponent->SetMobility(EComponentMobility::Movable);
+	SceneComponent->SetMobility(EComponentMobility::Movable);
 	SetActorRotation(FRotator::ZeroRotator);
+	SkeletalMeshComponent->SetMobility(EComponentMobility::Static);
+	SceneComponent->SetMobility(EComponentMobility::Static);
 }
 
 

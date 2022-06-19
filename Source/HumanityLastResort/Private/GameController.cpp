@@ -69,6 +69,7 @@ void AGameController::GetCurrentBuilding(const FVector& intersectPoint)
 void AGameController::OnLeftMouseRelease()
 {
 	SPSubsystem->OnLeftMouseRelease();
+
 	FHitResult Hit;
 	FCollisionQueryParams TraceParams;
 	bool bHit = world->LineTraceSingleByChannel(Hit, start, end, ECC_Visibility, TraceParams);

@@ -91,7 +91,6 @@ void AGameController::SetupInputComponent()
 	Super::SetupInputComponent();
 	InputComponent->BindKey(FKey{ "LeftMouseButton" }, EInputEvent::IE_Released, this, &AGameController::OnLeftMouseRelease);
 	InputComponent->BindKey(FKey{ "LeftMouseButton" }, EInputEvent::IE_Pressed, this, &AGameController::OnLeftMouseClicked);
-
 }
 
 

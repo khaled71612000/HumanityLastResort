@@ -50,47 +50,6 @@ void ACameraPawn::BeginPlay()
 	Player->SetInputMode(inputMode);
 }
 
-FVector ACameraPawn::GetCameraPanDirecton() {
-	/*float MousePosX;
-	float MousePosY;
-
-	float CamDirectonX = 0;
-	float CamDirectonY = 0;
-
-
-	Player->GetMousePosition(MousePosX, MousePosY);
-
-	if (MousePosX < Margin) {
-		CamDirectonY = -1;
-	}
-
-	if (MousePosY < Margin) {
-		CamDirectonX = 1;
-	}
-
-	if (MousePosX > ScreenSizeX - Margin) {
-		CamDirectonY = 1;
-	}
-
-	if (MousePosY > ScreenSizeY - Margin) {
-		CamDirectonX = -1;
-	}*/
-
-	//return FVector(CamDirectonX, CamDirectonY, 0);
-	return FVector(0, 0, 0);
-
-
-}
-
-void ACameraPawn::MoveForward(float Value)
-{
-	AddMovementInput(GetActorForwardVector(), Value);
-}
-
-void ACameraPawn::MoveRight(float Value)
-{
-	AddMovementInput(GetActorRightVector(), Value);
-}
 void ACameraPawn::RotateToken(float value) {
 	if (SelectedToken) {
 
@@ -129,40 +88,11 @@ void ACameraPawn::RotateToken(float value) {
 		
 	}
 }
-void ACameraPawn::OrbitRotate(float Value)
-{
-	AddActorWorldRotation(FRotator(0 , orbitSpeed * Value, 0));
-}
-
-void ACameraPawn::CameraPitch(float Value)
-{
-	float minClamp = 310.f;
-	float maxClamp = 350.f;
-
-	FRotator NewRotation = SpringArm->GetComponentRotation();
-	NewRotation.Pitch = NewRotation.Pitch + CameraPitchSpeed * Value;
-	NewRotation.Pitch = FMath::ClampAngle(NewRotation.Pitch, minClamp, maxClamp);
-
-	SpringArm->SetWorldRotation(NewRotation);;
-}
-	
-// Called every frame
-void ACameraPawn::Tick(float DeltaTime)
-{
-	Super::Tick(DeltaTime);
-	//AddActorWorldOffset(GetCameraPanDirecton() * CamSpeed);
-
-}
 
 // Called to bind functionality to input
 void ACameraPawn::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
-
-	InputComponent->BindAxis("MoveForward", this, &ACameraPawn::MoveForward);
-	InputComponent->BindAxis("MoveRight", this, &ACameraPawn::MoveRight);
-	InputComponent->BindAxis("Orbit", this, &ACameraPawn::OrbitRotate);
-	InputComponent->BindAxis("CameraPitch", this, &ACameraPawn::CameraPitch);
 
 	InputComponent->BindAxis("Rotate", this, &ACameraPawn::RotateToken);
 

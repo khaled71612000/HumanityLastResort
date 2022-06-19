@@ -21,10 +21,6 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		class UCameraComponent* CameraComp;
 
-	UPROPERTY(Category = "Panning", EditAnywhere)
-		float CamSpeed = 8;
-	UPROPERTY(Category = "Panning", EditAnywhere)
-		float Margin = 50;
 	UPROPERTY()
 	APlayerController* Player;
 
@@ -33,10 +29,6 @@ public:
 	UPROPERTY()
 	int32 ScreenSizeY;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Movement")
-		float orbitSpeed = 1;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Movement")
-		float CameraPitchSpeed = 1;
 	UPROPERTY(VisibleAnywhere, Category = "Movement")
 		class UPawnMovementComponent* PawnMovementComponent;
 	UPROPERTY(VisibleAnywhere, Category = "Movement")
@@ -45,19 +37,6 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "BuildTransform")
 		class APlaceable* SelectedToken;
-
-	UFUNCTION(BlueprintCallable, Category = "Movement")
-		void OrbitRotate(float Value);
-	UFUNCTION(BlueprintCallable, Category = "Movement")
-		void CameraPitch(float Value);
-	UFUNCTION(BlueprintCallable, Category = "Movement")
-		void MoveForward(float Value);
-	UFUNCTION(BlueprintCallable, Category = "Movement")
-		void MoveRight(float Value);
-	UFUNCTION(BlueprintCallable, Category = "Movement")
-		FVector GetCameraPanDirecton();
-
-	virtual void Tick(float DeltaTime) override;
 
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 

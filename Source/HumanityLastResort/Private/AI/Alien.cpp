@@ -7,9 +7,6 @@
 AAlien::AAlien()
 {
 	PrimaryActorTick.bCanEverTick = false;
-	AlienState = Idle;
-	isDancing = false;
-	Mood = 100;
 }
 
 void AAlien::BeginPlay()
@@ -38,9 +35,9 @@ void AAlien::TryGetTask()
 			}
 			else
 			{
-				NumOfFailedTasks--;
+				CurFailedTasks--;
 				ChangeMood(-BadMoodVal);
-				if (NumOfFailedTasks <= 0)
+				if (CurFailedTasks <= 0)
 				{
 					AlienState = Leaving;
 					return;
@@ -74,30 +71,31 @@ void AAlien::Leave()
 
 void AAlien::ChangeMood(int MoodVal)
 {
-	//UE_LOG(LogTemp, Warning, TEXT("Mood: %d"), MoodVal);
-	AlienSubsystem->GlobalMood -= Mood;
 	Mood += MoodVal;
-	if (Mood < 0)
-		Mood = 0;
-	else if (Mood > 100)
-		Mood = 100;
-
+	Mood /= 10;
 }
 
 
 void AAlien::RemoveAlien()
 {
 	this->SetActorLocation({ 0, -100, 0 });
-	AlienSubsystem->NumOfAliensRemoved++;
 	AlienSubsystem->UpdateGlobalMood(Mood);
-	AlienSubsystem->UpdateGlobalMoodPercentage();
+	ResetAlienNeeds();
 	AlienSubsystem->MoveAlienToPool(this);
+}
+
+void AAlien::ResetAlienNeeds()
+{
 	for (int32 i = 0; i < Needs.Num(); i++)
 	{
+		GetWorld()->GetTimerManager().ClearTimer(Needs[i]->TimerManager);
 		Needs[i]->CurValue = Needs[i]->MaxCapacity;
+		if (Needs[i]->Needed)
+		{
+			Needs[i]->Needed = false;
+			Needs[i]->DecrementNeededVal();
+		}
 	}
-	AlienState = Idle;
-	Mood = 100;
 }
 
 bool AAlien::GetisDancing()

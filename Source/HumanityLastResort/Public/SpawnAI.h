@@ -7,7 +7,7 @@
 #include "SpawnAI.generated.h"
 
 /**
- * 
+ *
  */
 
 USTRUCT()
@@ -32,27 +32,33 @@ private:
 	TArray<FAliens> AliensToSpawn;
 	TArray<int32> SpawnAlienTypeInd;
 
-	int32 NumOfAllAliensToSpawn = 20;
+	int32 NumOfAllAliensToSpawn = 100;
 	int32 IndOfAlienToSpawn = 0;
 	int32 NumOfAliensType = 4;
+
+	void SpawnAllAliens();
+	void InitAlien(class AAlien* Alien);
+	void InitAlienComponents(class AAlien* Alien);
+
+	UPROPERTY(EditAnywhere, Category = "SpawnAlien")
+		int32 InitialSpawnRate = 8;
+
+	UPROPERTY()
+		class UAlienSubsystem* AlienSubsystem;
+	UPROPERTY()
+		class AAlien* AlienToSpawn;
+
 	FActorSpawnParameters SpawnParams;
 	FVector SpawnLocation;
 	FRotator SpawnRotation;
 	FVector SpawnScale;
-	FTimerHandle SpawnManager;
 
-	UPROPERTY(EditAnywhere, Category = "SpawnAlien")
-	int32 InitialSpawnRate = 2;
+	FTimerHandle SpawnManager;
+	UFUNCTION()
+	void UpdateSpawnTimer(int32 SpawnRate);
+	void SpawnAnAlien();
 
 	UPROPERTY(EditAnywhere, meta = (AllowPrivateAccess = "true"))
 		TArray<TSubclassOf<class AAlien>> Aliens;
-	UPROPERTY()
-	class UAlienSubsystem* AlienSubsystem;
-	UPROPERTY()
-	class AAlien* AlienToSpawn;
 
-	void SpawnAnAlien();
-	void SpawnAllAliens();
-	UFUNCTION()
-		void UpdateSpawnTimer(int32 SpawnRate);
 };

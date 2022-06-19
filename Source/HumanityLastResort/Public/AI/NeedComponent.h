@@ -37,14 +37,19 @@ public:
 	UPROPERTY()
 	class UNeedSubsystem* NeedSubsystem;
 
+	UPROPERTY()
+	FTimerHandle TimerManager;
+
+	bool Needed;
+
 private:
 	void OnRegister() override;
 
 protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
-private:
+public:
 	void StartDecreasingValue();
 	void DecreaseValue();
-		
+	void DecrementNeededVal();
 };

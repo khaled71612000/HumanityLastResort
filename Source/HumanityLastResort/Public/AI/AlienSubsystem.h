@@ -16,7 +16,7 @@ USTRUCT()
 struct FAliensArray
 {
 	GENERATED_BODY()
-	TArray<class AAlien*> Aliens;
+		TArray<class AAlien*> Aliens;
 };
 
 UCLASS()
@@ -29,18 +29,16 @@ public:
 
 
 	UPROPERTY()
-	TArray<class AAlien*> SpawnedAliens;
+		TArray<class AAlien*> SpawnedAliens;
 
 	UPROPERTY()
-	TArray <FAliensArray> AliensPool;
+		TArray <FAliensArray> AliensPool;
 
-	int32 GlobalMood;
+	int32 GlobalMood = 70;
 	int32 NumOfAliens;
-	int32 NumOfAliensRemoved = 0; 
-	int32 GlobalMoodPercentage;
 
 	UPROPERTY(BlueprintAssignable)
-	FSpawnRateUpdate SpawnRateUpdate;
+		FSpawnRateUpdate SpawnRateUpdate;
 private:
 	void Initialize(FSubsystemCollectionBase& Collection) override;
 	TStatId GetStatId() const override;
@@ -49,9 +47,8 @@ private:
 public:
 	void MoveAlienToPool(class AAlien* Alien);
 	void UpdateGlobalMood(int32 Amount);
-	void UpdateGlobalMoodPercentage();
 	UFUNCTION(BlueprintCallable)
-		int32 GetGlobalMoodPercentage();
+		int32 GetGlobalMood();
 	UFUNCTION(BlueprintCallable)
 		int32 GetNumOfAliens();
 };

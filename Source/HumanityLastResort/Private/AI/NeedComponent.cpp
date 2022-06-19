@@ -24,7 +24,6 @@ void UNeedComponent::BeginPlay()
 
 void UNeedComponent::StartDecreasingValue()
 {
-	FTimerHandle TimerManager;
 	GetWorld()->GetTimerManager().SetTimer(TimerManager, this, &UNeedComponent::DecreaseValue, 1.f, true);
 }
 
@@ -33,5 +32,14 @@ void UNeedComponent::DecreaseValue()
 	if (CurValue > 0)
 		CurValue -= DecayRate;
 	if (CurValue == Threshold)
+	{
+		Needed = true;
 		NeedSubsystem->IncrementNeed(BuildingType);
+	}
+}
+
+void UNeedComponent::DecrementNeededVal()
+{
+	NeedSubsystem->DecrementNeed(BuildingType);
+
 }

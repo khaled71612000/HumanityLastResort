@@ -8,9 +8,8 @@ void UAlienSubsystem::Initialize(FSubsystemCollectionBase& Collection)
 {
 	Super::Initialize(Collection);
 	AliensPool.SetNum(NumOfAlienTypes);
-	GlobalMood = 0;
+	GlobalMood = 75;
 	NumOfAliens = 0;
-	GlobalMoodPercentage = 100;
 }
 
 TStatId UAlienSubsystem::GetStatId() const
@@ -47,7 +46,6 @@ void UAlienSubsystem::Tick(float DeltaTime)
 void UAlienSubsystem::MoveAlienToPool(class AAlien* Alien)
 {
 	NumOfAliens--;
-	UpdateGlobalMood(-Alien->Mood);
 	SpawnedAliens.Remove(Alien);
 	AliensPool[Alien->AlienType].Aliens.Add(Alien);
 }
@@ -56,26 +54,21 @@ void UAlienSubsystem::MoveAlienToPool(class AAlien* Alien)
 void UAlienSubsystem::UpdateGlobalMood(int32 Amount)
 {
 	GlobalMood += Amount;
-	if (GlobalMood < 0)
-		GlobalMood = 0;
-}
+	if (GlobalMood < 0) GlobalMood = 0;
+	else if (GlobalMood > 100) GlobalMood = 100;
 
-void UAlienSubsystem::UpdateGlobalMoodPercentage()
-{
-	if (NumOfAliensRemoved)
-		GlobalMoodPercentage = (GlobalMood / (float)(NumOfAliensRemoved * 100)) * 100;
-
-	if (GlobalMoodPercentage > 80)
+	if (GlobalMood > 80)
 		SpawnRateUpdate.Broadcast(2);
-	else if (GlobalMoodPercentage > 60)
+	else if (GlobalMood > 60)
 		SpawnRateUpdate.Broadcast(4);
 	else
 		SpawnRateUpdate.Broadcast(6);
 }
 
-int32 UAlienSubsystem::GetGlobalMoodPercentage()
+
+int32 UAlienSubsystem::GetGlobalMood()
 {
-	return GlobalMoodPercentage;
+	return GlobalMood;
 }
 
 int32 UAlienSubsystem::GetNumOfAliens()

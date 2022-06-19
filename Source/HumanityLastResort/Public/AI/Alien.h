@@ -42,6 +42,8 @@ public:
 
 	int32 AlienType;
 	State AlienState;
+	int32 CurTasks;
+	int32 CurFailedTasks;
 
 	UPROPERTY()
 	class UNeedSatisfactionTask* Task;
@@ -59,6 +61,7 @@ public:
 	void Leave();
 	void ChangeMood(int MoodVal);
 	void RemoveAlien();
+	void ResetAlienNeeds();
 
 	UFUNCTION(BlueprintCallable)
 		bool GetisDancing();

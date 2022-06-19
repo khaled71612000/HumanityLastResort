@@ -4,9 +4,11 @@
 #include "AI/Alien.h"
 #include "AI/AlienSubsystem.h"
 #include "TimerManager.h"
+#include "AI/NeedSatisfactionTask.h"
+#include "AI/NeedComponent.h"
 
 
-void ASpawnAI::BeginPlay() 
+void ASpawnAI::BeginPlay()
 {
 	AliensToSpawn.SetNum(NumOfAliensType);
 	SpawnAlienTypeInd.Init(0, NumOfAliensType);
@@ -32,9 +34,12 @@ void ASpawnAI::SpawnAllAliens()
 		for (int32 j = 0; j < NumOfAllAliensToSpawn; j++)
 		{
 			AliensToSpawn[i].AlienType.Add(GetWorld()->SpawnActorDeferred<AAlien>(Aliens[i], { SpawnRotation, SpawnLocation, SpawnScale }));
+			AliensToSpawn[i].AlienType[j]->SetActorEnableCollision(false);
+			AliensToSpawn[i].AlienType[j]->SetActorHiddenInGame(true);
 		}
 	}
 }
+
 
 void ASpawnAI::UpdateSpawnTimer(int32 SpawnRate)
 {
@@ -46,23 +51,51 @@ void ASpawnAI::UpdateSpawnTimer(int32 SpawnRate)
 
 void ASpawnAI::SpawnAnAlien()
 {
-	int32 AlienInd = FMath::RandRange(0,  Aliens.Num()-1);
+	int32 AlienInd = FMath::RandRange(0, Aliens.Num() - 1);
 	if (AlienSubsystem->AliensPool[AlienInd].Aliens.Num() > 0)
 	{
+		UE_LOG(LogTemp, Warning, TEXT("From Pool: %d"), AlienInd);
 		AlienToSpawn = AlienSubsystem->AliensPool[AlienInd].Aliens.Last();
-		AlienToSpawn->SetActorEnableCollision(true);
-		AlienToSpawn->SetActorHiddenInGame(false);
-		AlienToSpawn->SetActorLocation(SpawnLocation);
 		AlienSubsystem->AliensPool[AlienInd].Aliens.Pop();
 	}
 	else
 	{
-		AliensToSpawn[AlienInd].AlienType[SpawnAlienTypeInd[AlienInd]]->FinishSpawning({ SpawnRotation, SpawnLocation, SpawnScale });
+		UE_LOG(LogTemp, Warning, TEXT("From Array: %d"), AlienInd);
+
 		AlienToSpawn = AliensToSpawn[AlienInd].AlienType[SpawnAlienTypeInd[AlienInd]];
+		AlienToSpawn->FinishSpawning({ SpawnRotation, SpawnLocation, SpawnScale });
 		SpawnAlienTypeInd[AlienInd]++;
+		InitAlienComponents(AlienToSpawn);
+		//UE_LOG(LogTemp, Warning, TEXT("Ind: %d"), SpawnAlienTypeInd[AlienInd]);
+
 	}
+	InitAlien(AlienToSpawn);
 	AlienSubsystem->SpawnedAliens.Add(AlienToSpawn);
 	AlienSubsystem->NumOfAliens++;
-	AlienSubsystem->GlobalMood += 100;
-	
+
+}
+
+void ASpawnAI::InitAlien(AAlien* Alien)
+{
+	Alien->SetActorLocation(SpawnLocation);
+	Alien->SetActorEnableCollision(true);
+	Alien->SetActorHiddenInGame(false);
+	Alien->CurTasks = Alien->NumOfTasks;
+	Alien->CurFailedTasks = Alien->NumOfFailedTasks;
+	Alien->AlienState = Idle;
+	Alien->isDancing = false;
+	Alien->Mood = 0;
+
+	for (int32 i = 0; i < Alien->Needs.Num(); i++)
+	{
+		Alien->Needs[i]->StartDecreasingValue();
+	}
+}
+
+void ASpawnAI::InitAlienComponents(AAlien* Alien)
+{
+	AlienToSpawn->GetComponents(AlienToSpawn->Needs);
+	Alien->Task = NewObject<UNeedSatisfactionTask>(this);
+	Alien->Task->CustomBeginPlay();
+	AlienSubsystem = GetWorld()->GetSubsystem<UAlienSubsystem>();
 }

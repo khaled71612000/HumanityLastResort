@@ -58,11 +58,11 @@ void UAlienSubsystem::UpdateGlobalMood(int32 Amount)
 	else if (GlobalMood > 100) GlobalMood = 100;
 
 	if (GlobalMood > 80)
-		SpawnRateUpdate.Broadcast(2);
+		SpawnRateUpdate.Broadcast(3);
 	else if (GlobalMood > 60)
-		SpawnRateUpdate.Broadcast(4);
+		SpawnRateUpdate.Broadcast(5);
 	else
-		SpawnRateUpdate.Broadcast(6);
+		SpawnRateUpdate.Broadcast(8);
 }
 
 

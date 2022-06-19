@@ -10,7 +10,10 @@
 void USPSubsystem::OnLeftMouseRelease()
 {
 	TArray<AActor*> actorPtrs;
-	UGameplayStatics::GetAllActorsOfClass(GetWorld(), APlaceable::StaticClass(), actorPtrs);
+
+	UGameplayStatics::GetAllActorsWithInterface(GetWorld(),
+		UPlacementInterface::StaticClass(), actorPtrs);
+
 	if (actorPtrs.Num() != 0) {
 		for (AActor* actor : actorPtrs) {
 
@@ -18,7 +21,6 @@ void USPSubsystem::OnLeftMouseRelease()
 
 			if(ReactingObject) {
 				ReactingObject->MouseRelease();
-
 			}
 		}
 	}

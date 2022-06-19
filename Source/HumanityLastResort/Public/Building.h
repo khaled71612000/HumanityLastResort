@@ -49,6 +49,7 @@ public:
 
 	virtual APlaceable* Selected(const FHitResult& selectionInfoRay) override;
 	virtual void HightLight() override;
+	virtual void DeHighLight() override;
 
 protected:
 	ABuilding();

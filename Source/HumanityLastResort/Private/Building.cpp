@@ -42,8 +42,10 @@ APlaceable* ABuilding::Selected(const FHitResult& selectionInfoRay)
 
 void ABuilding::HightLight()
 {
-	//TODO
-//UMaterial* Material = (UMaterial*)StaticMeshComponent->GetMaterial(0);
-//if (Material)
-//	Material->SetScalarParameterValueEditorOnly(TEXT("Selected"), 1);
+	SkeletalMeshComponent->SetScalarParameterValueOnMaterials(TEXT("Selected"), 1);
+
+}
+void ABuilding::DeHighLight()
+{
+	SkeletalMeshComponent->SetScalarParameterValueOnMaterials(TEXT("Selected"), 0);
 }

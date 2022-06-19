@@ -32,19 +32,19 @@ void APlaceable::BeginPlay()
 	world = GetWorld();
 	BuildingSubsystem = world->GetSubsystem<UBuildingSubsystem>();
 	RoadSubsystem = world->GetSubsystem<URoadSubsystem>();
-	if(SkeletalMeshComponent)
-	SkeletalMeshComponent->OnClicked.AddDynamic(this, &APlaceable::OnClicked);
+	if (SkeletalMeshComponent)
+		SkeletalMeshComponent->OnClicked.AddDynamic(this, &APlaceable::OnClicked);
 
 	oldPos = GetActorLocation();
 
 	FTimerHandle StatManager;
-			if (!isDragging && SkeletalMeshComponent) {
-				SkeletalMeshComponent->SetMobility(EComponentMobility::Static);
-				SceneComponent->SetMobility(EComponentMobility::Static);
-			}
+	if (!isDragging && SkeletalMeshComponent) {
+		SkeletalMeshComponent->SetMobility(EComponentMobility::Static);
+		SceneComponent->SetMobility(EComponentMobility::Static);
+	}
 
-			if(SkeletalMeshComponent)
-	UKismetSystemLibrary::GetComponentBounds(SkeletalMeshComponent, OriginSklet , HalfBoxSklet , sphereRad);
+	if (SkeletalMeshComponent)
+		UKismetSystemLibrary::GetComponentBounds(SkeletalMeshComponent, OriginSklet, HalfBoxSklet, sphereRad);
 
 	SelectionSubSystem = world->GetSubsystem<USelectionSubsystem>();
 	HalfBoxSklet.Z = 1;
@@ -56,30 +56,25 @@ void APlaceable::OnClicked(UPrimitiveComponent* ClickedComp, FKey ButtonClicked)
 	isDragging = true;
 	if (SkeletalMeshComponent) {
 
-	SkeletalMeshComponent->SetMobility(EComponentMobility::Movable);
-	SceneComponent->SetMobility(EComponentMobility::Movable);
+		SkeletalMeshComponent->SetMobility(EComponentMobility::Movable);
+		SceneComponent->SetMobility(EComponentMobility::Movable);
 
 	}
 }
 
 void APlaceable::LockPosition(bool block)
 {
-		if (SkeletalMeshComponent) {
-	if (SkeletalMeshComponent->GetBodyInstance()->bLockXTranslation) {
-
-
+	if (SkeletalMeshComponent) {
+		if (SkeletalMeshComponent->GetBodyInstance()->bLockXTranslation) {
 			SkeletalMeshComponent->SetMobility(EComponentMobility::Movable);
 			SceneComponent->SetMobility(EComponentMobility::Movable);
-
 		}
 	}
 	else {
-			if (SkeletalMeshComponent) {
-
-				SkeletalMeshComponent->SetMobility(EComponentMobility::Static);
-				SceneComponent->SetMobility(EComponentMobility::Static);
-
-			}
+		if (SkeletalMeshComponent) {
+			SkeletalMeshComponent->SetMobility(EComponentMobility::Static);
+			SceneComponent->SetMobility(EComponentMobility::Static);
+		}
 	}
 }
 
@@ -95,12 +90,16 @@ void APlaceable::MouseMove(FVector position)
 	if (isDragging)
 	{
 		ClearFloor();
+
+		if (ARoad* isRoad = Cast<ARoad>(this)) {
+			RoadSubsystem->UpdateRoads();
+		}
+
 		FVector origin, boxExtent;
 		GetActorBounds(false, origin, boxExtent);
 		boxExtent.Z = 1.f;
 
 		this->SetActorLocation(position);
-
 		MyPawn = UGameplayStatics::GetPlayerController(this, 0)->GetPawn<ACameraPawn>();
 		if (MyPawn)
 			MyPawn->SelectedToken = this;
@@ -122,11 +121,32 @@ void APlaceable::MouseMove(FVector position)
 			true, FLinearColor::Red, FLinearColor::Green, -1
 		);
 
+		if(!BoxHit)
+			oldPos = position;
+
+
 		if (BoxHit) {
-				this->SetActorLocation(oldPos);
+			this->SetActorLocation(oldPos);
 		}
 	}
 }
+
+
+
+void APlaceable::MouseRelease()
+{
+	isDragging = false;
+	if (MyPawn)
+		MyPawn->SelectedToken = nullptr;
+	oldPos = GetActorLocation();
+	if (!isDragging) {
+		if (SkeletalMeshComponent) {
+			SkeletalMeshComponent->SetMobility(EComponentMobility::Static);
+			SceneComponent->SetMobility(EComponentMobility::Static);
+		}
+	}
+}
+
 
 void APlaceable::ClearFloor()
 {
@@ -160,22 +180,6 @@ void APlaceable::ClearFloor()
 
 }
 
-
-void APlaceable::MouseRelease()
-{
-	isDragging = false;
-	if (MyPawn)
-		MyPawn->SelectedToken = nullptr;
-	oldPos = GetActorLocation();
-			if (!isDragging) {
-				if (SkeletalMeshComponent) {
-					SkeletalMeshComponent->SetMobility(EComponentMobility::Static);
-					SceneComponent->SetMobility(EComponentMobility::Static);
-
-				}
-			}
-}
-
 void APlaceable::DestroyBuildingActor()
 {
 	if (Cast<ABuilding>(this))
@@ -184,7 +188,7 @@ void APlaceable::DestroyBuildingActor()
 	else if (Cast<ARoad>(this))
 		RoadSubsystem->RemoveRoad(Cast<ARoad>(this));
 
-	if(IISelectionHandler* CurrentSelect = Cast<IISelectionHandler>(this))
+	if (IISelectionHandler* CurrentSelect = Cast<IISelectionHandler>(this))
 		SelectionSubSystem->RemoveSelectionHandler(CurrentSelect);
 
 	Destroy();

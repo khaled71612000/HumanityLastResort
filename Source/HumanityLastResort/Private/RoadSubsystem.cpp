@@ -14,11 +14,16 @@ void URoadSubsystem::AddRoad(ARoad* Road)
 {
 	Roads.Add(Road);
 
-	for (ARoad* curRoad : Roads) 
+	UpdateRoads();
+
+}
+
+void URoadSubsystem::UpdateRoads()
+{
+	for (ARoad* curRoad : Roads)
 	{
 		curRoad->UpdateSideOfRoadTile();
 	}
-
 }
 
 void URoadSubsystem::RemoveRoad(ARoad* Road)

@@ -19,6 +19,7 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 		void AddRoad(class ARoad* Road);
+	void UpdateRoads();
 	UFUNCTION(BlueprintCallable)
 	void RemoveRoad(class ARoad* Road);
 protected:

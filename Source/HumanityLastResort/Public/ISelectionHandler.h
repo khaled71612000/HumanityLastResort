@@ -24,5 +24,5 @@ class HUMANITYLASTRESORT_API IISelectionHandler
 public:
 	virtual class APlaceable* Selected(const FHitResult& selectionInfoRay) = 0;
 	virtual void HightLight() = 0;
-
+	virtual void DeHighLight() = 0;
 };

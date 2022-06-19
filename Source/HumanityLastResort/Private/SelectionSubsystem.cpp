@@ -24,3 +24,15 @@ APlaceable* USelectionSubsystem::TrySelect(const FHitResult& selectionInfoRay)
 	}
 		return nullptr;
 }
+void USelectionSubsystem::DeSelect(const FHitResult& selectionInfoRay)
+{
+	for (IISelectionHandler* handler : Handlers)
+	{
+		APlaceable* selection = handler->Selected(selectionInfoRay);
+		if (selection == selectionInfoRay.GetActor())
+		{
+			handler->DeHighLight();
+		}
+	}
+
+}

@@ -3,7 +3,6 @@
 
 #include "Building.h"
 #include "Components/SphereComponent.h"
-//#include "AI/Alien.h"
 #include "Economy/EconomySubsystem.h"
 #include "SelectionSubsystem.h"
 

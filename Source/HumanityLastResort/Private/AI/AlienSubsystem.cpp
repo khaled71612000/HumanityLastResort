@@ -23,7 +23,6 @@ void UAlienSubsystem::Tick(float DeltaTime)
 	{
 		if (!Alien)
 			continue;
-		//UE_LOG(LogTemp, Warning, TEXT("Alien: %d"), Alien->AlienState);
 		if (Alien->AlienState == Idle)
 		{
 			Alien->AlienState = Waiting;

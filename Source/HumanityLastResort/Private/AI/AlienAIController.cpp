@@ -12,7 +12,6 @@ void AAlienAIController::OnMoveCompleted(FAIRequestID RequestID, const FPathFoll
 
 	if (Alien->AlienState == Moving)
 	{
-		//UE_LOG(LogTemp, Warning, TEXT("Moving"));
 		Alien->SetActorHiddenInGame(true);
 		Alien->SetActorEnableCollision(false);
 		Alien->RemoveAlien();
@@ -23,12 +22,10 @@ void AAlienAIController::OnMoveCompleted(FAIRequestID RequestID, const FPathFoll
 			Alien->AlienState = Leaving;
 		else
 			Alien->AlienState = Idle;
-		//UE_LOG(LogTemp, Warning, TEXT("Was Wandering: %d"), Alien->AlienState);
 
 	}
 	else if (Result.IsSuccess())
 	{
-		//UE_LOG(LogTemp, Warning, TEXT("Success: %d"), Alien->AlienState);
 		if (Alien->AlienState == Assigned)
 		{
 			Alien->AlienState = Arrived;

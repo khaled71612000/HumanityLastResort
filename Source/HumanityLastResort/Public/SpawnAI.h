@@ -41,7 +41,7 @@ private:
 	void InitAlienComponents(class AAlien* Alien);
 
 	UPROPERTY(EditAnywhere, Category = "SpawnAlien")
-		int32 InitialSpawnRate = 2;
+		int32 InitialSpawnRate = 8;
 
 	UPROPERTY()
 		class UAlienSubsystem* AlienSubsystem;

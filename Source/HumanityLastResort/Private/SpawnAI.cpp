@@ -70,6 +70,8 @@ void ASpawnAI::SpawnAnAlien()
 	AlienSubsystem->SpawnedAliens.Add(AlienToSpawn);
 	AlienSubsystem->NumOfAliens++;
 
+	OnSpawning();
+
 }
 
 void ASpawnAI::InitAlien(AAlien* Alien)

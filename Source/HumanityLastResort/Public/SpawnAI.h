@@ -10,7 +10,7 @@
  *
  */
 
-USTRUCT()
+USTRUCT(Blueprintable)
 struct FAliens
 {
 	GENERATED_BODY()
@@ -19,7 +19,7 @@ struct FAliens
 		TArray<class AAlien*> AlienType;
 };
 
-UCLASS()
+UCLASS(Blueprintable)
 class HUMANITYLASTRESORT_API ASpawnAI : public AVolume
 {
 	GENERATED_BODY()
@@ -40,6 +40,11 @@ private:
 	void InitAlien(class AAlien* Alien);
 	void InitAlienComponents(class AAlien* Alien);
 
+public:
+	UFUNCTION(BlueprintImplementableEvent, Category = "SpawnAlien")
+	void OnSpawning();
+
+private:
 	UPROPERTY(EditAnywhere, Category = "SpawnAlien")
 		int32 InitialSpawnRate = 8;
 

@@ -11,6 +11,8 @@
  */
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FSpawnRateUpdate, int32, SpawnRate);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FGameOver);
+
 
 USTRUCT()
 struct FAliensArray
@@ -38,7 +40,11 @@ public:
 	int32 NumOfAliens;
 
 	UPROPERTY(BlueprintAssignable)
-		FSpawnRateUpdate SpawnRateUpdate;
+	FSpawnRateUpdate SpawnRateUpdate;
+
+	UPROPERTY(BlueprintAssignable)
+	FGameOver GameOver;
+
 private:
 	void Initialize(FSubsystemCollectionBase& Collection) override;
 	TStatId GetStatId() const override;

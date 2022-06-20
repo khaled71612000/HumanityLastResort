@@ -39,7 +39,7 @@ void AGameController::Tick(float dt) {
 void AGameController::GetCurrentMousePosition()
 {
 	DeprojectMousePositionToWorld(start, dir);
-	end = start + dir * 10000.0f;
+	end = start + dir * 100000.0f;
 
 	intersect= FMath::LinePlaneIntersection(start, end, plane);
 	intersect.Z = 100;

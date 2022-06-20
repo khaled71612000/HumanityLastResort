@@ -120,7 +120,7 @@ void APlaceable::MouseMove(FVector position)
 
 		bool BoxHit = UKismetSystemLibrary::BoxTraceMulti(world, Start, End,
 			HalfBoxSklet,
-			GetActorRotation(), UEngineTypes::ConvertToTraceType(ECC_Pawn),
+			GetActorRotation(), UEngineTypes::ConvertToTraceType(ECC_Visibility),
 			false, ActorsToIgnore, EDrawDebugTrace::None, HitResult,
 			true, FLinearColor::Red, FLinearColor::Green, -1
 		);

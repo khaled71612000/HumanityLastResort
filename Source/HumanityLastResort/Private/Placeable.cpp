@@ -181,7 +181,6 @@ void APlaceable::ClearFloor()
 			}
 		}
 	}
-
 }
 
 void APlaceable::DestroyBuildingActor()

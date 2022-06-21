@@ -1,17 +1,14 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
-
 #include "Building.h"
 #include "Components/SphereComponent.h"
 #include "Economy/EconomySubsystem.h"
 #include "SelectionSubsystem.h"
 
 
-
 ABuilding::ABuilding() 
 {
 	CurOccupants = 0;
-
 }
 
 void ABuilding::BeginPlay()

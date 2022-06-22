@@ -38,7 +38,7 @@ public:
 
 	int32 GlobalMood = 70;
 	int32 NumOfAliens;
-
+	float SpawnMultiplier = 1;
 	UPROPERTY(BlueprintAssignable)
 	FSpawnRateUpdate SpawnRateUpdate;
 
@@ -57,4 +57,5 @@ public:
 		int32 GetGlobalMood();
 	UFUNCTION(BlueprintCallable)
 		int32 GetNumOfAliens();
+
 };

@@ -62,7 +62,7 @@ void UAlienSubsystem::UpdateGlobalMood(int32 Amount)
 		SpawnRateUpdate.Broadcast(5);
 	else if (GlobalMood > 40)
 		SpawnRateUpdate.Broadcast(8);
-	else
+	else if(GlobalMood < 30)
 		GameOver.Broadcast();
 }
 
@@ -76,3 +76,5 @@ int32 UAlienSubsystem::GetNumOfAliens()
 {
 	return NumOfAliens;
 }
+
+

@@ -21,13 +21,16 @@ ACameraPawn::ACameraPawn()
 	SpringArm = CreateDefaultSubobject<USpringArmComponent>(TEXT("SpringArm"));
 	SpringArm->SetupAttachment(RootScene);
 	SpringArm->bDoCollisionTest = false;
-	SpringArm->SetRelativeRotation(FRotator(-60, 0, 0));
-	SpringArm->SocketOffset=FVector(-60, 0, 0);
-
-	SpringArm->TargetArmLength = 3000.f;
+	SpringArm->SetRelativeRotation(FRotator(0, 0, 0));
+	SpringArm->SocketOffset = FVector(-1000.0, 0, 0);
+	SpringArm->TargetOffset = FVector(0,0,5000);
+	SpringArm->TargetArmLength = 1;
+	SpringArm->bEnableCameraLag = true;
+	SpringArm->bEnableCameraRotationLag = true;
 
 	CameraComp = CreateDefaultSubobject<UCameraComponent>(TEXT("Camera"));
 	CameraComp->SetupAttachment(SpringArm);
+	CameraComp->SetRelativeRotation(FRotator(-40, 0, 0));
 
 	AutoPossessPlayer = EAutoReceiveInput::Player0;
 	PawnMovementComponent = CreateDefaultSubobject<UPawnMovementComponent>(TEXT("Pawn Movement"));

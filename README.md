@@ -11,7 +11,7 @@
 - **PlayerController.cpp:** Handles player inputs and character interactions.
 - **GameManager.cpp:** Oversees game state, including score tracking and event handling.
 - **EnvironmentManager.cpp:** Manages dynamic environmental elements and interactions.
-
+- 
 ### HumanityLastResort.uproject
 - **Project File:** The main project file for the Unreal Engine project.
 

@@ -21,7 +21,7 @@
 - **Advanced AI:** Implements sophisticated AI for dynamic interactions and behaviors.
 - **Dynamic Environments:** Features a responsive and interactive game world.
 - **Comprehensive Game Management:** Ensures smooth game flow and consistent gameplay mechanics.
-- 
+  
 ## How to Play the Game
 
 ### Game Controls:

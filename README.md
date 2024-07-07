@@ -49,6 +49,8 @@
 - Lose money if an alien's needs are not satisfied, which lowers the satisfaction level.
 
 This project serves as an advanced example for developers looking to create detailed and interactive games using Unreal Engine.
+https://youtu.be/MwhhXPSRmPE?si=6418c2I8Cj1OqoeE
+
 ![poster final](https://github.com/khaled71612000/HumanityLastResort/assets/59780800/c1a1c1be-b301-4925-9f10-0bc13e41eaf7)
 ![image](https://github.com/khaled71612000/HumanityLastResort/assets/59780800/34d23918-aa1b-402a-aa5b-4efb13b9fa2e)
 ![image](https://github.com/khaled71612000/HumanityLastResort/assets/59780800/28c04c96-4fdf-49fe-8a22-7b6531e97ed4)

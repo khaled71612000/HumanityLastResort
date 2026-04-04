@@ -1,75 +1,81 @@
-# HumanityLastResort
+# Humanity Last Resort
 
-> A 3D city-building survival game in Unreal Engine 5 — manage resources, construct buildings, and ensure humanity's survival against escalating threats.
 
 ![Unreal Engine](https://img.shields.io/badge/Unreal%20Engine-0E1128?logo=unrealengine&logoColor=white)
 ![C++](https://img.shields.io/badge/C++-00599C?logo=c%2B%2B&logoColor=white)
 ![License](https://img.shields.io/badge/license-MIT-green)
 
-## Overview
+**Humanity Last Resort** is a 3D city-building game where the player controls a resort owner aiming to satisfy aggressive aliens by building and managing a resort. Failure to satisfy the aliens risks global destruction. The game is a real-time construction simulator requiring efficient resource management to expand the resort and attract tourists.
 
-A 3D city-building survival game in Unreal Engine 5 — manage resources, construct buildings, and ensure humanity's survival against escalating threats.
+## Key Components
+### Plugins
+- **DataTableEditorUtilities Plugin:** Provides utilities for managing data tables efficiently.
 
-Built with **Unreal Engine** and **C++**, demonstrating professional game development patterns: the Actor-Component model, Unreal's reflection system (UPROPERTY/UFUNCTION), Blueprint interoperability, and optimized gameplay systems.
+### Source
+- **AIController.cpp:** Manages the behavior and state of AI characters in the game.
+- **PlayerController.cpp:** Handles player inputs and character interactions.
+- **GameManager.cpp:** Oversees game state, including score tracking and event handling.
+- **EnvironmentManager.cpp:** Manages dynamic environmental elements and interactions.
+- 
+### HumanityLastResort.uproject
+- **Project File:** The main project file for the Unreal Engine project.
 
 ## Features
 
-- Unreal Engine gameplay framework (GameMode, GameState, PlayerController)
-- Custom C++ Actor and Component classes
-- Blueprint-C++ interoperability
-- Physics and collision systems
-- Optimized asset loading
+- **Immersive Gameplay:** Offers a rich and engaging gaming experience with complex mechanics.
+- **Advanced AI:** Implements sophisticated AI for dynamic interactions and behaviors.
+- **Dynamic Environments:** Features a responsive and interactive game world.
+- **Comprehensive Game Management:** Ensures smooth game flow and consistent gameplay mechanics.
+  
+## How to Play the Game
 
-## Technologies Used
+### Game Controls:
+- **Middle Mouse Button:** To pan camera
+- **Right Click Button:** To move camera
+- **Mouse Scroll:** To rotate building
 
-| Technology | Details |
-|------------|---------|
-| Unreal Engine | 4.x / 5.x |
-| C++ | Modern C++17 |
-| Blueprints | Visual scripting |
-| Chaos Physics | Physics simulation |
+### Buildings Controls:
+- **Right Click Button:** To show context menu
+- **Mouse Scroll:** To rotate building
+- **Drag and Drop:** To place building 
 
-## Screenshots / Demo
+### Game Win:
+- Reach two days
 
-![Screenshot 1](https://raw.githubusercontent.com/khaled71612000/HumanityLastResort/HEAD/Plugins/DataTableEditorUtilities/Resources/Icon128.png)
+### Game Lose:
+- Satisfaction level below 30 (shown by the top right number next to the smiley face)
+
+### Game Rules:
+- NPCs can only walk on roads.
+- You can't build outside the build area.
+- You can't build on top of other buildings.
+- To earn money, build roads to buildings for aliens to walk on, increasing their satisfaction.
+- Check needs on the top right arrow; click to show required needs.
+- Lose money if an alien's needs are not satisfied, which lowers the satisfaction level.
+
+This project serves as an advanced example for developers looking to create detailed and interactive games using Unreal Engine.
+https://youtu.be/MwhhXPSRmPE?si=6418c2I8Cj1OqoeE
+
+![poster final](https://github.com/khaled71612000/HumanityLastResort/assets/59780800/c1a1c1be-b301-4925-9f10-0bc13e41eaf7)
+![image](https://github.com/khaled71612000/HumanityLastResort/assets/59780800/34d23918-aa1b-402a-aa5b-4efb13b9fa2e)
+![image](https://github.com/khaled71612000/HumanityLastResort/assets/59780800/28c04c96-4fdf-49fe-8a22-7b6531e97ed4)
+![image](https://github.com/khaled71612000/HumanityLastResort/assets/59780800/35f10fb9-e22b-4bb2-8f1b-60448ab596b2)
+![image](https://github.com/khaled71612000/HumanityLastResort/assets/59780800/4ded770f-2eb3-4d45-9241-3b10f1731669)
+
+![final poster 2](https://github.com/khaled71612000/HumanityLastResort/assets/59780800/20717fd3-7213-46fe-8de1-ab77a72a149f)
 
 ## Getting Started
 
 ### Prerequisites
-
 - [Unreal Engine](https://www.unrealengine.com/en-US/download) 4.x or 5.x
 - Visual Studio 2019 or 2022 with **Desktop development with C++**
-- Git LFS
+- Git LFS (`git lfs install`)
 
-### Installation
-
+### Setup
 ```bash
 git lfs install
 git clone https://github.com/khaled71612000/HumanityLastResort.git
-cd HumanityLastResort
 ```
-
-1. Right-click `.uproject` → **Generate Visual Studio project files**
-2. Open `.sln` in Visual Studio
-3. Set config: **Development Editor | Win64**
-4. Build (Ctrl+Shift+B) then launch the editor
-
-## Project Structure
-
-```
-HumanityLastResort/
-├── Source/                  # C++ source files
-  Plugins/DataTableEditorUtilities/Source/DataTableEditorUtilities/Private/DataTableEditorUtilitiesBlueprintLibrary.cpp
-  Plugins/DataTableEditorUtilities/Source/DataTableEditorUtilities/Private/DataTableEditorUtilitiesHelper.cpp
-  Plugins/DataTableEditorUtilities/Source/DataTableEditorUtilities/Private/DataTableEditorUtilitiesHelper.h
-  Plugins/DataTableEditorUtilities/Source/DataTableEditorUtilities/Private/DataTableEditorUtilitiesModule.cpp
-  Plugins/DataTableEditorUtilities/Source/DataTableEditorUtilities/Public/DataTableEditorUtilitiesBlueprintLibrary.h
-  Plugins/DataTableEditorUtilities/Source/DataTableEditorUtilities/Public/DataTableEditorUtilitiesModule.h
-├── Content/                 # Assets, blueprints, levels
-├── Config/                  # Project settings
-└── HumanityLastResort.uproject
-```
-
-## License
-
-[MIT License](LICENSE)
+1. Right-click the `.uproject` → **Generate Visual Studio project files**
+2. Open `.sln` → Build (**Development Editor | Win64**)
+3. Launch via Unreal Editor

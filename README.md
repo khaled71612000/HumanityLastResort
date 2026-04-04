@@ -7,6 +7,13 @@
 
 **Humanity Last Resort** is a 3D city-building game where the player controls a resort owner aiming to satisfy aggressive aliens by building and managing a resort. Failure to satisfy the aliens risks global destruction. The game is a real-time construction simulator requiring efficient resource management to expand the resort and attract tourists.
 
+
+## Live Demo
+
+[![Watch Gameplay Demo](https://img.youtube.com/vi/MwhhXPSRmPE/maxresdefault.jpg)](https://youtu.be/MwhhXPSRmPE)
+
+> Click the thumbnail above to watch the full demo video.
+
 ## Key Components
 ### Plugins
 - **DataTableEditorUtilities Plugin:** Provides utilities for managing data tables efficiently.
@@ -63,6 +70,17 @@ https://youtu.be/MwhhXPSRmPE?si=6418c2I8Cj1OqoeE
 ![image](https://github.com/khaled71612000/HumanityLastResort/assets/59780800/4ded770f-2eb3-4d45-9241-3b10f1731669)
 
 ![final poster 2](https://github.com/khaled71612000/HumanityLastResort/assets/59780800/20717fd3-7213-46fe-8de1-ab77a72a149f)
+
+
+## Tech Stack
+
+| Technology | Role |
+|---|---|
+| Unreal Engine 4/5 | Game engine (Blueprints + C++) |
+| C++ | Gameplay systems, custom components |
+| HLSL / USF | Custom shader authoring |
+| Git LFS | Large asset version control |
+
 
 ## Getting Started
 
